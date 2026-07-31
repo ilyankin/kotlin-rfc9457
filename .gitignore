@@ -1,11 +1,24 @@
 # Gradle
 .gradle/
-/build/
-*/build/
+**/build/
+!**/src/**/build/
+.gradletasknamecache
+gradle-app.setting
 !gradle/wrapper/gradle-wrapper.jar
 
 # Kotlin
 .kotlin/
+
+# JVM — these land in the working directory, not build/, so they're not
+# already covered by the rule above
+hs_err_pid*
+replay_pid*
+.attach_pid*
+scan-journal.log
+
+# Harmless to keep even without an Android target today — multiplatform is
+# the direction this project is headed, and this matches nothing until then
+local.properties
 
 # IntelliJ IDEA
 .idea/
@@ -13,6 +26,14 @@
 *.ipr
 *.iws
 out/
+
+# Other editors/IDEs
+.vscode/
+.fleet/
+.classpath
+.project
+.settings/
+bin/
 
 # macOS
 .DS_Store
