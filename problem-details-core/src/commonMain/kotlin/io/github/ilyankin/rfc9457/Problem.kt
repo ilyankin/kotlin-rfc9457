@@ -26,7 +26,9 @@ import kotlinx.serialization.Serializable
  *   only**: a generator MUST make it agree with the real response status, but a consumer should key
  *   off the actual HTTP status, because §5 notes the two can legitimately disagree once an
  *   intermediary has rewritten the response without touching the body. Its purpose is recovering
- *   the original status after the document has passed through caches, logs or proxies.
+ *   the original status after the document has passed through caches, logs or proxies. The value
+ *   is deliberately unvalidated — §3.1 pins the meaning, not a numeric range; agreeing with the
+ *   real response status is the responder's job, not this type's.
  * @property title short human-readable summary **of the type**, not of this occurrence: §3.1 says it
  *   SHOULD stay the same across occurrences, localization aside.
  * @property detail human-readable explanation of *this* occurrence. §3.1 asks that it help the
