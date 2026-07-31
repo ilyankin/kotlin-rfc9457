@@ -1,6 +1,6 @@
 package io.github.ilyankin.rfc9457
 
-import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -40,10 +40,35 @@ public val ProblemJson: Json =
  * `JsonPrimitive(Number)`, which is what preserves an exact literal — kotlinx's own documentation
  * prescribes it for values that must not be quoted or truncated.
  */
-@OptIn(ExperimentalSerializationApi::class)
 @PublishedApi
-internal fun ProblemValue.toJsonElement(): JsonElement =
-    when (this) {
+internal fun ProblemValue.toJsonElement(): JsonElement = toJsonElement(depth = 0)
+
+/**
+ * Converts from the JSON tree. [JsonNull] is checked first because it is a [JsonPrimitive].
+ *
+ * Note what this does *not* protect against. By the time it runs, kotlinx has already built the
+ * whole `JsonElement` tree, so a document deep enough to overflow *its* parser never reaches this
+ * function. Measured against kotlinx-serialization 1.11.0: nested **objects** survive past 50 000
+ * levels, because `JsonTreeReader` switched to `DeepRecursiveFunction`
+ * ([#1594](https://github.com/Kotlin/kotlinx.serialization/issues/1594)); nested **arrays** still
+ * overflow at around 5 000, because the same fix was
+ * [declined for arrays](https://github.com/Kotlin/kotlinx.serialization/issues/1703) as "narrow and
+ * unique". That residue is upstream and outside this library's reach — the guard below covers the
+ * recursion this library owns.
+ */
+@PublishedApi
+internal fun JsonElement.toProblemValue(): ProblemValue = toProblemValue(depth = 0)
+
+/**
+ * The recursion the library owns, bounded by [Problem.MAX_NESTING_DEPTH].
+ *
+ * The public entry points above keep their original signatures rather than gaining a `depth`
+ * parameter: they are `@PublishedApi internal` and therefore inlined into callers, so changing their
+ * shape would be an ABI break for no gain.
+ */
+private fun ProblemValue.toJsonElement(depth: Int): JsonElement {
+    checkDepth(depth)
+    return when (this) {
         is ProblemPrimitive -> {
             when {
                 isString -> JsonPrimitive(content)
@@ -60,20 +85,29 @@ internal fun ProblemValue.toJsonElement(): JsonElement =
         }
 
         is ProblemArray -> {
-            JsonArray(map { it.toJsonElement() })
+            JsonArray(map { it.toJsonElement(depth + 1) })
         }
 
         is ProblemObject -> {
-            JsonObject(mapValues { (_, value) -> value.toJsonElement() })
+            JsonObject(mapValues { (_, value) -> value.toJsonElement(depth + 1) })
         }
     }
+}
 
-/** Converts from the JSON tree. [JsonNull] is checked first because it is a [JsonPrimitive]. */
-@PublishedApi
-internal fun JsonElement.toProblemValue(): ProblemValue =
-    when (this) {
+private fun JsonElement.toProblemValue(depth: Int): ProblemValue {
+    checkDepth(depth)
+    return when (this) {
         JsonNull -> ProblemNull
         is JsonPrimitive -> ProblemPrimitive(content, isString)
-        is JsonArray -> ProblemArray(map { it.toProblemValue() })
-        is JsonObject -> ProblemObject(mapValues { (_, value) -> value.toProblemValue() })
+        is JsonArray -> ProblemArray(map { it.toProblemValue(depth + 1) })
+        is JsonObject -> ProblemObject(mapValues { (_, value) -> value.toProblemValue(depth + 1) })
     }
+}
+
+private fun checkDepth(depth: Int) {
+    if (depth > Problem.MAX_NESTING_DEPTH) {
+        throw SerializationException(
+            "Extension value nests deeper than ${Problem.MAX_NESTING_DEPTH} levels",
+        )
+    }
+}

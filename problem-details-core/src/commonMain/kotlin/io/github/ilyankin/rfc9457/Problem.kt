@@ -1,6 +1,7 @@
 package io.github.ilyankin.rfc9457
 
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmField
 
 /**
  * An RFC 9457 problem detail — the document carried by `application/problem+json` and
@@ -76,6 +77,47 @@ public data class Problem(
          */
         public val RESERVED_MEMBERS: Set<String> =
             setOf("type", "status", "title", "detail", "instance")
+
+        /**
+         * How deeply an extension value may nest before either codec refuses it.
+         *
+         * Both codecs walk the [ProblemValue] tree recursively in both directions, so an unbounded
+         * document exhausts the call stack — a `StackOverflowError`, which is an `Error` rather than
+         * an `Exception` and therefore escapes ordinary handling. Since problem documents arrive
+         * over the network, the limit is enforced rather than merely documented: past it, both
+         * codecs throw `SerializationException`.
+         *
+         * It lives here, in core, so the JSON and XML codecs cannot drift apart about what they will
+         * accept — a document one of them emits must be one the other can read.
+         *
+         * 64 is far beyond any real document: §3.1 defines five flat members, and the deepest
+         * example the RFC publishes nests three levels. For calibration, Jackson's equivalent
+         * (`StreamReadConstraints.maxNestingDepth`, added in 2.15 in response to CVE-2025-52999)
+         * defaults to 1000 and is proposed to drop to 500, while the JDK's XML parser has capped
+         * `jdk.xml.maxElementDepth` at 100 since JDK 25. kotlinx.serialization offers no such
+         * setting at all — `JsonConfiguration` has no depth or size parameter — which is why this
+         * has to be the library's own guard rather than something a caller can configure.
+         *
+         * Deliberately not a codec parameter. Adding an optional `maxDepth` argument to an *existing*
+         * entry point would change its JVM signature and break precompiled callers — but that is the
+         * only door 1.0 closes. A new overload, or an entry point taking a configuration object built
+         * from this library's own types, stays binary-compatible and can be introduced whenever a
+         * real need appears. What 1.0 freezes is the default, not the possibility; do not read this
+         * paragraph as a refusal of a later, well-motivated request.
+         *
+         * Deliberately not `const`, unlike the wire constants above it, and the distinction is worth
+         * keeping: a `const val` is inlined into every consumer's bytecode. This value is shared
+         * across two separately published artifacts on purpose, so inlining it would let them drift
+         * — `problem-details-xml` compiled against one release would keep enforcing that release's
+         * number while a newer core enforced another, which is the exact divergence the shared
+         * constant exists to prevent. [ABOUT_BLANK] and the XML names may be `const` because the RFC
+         * fixes them forever; this one is a tuning decision that has to stay readable at runtime.
+         *
+         * `@JvmField` keeps it a plain static read from Java (`Problem.MAX_NESTING_DEPTH`) rather
+         * than `Problem.Companion.getMAX_NESTING_DEPTH()`, without restoring the inlining.
+         */
+        @JvmField
+        public val MAX_NESTING_DEPTH: Int = 64
 
         /**
          * The `about:blank` problem for [status]. [title] SHOULD be the status code's standard

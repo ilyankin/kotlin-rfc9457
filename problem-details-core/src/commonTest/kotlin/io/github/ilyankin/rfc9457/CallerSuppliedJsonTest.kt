@@ -87,9 +87,10 @@ class CallerSuppliedJsonTest :
         "a caller's naming strategy decides the extension member names" {
             @OptIn(ExperimentalSerializationApi::class)
             val snakeCase = Json { namingStrategy = JsonNamingStrategy.SnakeCase }
-            val problem = problem(json = snakeCase) {
-                extensions(TracedRequest(traceId = "abc-123"))
-            }
+            val problem =
+                problem(json = snakeCase) {
+                    extensions(TracedRequest(traceId = "abc-123"))
+                }
             problem.extensions.keys shouldBe setOf("trace_id")
         }
 

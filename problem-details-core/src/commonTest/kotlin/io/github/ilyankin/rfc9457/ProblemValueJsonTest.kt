@@ -1,7 +1,10 @@
 package io.github.ilyankin.rfc9457
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.add
@@ -9,8 +12,46 @@ import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
+private fun nestedValue(depth: Int): ProblemValue {
+    var value: ProblemValue = ProblemPrimitive("leaf")
+    repeat(depth) { value = ProblemObject(mapOf("a" to value)) }
+    return value
+}
+
 class ProblemValueJsonTest :
     StringSpec({
+
+        "encoding an extension nested past the limit throws instead of overflowing the stack" {
+            // Both conversions recurse per level; unguarded, this was a StackOverflowError at
+            // ~10 000 levels — an Error, so it slips past ordinary handling. kotlinx has no setting
+            // that could bound it: JsonConfiguration exposes no depth or size parameter at all.
+            val problem = Problem(extensions = mapOf("deep" to nestedValue(Problem.MAX_NESTING_DEPTH + 5)))
+            shouldThrow<SerializationException> { Json.encodeToString(problem) }
+        }
+
+        "decoding an extension nested past the limit throws instead of overflowing the stack" {
+            val document =
+                buildString {
+                    append("""{"type":"about:blank","deep":""")
+                    repeat(Problem.MAX_NESTING_DEPTH + 5) { append("""{"a":""") }
+                    append("1")
+                    repeat(Problem.MAX_NESTING_DEPTH + 5) { append("}") }
+                    append("}")
+                }
+            shouldThrow<SerializationException> { Json.decodeFromString<Problem>(document) }
+        }
+
+        "nesting up to the limit still round-trips" {
+            // MAX_NESTING_DEPTH - 1 wrappers puts the deepest value exactly at the limit.
+            val problem = Problem(extensions = mapOf("deep" to nestedValue(Problem.MAX_NESTING_DEPTH - 1)))
+            Json.decodeFromString<Problem>(Json.encodeToString(problem)) shouldBe problem
+        }
+
+        "the limit is shared with the XML codec rather than duplicated" {
+            // Both codecs read Problem.MAX_NESTING_DEPTH. If one ever grew its own constant, a
+            // document one codec emits could be one the other refuses.
+            Problem.MAX_NESTING_DEPTH shouldBe 64
+        }
 
         "an integer literal survives as an unquoted number" {
             ProblemPrimitive(30).toJsonElement().toString() shouldBe "30"
