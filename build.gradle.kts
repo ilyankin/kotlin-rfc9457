@@ -1,28 +1,8 @@
-plugins {
-    alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
-}
-
-subprojects {
-    apply(plugin = "org.jetbrains.kotlin.multiplatform")
-
-    group = "io.github.ilyankin"
-    version = "0.1.0-SNAPSHOT"
-
-    extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension> {
-        explicitApi()
-        jvm()
-        jvmToolchain(17)
-
-        sourceSets.getByName("commonTest").dependencies {
-            implementation(rootProject.libs.kotest.framework.engine)
-            implementation(rootProject.libs.kotest.assertions.core)
-        }
-        // The JVM target discovers and runs kotest specs through the JUnit Platform.
-        sourceSets.getByName("jvmTest").dependencies {
-            implementation(rootProject.libs.kotest.runner.junit5)
-        }
-    }
-
-    tasks.withType<Test>().configureEach { useJUnitPlatform() }
-}
+// No `subprojects { }` / `allprojects { }` here — that pattern caused 40 Isolated Projects
+// violations (4 unique: Project.apply/extensions/providers/tasks) before the migration. Shared
+// config now lives in `build-logic/src/main/kotlin` as two convention plugins, applied per module:
+//
+//   rfc9457.kmp-library — Kotlin Multiplatform, explicitApi, JVM toolchain, ABI validation, kotest
+//   rfc9457.published   — maven-publish, signing, POM metadata; only on modules that ship
+//
+// Adding a `subprojects { }` block back would reintroduce all 40 violations.

@@ -1,4 +1,9 @@
 // No dependency on `problem-details-xml`; that is the point of the split.
+plugins {
+    id("rfc9457.kmp-library")
+    id("rfc9457.published")
+}
+
 kotlin {
     sourceSets.getByName("commonMain").dependencies {
         api(project(":problem-details-core"))
