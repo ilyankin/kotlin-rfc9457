@@ -8,13 +8,14 @@ import kotlinx.serialization.serializer
 /**
  * Decodes the whole extension map into [T] — the typed consuming edge.
  *
- * Extension members that [T] does not declare are ignored, so a partial view of a problem's
- * extensions is fine — and so is reading a document produced by a newer version of the problem type
- * than [T] was written against. That is not a convenience but RFC 9457 §3.2: *"consumers MUST ignore
- * extension members they don't recognize"*. It therefore holds regardless of [json] —
- * `ignoreUnknownKeys` is re-applied on top of a caller's instance rather than left to it, since a
- * strictly configured application instance would otherwise turn a conforming document into an
- * exception. Everything else about [json] — its `serializersModule` above all — is the caller's.
+ * Extension members [T] does not declare are ignored, so a partial view is fine, as is reading a
+ * document produced by a newer version of the problem type than [T] was written against. That is
+ * §3.2 rather than a convenience: *"consumers MUST ignore extension members they don't recognize"*.
+ * It therefore holds regardless of [json] — `ignoreUnknownKeys` is re-applied on top of a caller's
+ * instance, so a strictly configured application instance cannot turn a conforming document into an
+ * exception. Everything else about [json], its `serializersModule` above all, stays the caller's.
+ *
+ * @see <a href="https://www.rfc-editor.org/rfc/rfc9457#section-3.2">RFC 9457 §3.2, Extension Members</a>
  */
 public fun <T> Problem.extensionsAs(
     deserializer: DeserializationStrategy<T>,
@@ -25,9 +26,21 @@ public fun <T> Problem.extensionsAs(
         JsonObject(extensions.mapValues { (_, value) -> value.toJsonElement() }),
     )
 
+/**
+ * Decodes the whole extension map into [T], with the deserializer found from [T] instead of passed
+ * in. Members [T] does not declare are ignored, as RFC 9457 §3.2 requires.
+ *
+ * @sample io.github.ilyankin.rfc9457.samples.readTypedExtensions
+ */
 public inline fun <reified T> Problem.extensionsAs(json: Json = ProblemJson): T = extensionsAs(serializer(), json)
 
-/** Decodes a single extension member, or returns `null` when it is absent. */
+/**
+ * Decodes a single extension member, or returns `null` when it is absent.
+ *
+ * Absence and a present-but-undecodable member are *not* the same: a member of the wrong shape
+ * throws rather than returning `null`. Read it through [Problem.extensions] and the lenient
+ * accessors — [stringOrNull] and friends — to follow §3's "ignore it like an absent member" rule.
+ */
 public fun <T> Problem.extension(
     name: String,
     deserializer: DeserializationStrategy<T>,
@@ -37,6 +50,10 @@ public fun <T> Problem.extension(
         json.lenientAboutUnknownMembers().decodeFromJsonElement(deserializer, it.toJsonElement())
     }
 
+/**
+ * Decodes a single extension member with the deserializer found from [T], or returns `null` when the
+ * member is absent.
+ */
 public inline fun <reified T> Problem.extension(
     name: String,
     json: Json = ProblemJson,

@@ -17,17 +17,16 @@ import kotlinx.serialization.json.JsonUnquotedLiteral
  * `Json` the caller is using, so an application's own formatting settings already apply on the wire.
  *
  * Override it per call — `problem(json = myJson) { … }`, `extensionsAs<T>(json = myJson)` — whenever
- * the application configures kotlinx.serialization in ways the payload depends on: a
- * `serializersModule` holding contextual or polymorphic serializers (where the default instance
- * fails outright), a `namingStrategy`, a `classDiscriminator`. Passing an instance from a DI
- * container is the intended use; nothing here is global or mutable.
+ * the payload depends on how the application configures kotlinx.serialization: a `serializersModule`
+ * holding contextual or polymorphic serializers (where the default instance fails outright), a
+ * `namingStrategy`, a `classDiscriminator`. Passing an instance from a DI container is the intended
+ * use; nothing here is global or mutable.
  *
- * `ignoreUnknownKeys` matters for [extensionsAs]: decoding the whole extension map into a type that
- * only declares some of the members must not fail. That one setting is re-applied on top of a
- * caller's instance, because RFC 9457 §3.2 requires that *"consumers MUST ignore extension members
- * they don't recognize"* — the very rule that lets a problem type gain members without breaking
- * clients written against the older shape. `encodeDefaults` departs from kotlinx's own default so
- * that a payload's defaulted properties still reach the wire.
+ * `ignoreUnknownKeys` is re-applied on top of a caller's instance rather than left to it, because
+ * §3.2 requires that *"consumers MUST ignore extension members they don't recognize"* — the rule
+ * that lets a problem type gain members without breaking clients written against the older shape.
+ * `encodeDefaults` departs from kotlinx's own default so a payload's defaulted properties still
+ * reach the wire.
  */
 public val ProblemJson: Json =
     Json {
@@ -46,15 +45,13 @@ internal fun ProblemValue.toJsonElement(): JsonElement = toJsonElement(depth = 0
 /**
  * Converts from the JSON tree. [JsonNull] is checked first because it is a [JsonPrimitive].
  *
- * Note what this does *not* protect against. By the time it runs, kotlinx has already built the
- * whole `JsonElement` tree, so a document deep enough to overflow *its* parser never reaches this
- * function. Measured against kotlinx-serialization 1.11.0: nested **objects** survive past 50 000
- * levels, because `JsonTreeReader` switched to `DeepRecursiveFunction`
- * ([#1594](https://github.com/Kotlin/kotlinx.serialization/issues/1594)); nested **arrays** still
- * overflow at around 5 000, because the same fix was
- * [declined for arrays](https://github.com/Kotlin/kotlinx.serialization/issues/1703) as "narrow and
- * unique". That residue is upstream and outside this library's reach — the guard below covers the
- * recursion this library owns.
+ * The guard below covers only the recursion this library owns: kotlinx has already built the whole
+ * `JsonElement` tree by the time this runs, so a document deep enough to overflow *its* parser never
+ * arrives here. Measured against kotlinx-serialization 1.11.0, nested **objects** survive past
+ * 50 000 levels ([#1594](https://github.com/Kotlin/kotlinx.serialization/issues/1594) moved them to
+ * `DeepRecursiveFunction`) while nested **arrays** still overflow at around 5 000, the same fix
+ * having been [declined for them](https://github.com/Kotlin/kotlinx.serialization/issues/1703). That
+ * residue is upstream and outside this library's reach.
  */
 @PublishedApi
 internal fun JsonElement.toProblemValue(): ProblemValue = toProblemValue(depth = 0)
