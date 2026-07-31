@@ -68,7 +68,13 @@ public object ProblemSerializer : KSerializer<Problem> {
                 "Problem can only be deserialized from JSON. For application/problem+xml use " +
                     "ProblemXml from the problem-details-xml module.",
             )
-        val obj = jsonDecoder.decodeJsonElement().jsonObject
+        // §3 defines a problem detail as a JSON *object*, so a well-formed document of any other
+        // shape is not a problem document at all and §3's leniency does not reach it. The failure
+        // is a SerializationException, as a kotlinx consumer would expect — not the
+        // IllegalArgumentException that JsonElement.jsonObject would leak.
+        val obj =
+            jsonDecoder.decodeJsonElement() as? JsonObject
+                ?: throw SerializationException("Expected a JSON object: an RFC 9457 problem document is one (§3)")
         // Everything that is not one of the five §3.1 members is a §3.2 extension member. The RFC
         // requires a consumer to *ignore* extension members it does not recognize; keeping them in
         // the model satisfies that (nothing fails) and goes one better, since a proxy or a logger

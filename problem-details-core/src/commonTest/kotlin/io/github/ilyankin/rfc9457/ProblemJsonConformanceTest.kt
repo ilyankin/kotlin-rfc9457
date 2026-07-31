@@ -98,4 +98,13 @@ class ProblemJsonConformanceTest :
                 }
             error.message!! shouldContain "problem+xml"
         }
+
+        "a well-formed JSON document that is not an object is refused, per RFC 3" {
+            // §3's leniency covers wrong-typed *members*; a document of another shape is not a
+            // problem document at all, and it fails as a SerializationException like any other
+            // kotlinx one — not as the IllegalArgumentException JsonElement.jsonObject would leak.
+            listOf("""[1,2,3]""", """null""", """"text"""", """42""").forEach { document ->
+                shouldThrow<SerializationException> { json.decodeFromString<Problem>(document) }
+            }
+        }
     })
