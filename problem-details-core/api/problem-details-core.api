@@ -1,0 +1,228 @@
+public final class io/github/ilyankin/rfc9457/Problem {
+	public static final field ABOUT_BLANK Ljava/lang/String;
+	public static final field Companion Lio/github/ilyankin/rfc9457/Problem$Companion;
+	public static final field MAX_NESTING_DEPTH I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Lio/github/ilyankin/rfc9457/Problem;
+	public static synthetic fun copy$default (Lio/github/ilyankin/rfc9457/Problem;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lio/github/ilyankin/rfc9457/Problem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDetail ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getInstance ()Ljava/lang/String;
+	public final fun getStatus ()Ljava/lang/Integer;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/ilyankin/rfc9457/Problem$Companion {
+	public final fun blank (ILjava/lang/String;)Lio/github/ilyankin/rfc9457/Problem;
+	public final fun getRESERVED_MEMBERS ()Ljava/util/Set;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemArray : io/github/ilyankin/rfc9457/ProblemValue, java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
+	public fun <init> (Ljava/util/List;)V
+	public fun add (ILio/github/ilyankin/rfc9457/ProblemValue;)V
+	public synthetic fun add (ILjava/lang/Object;)V
+	public fun add (Lio/github/ilyankin/rfc9457/ProblemValue;)Z
+	public synthetic fun add (Ljava/lang/Object;)Z
+	public fun addAll (ILjava/util/Collection;)Z
+	public fun addAll (Ljava/util/Collection;)Z
+	public fun clear ()V
+	public fun contains (Lio/github/ilyankin/rfc9457/ProblemValue;)Z
+	public final fun contains (Ljava/lang/Object;)Z
+	public fun containsAll (Ljava/util/Collection;)Z
+	public fun equals (Ljava/lang/Object;)Z
+	public fun get (I)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun get (I)Ljava/lang/Object;
+	public fun getSize ()I
+	public fun hashCode ()I
+	public fun indexOf (Lio/github/ilyankin/rfc9457/ProblemValue;)I
+	public final fun indexOf (Ljava/lang/Object;)I
+	public fun isEmpty ()Z
+	public fun iterator ()Ljava/util/Iterator;
+	public fun lastIndexOf (Lio/github/ilyankin/rfc9457/ProblemValue;)I
+	public final fun lastIndexOf (Ljava/lang/Object;)I
+	public fun listIterator ()Ljava/util/ListIterator;
+	public fun listIterator (I)Ljava/util/ListIterator;
+	public fun remove (I)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun remove (I)Ljava/lang/Object;
+	public fun remove (Ljava/lang/Object;)Z
+	public fun removeAll (Ljava/util/Collection;)Z
+	public fun replaceAll (Ljava/util/function/UnaryOperator;)V
+	public fun retainAll (Ljava/util/Collection;)Z
+	public fun set (ILio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun set (ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun size ()I
+	public fun sort (Ljava/util/Comparator;)V
+	public fun subList (II)Ljava/util/List;
+	public fun toArray ()[Ljava/lang/Object;
+	public fun toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemBuilder {
+	public fun <init> ()V
+	public fun <init> (Lkotlinx/serialization/json/Json;)V
+	public synthetic fun <init> (Lkotlinx/serialization/json/Json;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lio/github/ilyankin/rfc9457/Problem;
+	public final fun extension (Ljava/lang/String;D)V
+	public final fun extension (Ljava/lang/String;I)V
+	public final fun extension (Ljava/lang/String;J)V
+	public final fun extension (Ljava/lang/String;Lio/github/ilyankin/rfc9457/ProblemValue;)V
+	public final fun extension (Ljava/lang/String;Ljava/lang/Object;Lkotlinx/serialization/SerializationStrategy;)V
+	public final fun extension (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun extension (Ljava/lang/String;Z)V
+	public final fun extensions (Ljava/lang/Object;Lkotlinx/serialization/SerializationStrategy;)V
+	public final fun getDetail ()Ljava/lang/String;
+	public final fun getInstance ()Ljava/lang/String;
+	public final fun getStatus ()Ljava/lang/Integer;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public final fun setDetail (Ljava/lang/String;)V
+	public final fun setInstance (Ljava/lang/String;)V
+	public final fun setStatus (Ljava/lang/Integer;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public final fun setType (Ljava/lang/String;)V
+	public final fun type (Lio/github/ilyankin/rfc9457/ProblemType;)V
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemBuilderKt {
+	public static final fun problem (Lkotlinx/serialization/json/Json;Lkotlin/jvm/functions/Function1;)Lio/github/ilyankin/rfc9457/Problem;
+	public static synthetic fun problem$default (Lkotlinx/serialization/json/Json;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/github/ilyankin/rfc9457/Problem;
+}
+
+public abstract interface annotation class io/github/ilyankin/rfc9457/ProblemDsl : java/lang/annotation/Annotation {
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemNull : io/github/ilyankin/rfc9457/ProblemValue {
+	public static final field INSTANCE Lio/github/ilyankin/rfc9457/ProblemNull;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemObject : io/github/ilyankin/rfc9457/ProblemValue, java/util/Map, kotlin/jvm/internal/markers/KMappedMarker {
+	public fun <init> (Ljava/util/Map;)V
+	public fun clear ()V
+	public synthetic fun compute (Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;
+	public fun compute (Ljava/lang/String;Ljava/util/function/BiFunction;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun computeIfAbsent (Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;
+	public fun computeIfAbsent (Ljava/lang/String;Ljava/util/function/Function;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun computeIfPresent (Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;
+	public fun computeIfPresent (Ljava/lang/String;Ljava/util/function/BiFunction;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public final fun containsKey (Ljava/lang/Object;)Z
+	public fun containsKey (Ljava/lang/String;)Z
+	public fun containsValue (Lio/github/ilyankin/rfc9457/ProblemValue;)Z
+	public final fun containsValue (Ljava/lang/Object;)Z
+	public final fun entrySet ()Ljava/util/Set;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun get (Ljava/lang/Object;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public final synthetic fun get (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun get (Ljava/lang/String;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public fun getEntries ()Ljava/util/Set;
+	public fun getKeys ()Ljava/util/Set;
+	public fun getSize ()I
+	public fun getValues ()Ljava/util/Collection;
+	public fun hashCode ()I
+	public fun isEmpty ()Z
+	public final fun keySet ()Ljava/util/Set;
+	public synthetic fun merge (Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;
+	public fun merge (Ljava/lang/String;Lio/github/ilyankin/rfc9457/ProblemValue;Ljava/util/function/BiFunction;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+	public fun put (Ljava/lang/String;Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public fun putAll (Ljava/util/Map;)V
+	public synthetic fun putIfAbsent (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+	public fun putIfAbsent (Ljava/lang/String;Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public fun remove (Ljava/lang/Object;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public synthetic fun remove (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun remove (Ljava/lang/Object;Ljava/lang/Object;)Z
+	public synthetic fun replace (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+	public synthetic fun replace (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z
+	public fun replace (Ljava/lang/String;Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemValue;
+	public fun replace (Ljava/lang/String;Lio/github/ilyankin/rfc9457/ProblemValue;Lio/github/ilyankin/rfc9457/ProblemValue;)Z
+	public fun replaceAll (Ljava/util/function/BiFunction;)V
+	public final fun size ()I
+	public fun toString ()Ljava/lang/String;
+	public final fun values ()Ljava/util/Collection;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemPrimitive : io/github/ilyankin/rfc9457/ProblemValue {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContent ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isString ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lio/github/ilyankin/rfc9457/ProblemSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lio/github/ilyankin/rfc9457/Problem;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lio/github/ilyankin/rfc9457/Problem;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public abstract interface class io/github/ilyankin/rfc9457/ProblemType {
+	public abstract fun getStatus ()I
+	public abstract fun getTitle ()Ljava/lang/String;
+	public abstract fun getTypeUri ()Ljava/lang/String;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemTypeKt {
+	public static final fun problem (Lio/github/ilyankin/rfc9457/ProblemType;Ljava/lang/String;Ljava/lang/String;)Lio/github/ilyankin/rfc9457/Problem;
+	public static synthetic fun problem$default (Lio/github/ilyankin/rfc9457/ProblemType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/ilyankin/rfc9457/Problem;
+}
+
+public abstract interface class io/github/ilyankin/rfc9457/ProblemValue {
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemValueJsonKt {
+	public static final fun getProblemJson ()Lkotlinx/serialization/json/Json;
+	public static final fun toJsonElement (Lio/github/ilyankin/rfc9457/ProblemValue;)Lkotlinx/serialization/json/JsonElement;
+	public static final fun toProblemValue (Lkotlinx/serialization/json/JsonElement;)Lio/github/ilyankin/rfc9457/ProblemValue;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemValueKt {
+	public static final fun ProblemPrimitive (D)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun ProblemPrimitive (I)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun ProblemPrimitive (J)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun ProblemPrimitive (Ljava/lang/String;)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun ProblemPrimitive (Z)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun getBoolean (Lio/github/ilyankin/rfc9457/ProblemValue;)Z
+	public static final fun getBooleanOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Ljava/lang/Boolean;
+	public static final fun getDouble (Lio/github/ilyankin/rfc9457/ProblemValue;)D
+	public static final fun getDoubleOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Ljava/lang/Double;
+	public static final fun getInt (Lio/github/ilyankin/rfc9457/ProblemValue;)I
+	public static final fun getIntOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Ljava/lang/Integer;
+	public static final fun getLong (Lio/github/ilyankin/rfc9457/ProblemValue;)J
+	public static final fun getLongOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Ljava/lang/Long;
+	public static final fun getPrimitive (Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun getPrimitiveOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+	public static final fun getProblemArray (Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemArray;
+	public static final fun getProblemArrayOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemArray;
+	public static final fun getProblemObject (Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemObject;
+	public static final fun getProblemObjectOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Lio/github/ilyankin/rfc9457/ProblemObject;
+	public static final fun getString (Lio/github/ilyankin/rfc9457/ProblemValue;)Ljava/lang/String;
+	public static final fun getStringOrNull (Lio/github/ilyankin/rfc9457/ProblemValue;)Ljava/lang/String;
+	public static final fun problemLiteral (Ljava/lang/String;Z)Lio/github/ilyankin/rfc9457/ProblemPrimitive;
+}
+
+public final class io/github/ilyankin/rfc9457/TypedExtensionsKt {
+	public static final fun extension (Lio/github/ilyankin/rfc9457/Problem;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;Lkotlinx/serialization/json/Json;)Ljava/lang/Object;
+	public static synthetic fun extension$default (Lio/github/ilyankin/rfc9457/Problem;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;Lkotlinx/serialization/json/Json;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun extensionsAs (Lio/github/ilyankin/rfc9457/Problem;Lkotlinx/serialization/DeserializationStrategy;Lkotlinx/serialization/json/Json;)Ljava/lang/Object;
+	public static synthetic fun extensionsAs$default (Lio/github/ilyankin/rfc9457/Problem;Lkotlinx/serialization/DeserializationStrategy;Lkotlinx/serialization/json/Json;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
