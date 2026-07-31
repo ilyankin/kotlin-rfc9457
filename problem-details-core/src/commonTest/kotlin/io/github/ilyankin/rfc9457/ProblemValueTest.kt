@@ -46,6 +46,14 @@ class ProblemValueTest :
             obj shouldBe mapOf("balance" to ProblemPrimitive(30))
         }
 
+        "a non-finite Double is rejected: it has no JSON representation" {
+            // RFC 8259 §6 numbers cannot express NaN or Infinity; emitting one would produce a
+            // literal conforming parsers reject, so the producing edge refuses it instead.
+            shouldThrow<IllegalArgumentException> { ProblemPrimitive(Double.NaN) }
+            shouldThrow<IllegalArgumentException> { ProblemPrimitive(Double.POSITIVE_INFINITY) }
+            shouldThrow<IllegalArgumentException> { ProblemPrimitive(Double.NEGATIVE_INFINITY) }
+        }
+
         "typed accessors read through, OrNull variants tolerate the wrong shape" {
             ProblemPrimitive(true).boolean shouldBe true
             ProblemPrimitive(7L).long shouldBe 7L

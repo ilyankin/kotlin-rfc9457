@@ -35,7 +35,17 @@ public fun ProblemPrimitive(value: Int): ProblemPrimitive = ProblemPrimitive(val
 
 public fun ProblemPrimitive(value: Long): ProblemPrimitive = ProblemPrimitive(value.toString(), isString = false)
 
-public fun ProblemPrimitive(value: Double): ProblemPrimitive = ProblemPrimitive(value.toString(), isString = false)
+/**
+ * [value] must be finite: a JSON number (RFC 8259 §6) cannot represent NaN or Infinity, and writing
+ * one would emit a literal that conforming parsers reject. Guarded here, at the producing edge —
+ * [problemLiteral] stays the unguarded escape hatch for codecs.
+ */
+public fun ProblemPrimitive(value: Double): ProblemPrimitive {
+    require(value.isFinite()) {
+        "NaN and Infinity have no JSON representation; a Double extension value must be finite, was $value"
+    }
+    return ProblemPrimitive(value.toString(), isString = false)
+}
 
 public fun ProblemPrimitive(value: Boolean): ProblemPrimitive = ProblemPrimitive(value.toString(), isString = false)
 
