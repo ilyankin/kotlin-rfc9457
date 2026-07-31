@@ -17,38 +17,47 @@ import kotlinx.serialization.json.Json
 /**
  * Reads and writes `application/problem+json` bodies for `ContentNegotiation`.
  *
- * Thin by design: the encoding lives in `ProblemSerializer` in core, so this only delegates. That is
- * what makes registering it a convenience rather than a correctness requirement — an application's
- * pre-existing `json()` converter that wins the `application/json` match produces the same bytes,
- * because [Problem] carries `ProblemSerializer` as its own serializer.
+ * Thin by design — the encoding lives in `ProblemSerializer` in core, this only delegates.
+ * Registering it is a convenience, not a correctness requirement: an application's pre-existing
+ * `json()` converter produces the same bytes, since [Problem] carries `ProblemSerializer` as its
+ * own serializer.
  *
- * [json] governs formatting only (indentation and the like); it cannot change the document's shape,
- * since the serializer attached to [Problem] decides that.
+ * [json] governs formatting only (indentation and the like); the document's shape comes from the
+ * serializer attached to [Problem].
  */
 public class ProblemJsonConverter(
     private val json: Json = Json,
 ) : ContentConverter {
+    /**
+     * Writes [value] as `application/problem+json`, or `null` if it isn't a [Problem] — the
+     * interface's way of saying "not mine", so `ContentNegotiation` tries the next converter.
+     *
+     * The response is always labelled `application/problem+json`, regardless of the [contentType]
+     * this converter was matched under — echoing back `application/json` (see `acceptPlainJson`)
+     * would strip the only wire-level marker that the body is a problem document. RFC 9457 §3
+     * permits the override.
+     */
     override suspend fun serialize(
         contentType: ContentType,
         charset: Charset,
         typeInfo: TypeInfo,
         value: Any?,
     ): OutgoingContent? {
-        // Returning null is the interface's documented way of saying "not mine"; ContentNegotiation
-        // then tries the next registered converter instead of failing the response.
         if (value !is Problem) return null
-        // Deliberately NOT the `contentType` this converter was matched under. When registered for
-        // plain `application/json` (see acceptPlainJson) that parameter is `application/json`, and
-        // labeling a problem document as ordinary JSON is exactly what makes it undetectable —
-        // the media type is the only thing distinguishing it on the wire. RFC 9457 §3 sanctions
-        // this: a server MAY respond with `application/problem+json` even if the client's `Accept`
-        // header didn't explicitly list it (HTTP §12.5.1), so clients must be prepared for it.
         return TextContent(
             json.encodeToString(Problem.serializer(), value),
             ProblemContentTypes.Json.withCharset(charset),
         )
     }
 
+    /**
+     * Reads a [Problem] from the request body, or returns `null` if the receiving type is anything
+     * else, leaving the body to the next converter.
+     *
+     * @throws kotlinx.serialization.SerializationException if the body is not a valid problem
+     *   document. `ContentNegotiation` turns that into a 400, which the catalog then answers with a
+     *   problem document of its own.
+     */
     override suspend fun deserialize(
         charset: Charset,
         typeInfo: TypeInfo,
@@ -62,22 +71,21 @@ public class ProblemJsonConverter(
 /**
  * Registers the `application/problem+json` converter on Ktor's own `ContentNegotiation`.
  *
- * **Call this before `problemXml()` if you use both.** Registration order is what breaks the tie
- * when `Accept` is absent or a wildcard, and JSON should win it — RFC 9457 frames JSON as the
- * canonical serialization and the Appendix B XML form as an equivalent alternative. Everything else
- * about `Accept` matching, quality values included, stays `ContentNegotiation`'s job; this function
- * only writes the two `register` calls a developer would otherwise write by hand.
+ * **Call this before `problemXml()` if you use both** — registration order breaks the tie when
+ * `Accept` is absent or a wildcard, and JSON should win it: RFC 9457 treats JSON as the canonical
+ * serialization and the Appendix B XML form as an equivalent alternative. Everything about `Accept`
+ * matching, quality values included, stays `ContentNegotiation`'s job; this only writes the two
+ * `register` calls a developer would otherwise write by hand.
  *
  * [acceptPlainJson] additionally serves problem documents to clients asking for plain
- * `application/json`. Strictly a client should ask for `application/problem+json`, but plenty of
- * tooling only ever sends `application/json`, and §3 lets a server use the problem format without
- * being asked. Note what this does *not* mean: the response is still labelled
- * `application/problem+json`, because that label is the only thing that marks the body as a problem
- * document. The flag widens which requests get one, never how one is tagged. Turn it off to answer
- * such clients with 406 instead.
+ * `application/json` — strictly a client should ask for `application/problem+json`, but plenty of
+ * tooling only ever sends `application/json`, and §3 lets a server use the problem format unasked.
+ * The response is still labelled `application/problem+json` either way, since that's the only thing
+ * marking the body as a problem document; the flag only widens which requests get one. Turn it off
+ * to answer such clients with 406 instead.
  *
- * [json] governs formatting only; the document's shape comes from `ProblemSerializer`, which
- * [Problem] carries as its own serializer.
+ * [json] governs formatting only; the document's shape comes from the serializer attached to
+ * [Problem].
  */
 public fun ContentNegotiationConfig.problemJson(
     acceptPlainJson: Boolean = true,

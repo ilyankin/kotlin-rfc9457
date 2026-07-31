@@ -12,33 +12,29 @@ import kotlin.coroutines.cancellation.CancellationException
  *
  * Each catalog entry becomes one `exception(...)`/`status(...)` registration and nothing more: the
  * library generates the calls a developer would otherwise hand-write, so dispatch stays Ktor's.
+ *
+ * @sample io.github.ilyankin.rfc9457.samples.problemDetailsSample
  */
 public fun StatusPagesConfig.problemDetails(configure: ProblemDetailsCatalog.() -> Unit) {
     val catalog = ProblemDetailsCatalog().apply(configure)
 
-    // Registered *before* the catalog's own entries, and the order matters for exactly one class.
-    // StatusPages resolves handlers by nearest parent class, so for every other class registration
-    // order is irrelevant — but `StatusPagesConfig.exceptions` is a map keyed by class, so two
-    // registrations of Throwable itself collide and the later one wins. Registering this one first
-    // lets `map<Throwable>` replace it, instead of being silently swallowed by it.
+    // Registered *before* the catalog's own entries — order matters for exactly one class.
+    // `StatusPagesConfig.exceptions` is a map keyed by class, so two registrations of Throwable
+    // collide and the later one wins; registering this one first lets `map<Throwable>` replace it
+    // instead of being silently swallowed by it.
     exception<Throwable> { call, cause ->
-        // Cancellation is not a fault to report. Ktor cancels the call's coroutine when the client
-        // disconnects, so answering it would mean writing a document nobody is left to read — and
-        // logging a stack trace for every dropped connection. Rethrowing hands it back to the
-        // engine, which classifies it as transport noise (see `logFailure` in DefaultEnginePipeline,
-        // where CancellationException and IOException go to `debug`). TimeoutCancellationException
-        // is the one cancellation that *is* a status (504); `defaultExceptionStatusCode` is what
-        // tells the two apart, and it is the same table `unmapped` already trusts.
-        //
-        // A `map<Throwable>` entry replaces this handler wholesale — including this guard.
+        // Cancellation means the client disconnected — answering it writes a document nobody reads
+        // and logs a stack trace per dropped connection. Rethrowing hands it back to the engine,
+        // which treats it as transport noise (`logFailure` sends CancellationException to `debug`).
+        // TimeoutCancellationException is the one cancellation that *is* a real status (504);
+        // `defaultExceptionStatusCode` tells the two apart — the same table `unmapped` trusts.
+        // A `map<Throwable>` entry replaces this handler wholesale, guard included.
         if (cause is CancellationException && defaultExceptionStatusCode(cause) == null) throw cause
 
         val problem = catalog.unmapped(call, cause)
-        // The cause is logged in full server-side; only a terse document reaches the client (§5).
-        // The severity follows the status rather than being a flat `error`: a 4xx means the client
-        // sent something wrong, which is ordinary traffic and not a server fault. This mirrors how
-        // Ktor logs the same exceptions — BadRequestException and NotFoundException land in the
-        // `debug` branch of its own `logFailure`.
+        // Full cause logged server-side; only a terse document reaches the client (§5). Severity
+        // follows the status rather than a flat `error` — a 4xx is the client's fault, not the
+        // server's, mirroring how Ktor's own `logFailure` sends 4xx exceptions to `debug`.
         val message = "Unhandled exception; responding with a problem document"
         if ((problem.status ?: HttpStatusCode.InternalServerError.value) >= 500) {
             call.application.log.error(message, cause)
