@@ -105,6 +105,17 @@ public final class io/github/ilyankin/rfc9457/ProblemBuilderKt {
 public abstract interface annotation class io/github/ilyankin/rfc9457/ProblemDsl : java/lang/annotation/Annotation {
 }
 
+public final class io/github/ilyankin/rfc9457/ProblemException : java/lang/RuntimeException {
+	public fun <init> (Lio/github/ilyankin/rfc9457/Problem;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Lio/github/ilyankin/rfc9457/Problem;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getProblem ()Lio/github/ilyankin/rfc9457/Problem;
+}
+
+public final class io/github/ilyankin/rfc9457/ProblemExceptionKt {
+	public static final fun exception (Lio/github/ilyankin/rfc9457/ProblemType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)Lio/github/ilyankin/rfc9457/ProblemException;
+	public static synthetic fun exception$default (Lio/github/ilyankin/rfc9457/ProblemType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;ILjava/lang/Object;)Lio/github/ilyankin/rfc9457/ProblemException;
+}
+
 public final class io/github/ilyankin/rfc9457/ProblemNull : io/github/ilyankin/rfc9457/ProblemValue {
 	public static final field INSTANCE Lio/github/ilyankin/rfc9457/ProblemNull;
 	public fun equals (Ljava/lang/Object;)Z

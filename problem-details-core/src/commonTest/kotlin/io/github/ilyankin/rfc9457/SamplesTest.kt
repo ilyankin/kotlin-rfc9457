@@ -4,6 +4,8 @@ import io.github.ilyankin.rfc9457.samples.buildProblem
 import io.github.ilyankin.rfc9457.samples.buildProblemWithTypedExtension
 import io.github.ilyankin.rfc9457.samples.problemFromProblemType
 import io.github.ilyankin.rfc9457.samples.readTypedExtensions
+import io.github.ilyankin.rfc9457.samples.throwProblemForOutOfCredit
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -34,6 +36,15 @@ class SamplesTest :
             problem.title shouldBe "You do not have enough credit."
             problem.status shouldBe 403
             problem.detail shouldBe "Your current balance is 30, but that costs 50."
+        }
+
+        "throwProblemForOutOfCredit raises the problem type's own document" {
+            val thrown = shouldThrow<ProblemException> { throwProblemForOutOfCredit() }
+
+            thrown.problem.type shouldBe "https://example.com/probs/out-of-credit"
+            thrown.problem.title shouldBe "You do not have enough credit."
+            thrown.problem.status shouldBe 403
+            thrown.problem.detail shouldBe "Your current balance is 30, but that costs 50."
         }
 
         "readTypedExtensions ignores members the type does not declare" {

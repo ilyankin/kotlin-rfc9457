@@ -1,12 +1,9 @@
-// No Ktor. `xmlutil` is `implementation`, not `api` — no xmlutil type appears in a public signature
-// or thrown type, so the codec wraps XmlException in SerializationException instead. That's what
-// stops a consumer's own xmlutil version from being able to break this library's ABI.
+// `xmlutil` is `implementation`, not `api`: no xmlutil type appears in a public signature or as a
+// thrown type — the codec wraps XmlException in SerializationException — so a consumer's own
+// xmlutil version cannot break this library's ABI.
 //
-// The serialization plugin and the `commonTest` dependency below exist only for
-// CrossFormatRoundTripTest, which decodes the RFC's JSON example to compare the two codecs — nothing
-// in `commonMain` is `@Serializable`, so the plugin generates nothing for the production artifact.
-//
-// No `rfc9457.published`: docs/release-strategy.md holds the XML half back to 0.2.0.
+// The serialization plugin serves `commonTest` alone; nothing in `commonMain` is `@Serializable`.
+// This module is not published yet, hence no `rfc9457.published`.
 plugins {
     id("rfc9457.kmp-library")
     id("rfc9457.kmp-serialization")

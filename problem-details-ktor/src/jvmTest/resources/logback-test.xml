@@ -1,0 +1,5 @@
+<!-- Tests that assert on logging attach their own appender to a private, non-additive logger. Every
+     other exception this suite raises is deliberate, so its stack trace would be pure noise. -->
+<configuration>
+    <root level="OFF"/>
+</configuration>

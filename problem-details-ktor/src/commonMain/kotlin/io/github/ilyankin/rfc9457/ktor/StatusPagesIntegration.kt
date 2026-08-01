@@ -18,23 +18,18 @@ import kotlin.coroutines.cancellation.CancellationException
 public fun StatusPagesConfig.problemDetails(configure: ProblemDetailsCatalog.() -> Unit) {
     val catalog = ProblemDetailsCatalog().apply(configure)
 
-    // Registered *before* the catalog's own entries — order matters for exactly one class.
-    // `StatusPagesConfig.exceptions` is a map keyed by class, so two registrations of Throwable
-    // collide and the later one wins; registering this one first lets `map<Throwable>` replace it
-    // instead of being silently swallowed by it.
+    // `StatusPagesConfig.exceptions` is keyed by class, so two Throwable registrations collide and
+    // the later one wins. Registered first, before the catalog's, so `map<Throwable>` can replace it.
     exception<Throwable> { call, cause ->
-        // Cancellation means the client disconnected — answering it writes a document nobody reads
-        // and logs a stack trace per dropped connection. Rethrowing hands it back to the engine,
-        // which treats it as transport noise (`logFailure` sends CancellationException to `debug`).
-        // TimeoutCancellationException is the one cancellation that *is* a real status (504);
-        // `defaultExceptionStatusCode` tells the two apart — the same table `unmapped` trusts.
-        // A `map<Throwable>` entry replaces this handler wholesale, guard included.
+        // A plain cancellation is a client disconnect: answering it writes a document nobody reads.
+        // Rethrowing hands it back to the engine as transport noise. TimeoutCancellationException is
+        // the one cancellation that is a real status (504), and `defaultExceptionStatusCode` — the
+        // table `unmapped` also trusts — is what tells the two apart.
         if (cause is CancellationException && defaultExceptionStatusCode(cause) == null) throw cause
 
         val problem = catalog.unmapped(call, cause)
-        // Full cause logged server-side; only a terse document reaches the client (§5). Severity
-        // follows the status rather than a flat `error` — a 4xx is the client's fault, not the
-        // server's, mirroring how Ktor's own `logFailure` sends 4xx exceptions to `debug`.
+        // Full cause server-side, terse document to the client (§5). Severity follows the status: a
+        // 4xx is the client's fault, so it goes to `debug` rather than `error`.
         val message = "Unhandled exception; responding with a problem document"
         if ((problem.status ?: HttpStatusCode.InternalServerError.value) >= 500) {
             call.application.log.error(message, cause)

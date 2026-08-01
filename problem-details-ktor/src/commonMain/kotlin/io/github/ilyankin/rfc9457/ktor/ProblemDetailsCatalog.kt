@@ -1,10 +1,12 @@
 package io.github.ilyankin.rfc9457.ktor
 
 import io.github.ilyankin.rfc9457.Problem
+import io.github.ilyankin.rfc9457.ProblemException
 import io.github.ilyankin.rfc9457.ProblemType
 import io.github.ilyankin.rfc9457.problem
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.application.log
 import io.ktor.server.engine.defaultExceptionStatusCode
 import kotlin.reflect.KClass
 
@@ -24,16 +26,36 @@ public class ProblemDetailsCatalog internal constructor() {
     /**
      * The problem produced for an exception no mapping covers.
      *
-     * `about:blank` with no `detail` by default — RFC 9457 §5 warns that a problem document reaches
-     * the client, so it must not carry debugging information like a file path or SQL fragment.
-     *
-     * The *status* isn't a flat 500, though: this handler backs the catch-all `exception<Throwable>`
-     * registration, which would otherwise short-circuit `defaultExceptionStatusCode` and turn, say,
-     * a `NotFoundException` into a 500 just because this library was installed. Consulting that
-     * table first keeps Ktor's own answers intact.
+     * `about:blank` with no `detail`: a problem document reaches the client (§5), so it must not
+     * carry a file path or SQL fragment. The status comes from `defaultExceptionStatusCode` rather
+     * than a flat 500 — the catch-all this backs would otherwise turn Ktor's own `NotFoundException`
+     * into a 500 just because this library was installed.
      */
     internal var unmapped: (ApplicationCall, Throwable) -> Problem = { _, cause ->
         Problem.blank(defaultExceptionStatusCode(cause) ?: HttpStatusCode.InternalServerError)
+    }
+
+    init {
+        // A catalog entry rather than a registration in `problemDetails`: this key is unique, so a
+        // caller's own `map<ProblemException>` replaces it by ordinary map semantics, without the
+        // ordering the `Throwable` catch-all needs. Must sit below `exceptionMappings` — initializers
+        // run in source order, and an `init` above it would seed into an uninitialized map.
+        map<ProblemException> { call, cause ->
+            // `StatusPages` logs nothing it handles, and the engine's own error/debug split runs
+            // only when `StatusPages` rethrows, so an attached cause would otherwise vanish without
+            // a trace. Severity follows the status the response will carry. Nothing is logged when
+            // there is no cause: the document already describes the outcome completely.
+            cause.cause?.let { root ->
+                val status = cause.problem.status ?: HttpStatusCode.InternalServerError.value
+                val message = "Problem thrown with a cause; responding with its document"
+                if (status >= 500) {
+                    call.application.log.error(message, root)
+                } else {
+                    call.application.log.debug(message, root)
+                }
+            }
+            cause.problem
+        }
     }
 
     /**

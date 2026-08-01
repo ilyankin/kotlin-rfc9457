@@ -2,6 +2,7 @@ package io.github.ilyankin.rfc9457.samples
 
 import io.github.ilyankin.rfc9457.Problem
 import io.github.ilyankin.rfc9457.ProblemType
+import io.github.ilyankin.rfc9457.exception
 import io.github.ilyankin.rfc9457.extension
 import io.github.ilyankin.rfc9457.extensionsAs
 import io.github.ilyankin.rfc9457.problem
@@ -67,6 +68,20 @@ internal data class OutOfCredit(
     val balance: Int,
     val accounts: List<String>,
 )
+
+/** @see io.github.ilyankin.rfc9457.exception */
+internal fun throwProblemForOutOfCredit(): Nothing {
+    val outOfCredit =
+        object : ProblemType {
+            override val typeUri: String = "https://example.com/probs/out-of-credit"
+            override val title: String = "You do not have enough credit."
+            override val status: Int = 403
+        }
+
+    // Thrown from domain code: nothing on this path depends on a web framework. The Ktor
+    // integration answers it with this document, filling `instance` from the request path.
+    throw outOfCredit.exception(detail = "Your current balance is 30, but that costs 50.")
+}
 
 /** @see io.github.ilyankin.rfc9457.extensionsAs */
 internal fun readTypedExtensions(problem: Problem): OutOfCredit =

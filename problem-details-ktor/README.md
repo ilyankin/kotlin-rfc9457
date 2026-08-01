@@ -42,7 +42,7 @@ let the catalog answer.
 | [ProblemJsonConverter] | The converter behind it, if you need to register it yourself. |
 | [ProblemContentTypes] | `application/problem+json` and `application/problem+xml` as `ContentType`. |
 
-Three behaviours here are decisions rather than defaults, and each is pinned by a test:
+Four behaviours here are decisions rather than defaults, and each is pinned by a test:
 
 - A problem document is **always** labelled `application/problem+json`, even when it was matched
   under `application/json`. RFC 9457 §3 permits the override, and echoing back `application/json`
@@ -53,3 +53,7 @@ Three behaviours here are decisions rather than defaults, and each is pinned by 
 - The catch-all handler **rethrows `CancellationException`** unless the status map claims it. A
   cancellation means the client is gone; answering it writes a document to a dead socket and logs a
   stack trace per dropped connection. `TimeoutCancellationException` still becomes a 504.
+- A thrown `ProblemException` is answered with the document it carries, via an entry seeded into the
+  catalog — so `map<ProblemException>` replaces it like any other. Its `cause`, when present, is
+  logged server-side (`error` for a 5xx, `debug` otherwise) because `StatusPages` logs nothing it
+  handles and the cause would otherwise be dropped silently.

@@ -19,6 +19,29 @@ nested under an `extensions` key. The `extensions` map is how they are held in m
 member of the wire format. Several published implementations get this wrong, and a consumer reading
 `{"extensions": {...}}` is reading a non-conforming document.
 
+## Throwing a problem
+
+[io.github.ilyankin.rfc9457.ProblemException] carries a [io.github.ilyankin.rfc9457.Problem] and adds
+nothing to the wire format, so domain code can raise one without depending on a web framework:
+
+```kotlin
+throw OutOfCredit.exception(detail = "Your current balance is 30, but that costs 50.")
+```
+
+It *carries* a problem rather than *being* one. Making
+[io.github.ilyankin.rfc9457.Problem] an interface would allow the other shape, at the cost of the
+model's value semantics — `copy`, `equals`, destructuring — and of the single concrete type both
+codecs serialize; nothing here substitutes an exception where a document is expected, so that trade
+buys nothing. It is final for a separate reason: [io.github.ilyankin.rfc9457.ProblemType] already
+declares a problem type once, and a subclass would restate that type's URI, title and status beside
+it.
+
+Reach for it when the document is assembled at the throw site. To turn an *existing* exception type
+into a problem, map it in the `problem-details-ktor` catalog instead — that keeps the exception free
+of any dependency on this library.
+
+`problem-details-ktor` answers a thrown one with the document it carries.
+
 # Package io.github.ilyankin.rfc9457
 
 The problem-detail model, its builder, and the JSON codec.
@@ -30,6 +53,7 @@ The problem-detail model, its builder, and the JSON codec.
 | [ProblemValue] | The value of an extension member: primitive, null, array or object. |
 | [problem] | The builder. `problem { status = 404; title = "..." }`. |
 | [ProblemSerializer] | The flattening codec, already attached to [Problem]. |
+| [ProblemException] | A [Problem] that can be thrown. `throw someType.exception(detail = "…")`. |
 
 Reading extension values is deliberately offered twice: `problem.extensions["x"]?.string` throws on a
 wrong-typed member, `?.stringOrNull` returns `null` for it. RFC 9457 §3 requires *consumers* to

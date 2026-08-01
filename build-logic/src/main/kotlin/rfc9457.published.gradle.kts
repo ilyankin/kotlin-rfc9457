@@ -6,12 +6,9 @@ plugins {
     signing
 }
 
-// Maven Central rejects an artifact without a -javadoc.jar, and DGP v2 doesn't build one itself —
-// so this is that task. It carries Dokka's HTML output under the `javadoc` classifier, not Dokka's
-// Javadoc-format output: `org.jetbrains.dokka-javadoc` is still Alpha with no guarantee that Javadoc
-// HTML consumers can read it, while javadoc.io serves whatever this jar holds and HTML is guaranteed
-// to render. Replaces an earlier stub jar holding the README — valid by Central's rules, but it
-// would have made javadoc.io/doc/io.github.ilyankin/<artifact> resolve to an empty page.
+// Maven Central rejects an artifact without a -javadoc.jar and DGP v2 builds none itself. Carries
+// Dokka's HTML output rather than its Javadoc-format output, which is still Alpha; javadoc.io serves
+// whatever this jar holds.
 val dokkaHtml = tasks.named<DokkaGenerateTask>("dokkaGeneratePublicationHtml")
 
 val javadocJar =
@@ -21,10 +18,9 @@ val javadocJar =
         from(dokkaHtml.flatMap { it.outputDirectory })
     }
 
-// Captured here rather than read inside `withXml` below — that action runs at execution time, so
-// anything it closes over gets serialized into the configuration cache, and `project` can't be.
-// That failure only ever appeared on `publish*` tasks, so plain `build --configuration-cache` looked
-// green while publishing was broken.
+// Captured here, not read inside `withXml`: that action runs at execution time, so whatever it
+// closes over is serialized into the configuration cache, and `project` cannot be. The failure shows
+// only on `publish*` tasks, never on `build`.
 val artifactGroup = project.group.toString()
 val artifactVersion = project.version.toString()
 val jvmArtifactId = "${project.name}-jvm"
@@ -60,21 +56,18 @@ publishing {
             }
         }
 
-        // The root publication of a multiplatform project carries Kotlin metadata, not JVM classes — a consumer
-        // who writes the plain coordinates gets an empty jar and has to find the `-jvm` suffix the hard way.
-        // Rewritten the way kotlinx-serialization and kotlinx-coroutines do it: packaging `pom`
-        // plus a compile-scoped dependency on the `-jvm` artifact, so plain coordinates resolve
-        // transitively. Switching this later would break everyone who already wrote either form.
+        // A multiplatform root publication carries Kotlin metadata, not JVM classes, so plain
+        // coordinates would hand a consumer an empty jar. Rewritten to packaging `pom` plus a
+        // compile-scoped dependency on the `-jvm` artifact so they resolve transitively.
+        // Irreversible once published: changing it breaks everyone who wrote either form.
         if (name == "kotlinMultiplatform") {
             pom.withXml(RewriteRootPomToJvmRedirect(artifactGroup, jvmArtifactId, artifactVersion))
         }
     }
 }
 
-// Conditional so `publishToMavenLocal` still works without a key: supply it via Gradle properties
-// (`signingKey`/`signingPassword` in ~/.gradle/gradle.properties) or SIGNING_KEY/SIGNING_PASSWORD
-// env vars, which is what CI will use. Read through `providers` so the configuration cache tracks
-// them as inputs.
+// Conditional so `publishToMavenLocal` works without a key. Read through `providers` so the
+// configuration cache tracks them as inputs.
 val signingKey =
     providers
         .gradleProperty("signingKey")
@@ -90,9 +83,8 @@ if (signingKey.isPresent && signingPassword.isPresent) {
         sign(publishing.publications)
     }
 
-    // Both publications attach the same Javadoc jar, so their sign tasks write the same `.asc`
-    // path — without explicit ordering Gradle refuses the build outright. Invisible without a real
-    // key, so this would have surfaced on the first signed publication rather than any local test.
+    // Both publications attach the same Javadoc jar, so their sign tasks write the same `.asc` path
+    // and Gradle refuses the build without explicit ordering. Invisible until a real key is present.
     tasks.withType<AbstractPublishToMaven>().configureEach {
         dependsOn(tasks.withType<Sign>())
     }
