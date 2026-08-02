@@ -1,6 +1,6 @@
-// No `rfc9457.published`: like `problem-details-xml`, this module is not released yet.
 plugins {
     id("rfc9457.kmp-library")
+    id("rfc9457.published")
 }
 
 kotlin {

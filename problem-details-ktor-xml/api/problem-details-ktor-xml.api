@@ -1,0 +1,10 @@
+public final class io/github/ilyankin/rfc9457/ktor/xml/ProblemXmlConverter : io/ktor/serialization/ContentConverter {
+	public fun <init> ()V
+	public fun deserialize (Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Lio/ktor/utils/io/ByteReadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun serialize (Lio/ktor/http/ContentType;Ljava/nio/charset/Charset;Lio/ktor/util/reflect/TypeInfo;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/github/ilyankin/rfc9457/ktor/xml/ProblemXmlConverterKt {
+	public static final fun problemXml (Lio/ktor/server/plugins/contentnegotiation/ContentNegotiationConfig;)V
+}
+

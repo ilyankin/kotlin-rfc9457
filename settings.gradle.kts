@@ -53,5 +53,5 @@ include(
     "problem-details-core",
     "problem-details-xml",
     "problem-details-ktor",
-    // "problem-details-ktor-xml",
+    "problem-details-ktor-xml",
 )
