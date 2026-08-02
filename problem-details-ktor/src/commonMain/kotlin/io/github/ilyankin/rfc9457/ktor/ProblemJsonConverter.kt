@@ -22,8 +22,8 @@ import kotlinx.serialization.json.Json
  * `json()` converter produces the same bytes, since [Problem] carries `ProblemSerializer` as its
  * own serializer.
  *
- * [json] governs formatting only (indentation and the like); the document's shape comes from the
- * serializer attached to [Problem].
+ * @param json governs formatting only (indentation and the like); the document's shape comes from
+ * the serializer attached to [Problem].
  */
 public class ProblemJsonConverter(
     private val json: Json = Json,

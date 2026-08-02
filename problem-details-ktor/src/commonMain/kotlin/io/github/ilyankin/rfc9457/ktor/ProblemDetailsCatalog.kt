@@ -99,7 +99,12 @@ public class ProblemDetailsCatalog internal constructor() {
     }
 
     /**
-     * Replaces the fallback described on [unmapped].
+     * Replaces the problem produced for an exception no mapping covers.
+     *
+     * The default is `about:blank` with no `detail`, carrying the status
+     * `defaultExceptionStatusCode` derives from the exception rather than a flat 500 — a problem
+     * document reaches the client (§5), so it must not leak a file path or SQL fragment, and Ktor's
+     * own `NotFoundException` must not become a 500 just because this library is installed.
      *
      * The safe way to change catch-all behaviour: unlike `map<Throwable>` it only supplies the
      * document, so the surrounding handler still rethrows cancellation and still picks log severity
