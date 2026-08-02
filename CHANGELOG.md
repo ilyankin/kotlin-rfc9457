@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Added
+
+- Every JVM jar declares an `Automatic-Module-Name` in its manifest, so a JPMS consumer gets a stable
+  module name instead of one the runtime derives from the file name: `io.github.ilyankin.rfc9457`
+  for `problem-details-core`, `io.github.ilyankin.rfc9457.ktor` for `problem-details-ktor`. Each name
+  equals that module's root package, and from here on it is part of the API — changing one would
+  break every `requires` that names it.
+
 ## [0.1.0] — 2026-08-02
 
 First release. JSON only: `problem-details-core` and `problem-details-ktor`. The XML modules

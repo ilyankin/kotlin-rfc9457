@@ -13,6 +13,11 @@ kotlin {
     }
 }
 
+// This module's root package; see `problem-details-core` for why it is declared per module.
+tasks.named<Jar>("jvmJar") {
+    manifest { attributes("Automatic-Module-Name" to "io.github.ilyankin.rfc9457.ktor.xml") }
+}
+
 // Same reason as in `problem-details-ktor`: this module's KDoc names Ktor types.
 dokka {
     dokkaSourceSets.configureEach {

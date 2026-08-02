@@ -20,3 +20,8 @@ kotlin {
         implementation(libs.kotlinx.serialization.json)
     }
 }
+
+// This module's root package; see `problem-details-core` for why it is declared per module.
+tasks.named<Jar>("jvmJar") {
+    manifest { attributes("Automatic-Module-Name" to "io.github.ilyankin.rfc9457.xml") }
+}

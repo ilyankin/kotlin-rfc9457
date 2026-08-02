@@ -21,6 +21,11 @@ kotlin {
     }
 }
 
+// This module's root package; see `problem-details-core` for why it is declared per module.
+tasks.named<Jar>("jvmJar") {
+    manifest { attributes("Automatic-Module-Name" to "io.github.ilyankin.rfc9457.ktor") }
+}
+
 // Dokka knows stdlib and coroutines, not Ktor, so `[HttpStatusCode]` and friends rendered as plain
 // text — an unresolved link is a dead reference, not a build failure. Not in the convention plugin:
 // modules without a Ktor dependency would fetch this package list for nothing.
