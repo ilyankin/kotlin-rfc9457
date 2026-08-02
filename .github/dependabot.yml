@@ -1,0 +1,30 @@
+version: 2
+
+updates:
+  # Rewrites the SHA pins and their version comments, which nobody refreshes by hand.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+
+  # Reads `gradle/libs.versions.toml`. Not covered: the plugin versions written as literals in
+  # `settings.gradle.kts` — a settings `plugins { }` block runs before the catalog exists.
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      kotlin:
+        patterns:
+          - org.jetbrains.kotlin*
+          - org.jetbrains.kotlinx*
+      ktor:
+        patterns:
+          - io.ktor*
+      testing:
+        patterns:
+          - io.kotest*
+          - ch.qos.logback*
