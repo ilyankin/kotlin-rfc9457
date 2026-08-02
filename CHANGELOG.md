@@ -6,15 +6,32 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
-## [Unreleased]
+## [0.2.0] — 2026-08-02
+
+`problem-details-xml` and `problem-details-ktor-xml` publish for the first time, alongside
+`problem-details-core` and `problem-details-ktor`, all on the same version.
 
 ### Added
 
-- Every JVM jar declares an `Automatic-Module-Name` in its manifest, so a JPMS consumer gets a stable
-  module name instead of one the runtime derives from the file name: `io.github.ilyankin.rfc9457`
-  for `problem-details-core`, `io.github.ilyankin.rfc9457.ktor` for `problem-details-ktor`. Each name
-  equals that module's root package, and from here on it is part of the API — changing one would
-  break every `requires` that names it.
+- **`problem-details-xml`** — the RFC 9457 Appendix B `application/problem+xml` codec (`ProblemXml`),
+  byte-exact against the RFC's own example in both directions. The generic (non-JDK) xmlutil parser
+  is used explicitly, so external entities are never resolved. xmlutil is an `implementation`
+  dependency; no xmlutil type appears in this module's API, thrown types included.
+- **`problem-details-ktor-xml`** — `ProblemXmlConverter` and `problemXml()`, registering the codec
+  with Ktor's `ContentNegotiation`. `problem-details-ktor` still never depends on either XML module.
+  Register `problemXml()` after `problemJson()` — order decides which format an absent or wildcard
+  `Accept` resolves to.
+- Every JVM jar now declares an `Automatic-Module-Name` matching its root package.
+
+### Notes
+
+- The XML writer refuses what XML cannot express rather than writing it verbatim: an extension
+  member name that is not an XML `NCName`, or text carrying `U+0000` or an unpaired surrogate. A
+  `Problem` valid for JSON may therefore be refused here — see the module README. Every refusal
+  surfaces as `SerializationException`, never an xmlutil type.
+- A whitespace-only member (`detail = " "`) survives an XML round trip.
+- `application/problem+xml` requests and responses are always UTF-8, regardless of what charset was
+  negotiated — an XML document states its own encoding in-band.
 
 ## [0.1.0] — 2026-08-02
 
