@@ -72,3 +72,42 @@ jobs:
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+  # GitHub's own note generator reads merged pull requests, not `CHANGELOG.md`, so it produces
+  # dependency bumps where the changelog has prose. This copies the section across instead.
+  #
+  # A draft, not a release: the deployment above is only uploaded, and a human still presses Publish
+  # on the Portal. Publishing here on the tag alone would announce a version Central does not serve
+  # yet. Its own job so that `contents: write` stays away from the publishing credentials.
+  github-release:
+    name: Draft the GitHub release
+    needs: publish
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Create the draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          notes=$(awk -v heading="## [${version}]" '
+            index($0, heading) == 1 { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md)
+          if [ -z "$(printf '%s' "$notes" | tr -d '[:space:]')" ]; then
+            echo "No section for ${version} in CHANGELOG.md"
+            exit 1
+          fi
+          {
+            printf '%s\n\n---\n\n' "$notes"
+            printf '[API reference](https://ilyankin.github.io/kotlin-rfc9457/)'
+            printf ' · [Maven Central](https://central.sonatype.com/namespace/io.github.ilyankin)\n'
+          } > notes.md
+          gh release create "$GITHUB_REF_NAME" --draft --verify-tag \
+            --title "$GITHUB_REF_NAME" --notes-file notes.md
