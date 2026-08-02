@@ -1,0 +1,66 @@
+name: Bug report
+description: Something in the library behaves incorrectly
+labels: ['bug']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file this.
+
+        Two things that usually get a faster answer elsewhere:
+
+        - **"How do I …?"** — ask in
+          [Discussions](https://github.com/ilyankin/kotlin-rfc9457/discussions) instead.
+        - **"Is this a bug or does the spec say so?"** — file it here anyway, but link the section
+          of [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) you are reading it against. That is
+          usually the whole discussion.
+
+  - type: input
+    id: version
+    attributes:
+      label: Library version
+      placeholder: '0.1.0'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: artifact
+    attributes:
+      label: Which artifact
+      options:
+        - problem-details-core
+        - problem-details-ktor
+        - Both, or not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happens, and what should have happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Reproducer
+      description: |
+        Any form is welcome — a snippet, a failing test, a small project. If the wire document is
+        the problem, the JSON you got next to the JSON you expected is enough on its own.
+      render: kotlin
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Only if you think it matters.
+      value: |
+        - Kotlin:
+        - Ktor:
+        - JDK:
+    validations:
+      required: false

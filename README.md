@@ -207,6 +207,12 @@ JSON:
 and the shape of `ProblemType` are the named candidates — once someone outside this repo has actually
 used the library.
 
+## Contributing
+
+Bug reports, proposals and questions are all welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for
+where each of them goes and what the build checks before a pull request can land. The roadmap above
+is ordered by demand, so saying you need something counts as a contribution.
+
 ## License
 
 Apache License 2.0 — see [`LICENSE`](LICENSE).

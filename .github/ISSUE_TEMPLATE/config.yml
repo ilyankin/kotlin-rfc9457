@@ -1,0 +1,16 @@
+# Blank issues stay enabled deliberately. The two forms cover the cases that benefit from structure,
+# and at this stage a report that fits neither is worth more than the structure lost by letting it
+# through. Worth flipping to `false` once unusable issues, rather than the absence of issues, is the
+# problem.
+blank_issues_enabled: true
+
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/ilyankin/kotlin-rfc9457/discussions
+    about: How do I …? Anything that is not a defect or a concrete proposal.
+  - name: API reference
+    url: https://ilyankin.github.io/kotlin-rfc9457/
+    about: KDoc for every published module, regenerated from main on each push.
+  - name: RFC 9457
+    url: https://www.rfc-editor.org/rfc/rfc9457
+    about: The specification this library implements, when the question is what the spec requires.

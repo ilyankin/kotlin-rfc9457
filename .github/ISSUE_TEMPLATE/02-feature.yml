@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest something the library should do
+labels: ['enhancement']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The [Roadmap](https://github.com/ilyankin/kotlin-rfc9457#roadmap) already lists the XML
+        modules, a Ktor Client integration, and validation / OpenAPI / i18n / hooks modules. If your
+        idea is one of those, saying you need it on the existing entry is worth more than a new
+        issue — demand is how the order gets decided.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: What are you trying to do that the library makes hard or impossible today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would it look like?
+      description: A sketch of the API you have in mind. Rough is fine, and being wrong is fine.
+      render: kotlin
+    validations:
+      required: false
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Would you want to implement it?
+      options:
+        - 'No, just suggesting'
+        - 'Maybe, with some guidance'
+        - 'Yes'
+    validations:
+      required: false
