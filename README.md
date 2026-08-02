@@ -1,5 +1,6 @@
 # kotlin-rfc9457
 
+[![CI](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.10-7F52FF.svg?logo=kotlin)](https://kotlinlang.org)
 ![Status](https://img.shields.io/badge/status-0.x%20pre--release-orange.svg)
@@ -45,6 +46,10 @@ adding a target is a line in `kotlin { }` rather than a redesign.
 | [`problem-details-ktor`](problem-details-ktor/README.md) | `respondProblem`, `ProblemDetailsCatalog`, `problemDetails { }`, `problemJson()` |
 | [`problem-details-xml`](problem-details-xml/README.md) | The RFC Appendix B XML codec. **Not published yet** — see [Roadmap](#roadmap) |
 | [`problem-details-ktor-xml`](problem-details-ktor-xml/README.md) | Registers the XML codec with Ktor's `ContentNegotiation`. Same publish status as `problem-details-xml` |
+
+API reference for all four modules: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
+`main` on every push. Per-artifact documentation is also served by javadoc.io once a version is
+published.
 
 `problem-details-ktor` never depends on the XML modules. That is the point of the split: an
 application that only ever emits JSON does not resolve an XML parser, and optionality is expressed by
