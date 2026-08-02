@@ -1,0 +1,74 @@
+name: Release
+
+# A `v*` tag uploads a release deployment to the Central Portal; a manual run uploads the current
+# `-SNAPSHOT` to Central Snapshots, the rehearsal docs/release-strategy.md requires.
+#
+# Publishing stays USER_MANAGED (settings.gradle.kts): this uploads and validates, a human presses
+# Publish. A release to Central cannot be undone.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to Central Portal
+    runs-on: ubuntu-latest
+    # Holds the secrets below; add required reviewers so a tag alone cannot reach them.
+    environment: maven-central
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+        with:
+          cache-read-only: true
+
+      # `gradle.properties` holds the one version all four modules share; a tag that disagrees would
+      # publish coordinates nobody can trace back to this commit.
+      - name: Check the tag against the project version
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^version=//p' gradle.properties)
+          tag="${GITHUB_REF_NAME#v}"
+          if [ "$tag" != "$version" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match version ${version} in gradle.properties"
+            exit 1
+          fi
+          case "$version" in
+            *-SNAPSHOT) echo "Refusing to release a snapshot version: ${version}"; exit 1 ;;
+          esac
+
+      - name: Check the version is a snapshot
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^version=//p' gradle.properties)
+          case "$version" in
+            *-SNAPSHOT) ;;
+            *) echo "Manual runs publish snapshots only; version is ${version}"; exit 1 ;;
+          esac
+
+      - name: Build
+        run: ./gradlew build
+
+      # The aggregation carries whichever modules apply `rfc9457.published` — core and ktor today.
+      - name: Publish
+        run: ./gradlew ${{ github.event_name == 'workflow_dispatch' && 'publishAggregationToCentralPortalSnapshots' || 'publishAggregationToCentralPortal' }}
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}

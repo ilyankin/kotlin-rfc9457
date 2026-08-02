@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build, test, ABI, docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # 21 is the daemon JVM (`gradle/gradle-daemon-jvm.properties`); the 17 toolchain the code
+      # compiles against is provisioned by the foojay resolver and cached as `jdks` below.
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+        with:
+          # Configuration-cache entries are not cached without it. Absent on forked PRs; caching is
+          # then skipped, the build still passes.
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          gradle-home-cache-includes: |
+            caches
+            notifications
+            jdks
+
+      # Compiles, runs the Kotest suites and checks `api/*.api`.
+      - name: Build
+        run: ./gradlew build
+
+      # Dokka is deliberately off `check` — it needs network access and the local build must work
+      # offline. CI is the only place `reportUndocumented` + `failOnWarning` can gate a PR.
+      - name: Generate documentation
+        run: ./gradlew dokkaGenerate
+
+      # `failOnWarning` proves KDoc exists, not that its links resolve: Dokka renders an unresolved
+      # `[Link]` as plain text and stays green. Checked on the aggregate, which is where
+      # cross-module links are supposed to resolve.
+      - name: Check for unresolved KDoc links
+        run: |
+          set -euo pipefail
+          unresolved=$(grep -rho 'data-unresolved-link="[^"]*"' build/dokka/html | sort -u || true)
+          if [ -n "$unresolved" ]; then
+            echo "Unresolved KDoc links in the aggregated documentation:"
+            echo "$unresolved"
+            exit 1
+          fi
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: test-reports
+          path: '**/build/reports/tests/'
+          retention-days: 7
+
+  isolated-projects:
+    # Isolated Projects compatibility is a property this build is built around; only CI catches the
+    # regression that breaks it. See docs/gradle-build-structure.md.
+    name: Isolated Projects
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+        with:
+          # Only the `build` job writes the shared cache entry.
+          cache-read-only: true
+
+      - name: Build with Isolated Projects
+        run: ./gradlew build -Dorg.gradle.isolated-projects=true
+
+  dependency-graph:
+    # Submits the resolved graph so Dependabot alerts cover transitive dependencies, not just what
+    # `libs.versions.toml` declares.
+    name: Dependency graph
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/dependency-submission@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0

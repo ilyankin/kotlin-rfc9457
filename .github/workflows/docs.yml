@@ -1,0 +1,62 @@
+name: Documentation
+
+# Deploys the aggregated Dokka site. Pull requests already generate it in `ci.yml`, so this
+# workflow only publishes. Requires Settings → Pages → Source: GitHub Actions.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One Pages deployment per repository: queue rather than cancel, so the site is never half-updated.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy to Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+        with:
+          cache-read-only: true
+
+      # The root project aggregates all four modules into build/dokka/html; the per-module
+      # publications are built for their package lists, see the next step.
+      - name: Generate documentation
+        run: ./gradlew dokkaGenerate
+
+      # Dokka leaves per-module package lists out of the aggregate, and those are what the modules'
+      # cross-module externalDocumentationLinks resolve against. Copying them in is what makes
+      # `[Problem]` a working link in the published -javadoc.jar of the dependent modules.
+      - name: Add per-module package lists to the site
+        run: |
+          set -euo pipefail
+          for module in problem-details-core problem-details-ktor problem-details-xml problem-details-ktor-xml; do
+            cp "$module/build/dokka/html/$module/package-list" "build/dokka/html/$module/package-list"
+          done
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      # Served as-is, no Jekyll pass, so no `.nojekyll` needed.
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: build/dokka/html
+
+      - id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
