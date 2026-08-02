@@ -20,3 +20,15 @@ kotlin {
         implementation(libs.logback.classic)
     }
 }
+
+// Dokka knows stdlib and coroutines, not Ktor, so `[HttpStatusCode]` and friends rendered as plain
+// text — an unresolved link is a dead reference, not a build failure. Not in the convention plugin:
+// modules without a Ktor dependency would fetch this package list for nothing.
+dokka {
+    dokkaSourceSets.configureEach {
+        externalDocumentationLinks.register("ktor") {
+            url("https://api.ktor.io/")
+            packageListUrl("https://api.ktor.io/package-list")
+        }
+    }
+}

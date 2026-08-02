@@ -12,3 +12,13 @@ kotlin {
         implementation(libs.ktor.server.test.host)
     }
 }
+
+// Same reason as in `problem-details-ktor`: this module's KDoc names Ktor types.
+dokka {
+    dokkaSourceSets.configureEach {
+        externalDocumentationLinks.register("ktor") {
+            url("https://api.ktor.io/")
+            packageListUrl("https://api.ktor.io/package-list")
+        }
+    }
+}

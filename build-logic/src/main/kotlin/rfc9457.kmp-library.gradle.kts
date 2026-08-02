@@ -61,6 +61,18 @@ dokka {
             url("https://kotlinlang.org/api/kotlinx.serialization/")
             packageListUrl("https://kotlinlang.org/api/kotlinx.serialization/package-list")
         }
+
+        // A standalone publication has nothing to resolve `[Problem]` against, so KDoc in the three
+        // dependent modules pointed nowhere — visible on javadoc.io, not on the aggregated site.
+        // The package list carries locations relative to the site root, so links land on the
+        // published aggregate. An unreachable list is not an error: links stay plain text, as they
+        // already were. Core is skipped — its own types are local.
+        if (project.name != "problem-details-core") {
+            externalDocumentationLinks.register("problem-details-core") {
+                url("https://ilyankin.github.io/kotlin-rfc9457/")
+                packageListUrl("https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/package-list")
+            }
+        }
     }
 
     // `@sample` bodies live in `commonTest`, so a renamed API breaks the build instead of rotting an
