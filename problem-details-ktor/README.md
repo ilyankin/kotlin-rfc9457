@@ -4,9 +4,9 @@ Ktor server integration: respond with a problem document, and turn thrown except
 documents through `StatusPages`.
 
 **This module never depends on `problem-details-xml`.** That edge is the reason the library is split
-at all — an application that only emits JSON does not resolve an XML parser. XML support is a
-separate artifact declaring its own registration function, so a missing dependency is a compile error
-at the call site rather than a `NoClassDefFoundError` at runtime.
+at all — an application that only emits JSON does not resolve an XML parser. XML support (not
+published yet) is a separate artifact declaring its own registration function, so a missing
+dependency is a compile error at the call site rather than a `NoClassDefFoundError` at runtime.
 
 ## What it does not do
 

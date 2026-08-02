@@ -26,10 +26,8 @@ adding a target is a line in `kotlin { }` rather than a redesign.
 - **Content-negotiation-safe.** A problem document always claims `application/problem+json` on the
   wire, even when it matched under `application/json`, so the media type itself still says "this is a
   problem".
-- **Bounded, guarded codecs.** JSON and XML share one recursion limit
-  (`Problem.MAX_NESTING_DEPTH`) and fail with `SerializationException`, not a `StackOverflowError`.
-- **RFC Appendix B XML codec**, byte-exact against the RFC's own example in both directions — see
-  [Roadmap](#roadmap) for its publish status.
+- **Bounded, guarded codec.** Extension nesting is capped at `Problem.MAX_NESTING_DEPTH` and fails
+  with `SerializationException`, not a `StackOverflowError`.
 - **Multiplatform-ready today.** Every module is `kotlin("multiplatform")` with all code in
   `commonMain`; a `jvm()` target is declared for v1, and adding another target is a one-line change.
 - **Throw a problem from domain code.** `throw OutOfCredit.exception(detail = "…")`. The throwable
@@ -44,17 +42,9 @@ adding a target is a line in `kotlin { }` rather than a redesign.
 |---|---|
 | [`problem-details-core`](problem-details-core/README.md) | `Problem`, `ProblemType`, `ProblemValue`, the `problem { }` builder, typed extension reading, and the flattening JSON codec |
 | [`problem-details-ktor`](problem-details-ktor/README.md) | `respondProblem`, `ProblemDetailsCatalog`, `problemDetails { }`, `problemJson()` |
-| [`problem-details-xml`](problem-details-xml/README.md) | The RFC Appendix B XML codec. **Not published yet** — see [Roadmap](#roadmap) |
-| [`problem-details-ktor-xml`](problem-details-ktor-xml/README.md) | Registers the XML codec with Ktor's `ContentNegotiation`. Same publish status as `problem-details-xml` |
 
-API reference for all four modules: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
-`main` on every push. Per-artifact documentation is also served by javadoc.io once a version is
-published.
-
-`problem-details-ktor` never depends on the XML modules. That is the point of the split: an
-application that only ever emits JSON does not resolve an XML parser, and optionality is expressed by
-*which artifact declares the registration function* — so a missing dependency is a compile error at
-the call site, not a runtime `NoClassDefFoundError`.
+API reference: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from `main` on every
+push. Per-artifact documentation is also served by javadoc.io once a version is published.
 
 ## Requirements
 
@@ -191,9 +181,11 @@ islands out of a *stable* release, and at 0.x everything is unstable by declarat
 ## Roadmap
 
 **XML.** `problem-details-xml` and `problem-details-ktor-xml` cover the RFC Appendix B XML
-representation. They are not published yet — less public surface to commit to before anyone has said
-they need XML at all — and they stay separate artifacts, so an application that emits only JSON never
-resolves an XML parser.
+representation, byte-exact against the RFC's own example in both directions. They are not part of
+this release — less public surface to commit to before anyone has said they need XML at all — and
+they will ship as separate artifacts, so an application that emits only JSON never resolves an XML
+parser. Optionality is expressed by *which artifact declares the registration function*, so a missing
+dependency is a compile error at the call site, not a runtime `NoClassDefFoundError`.
 
 **Planned, next phase** — independent optional modules, the same way the XML half is independent of
 JSON:
