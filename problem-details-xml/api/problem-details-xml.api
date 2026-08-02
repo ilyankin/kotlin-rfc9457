@@ -1,0 +1,10 @@
+public final class io/github/ilyankin/rfc9457/xml/ProblemXml {
+	public static final field ARRAY_ITEM_ELEMENT Ljava/lang/String;
+	public static final field INSTANCE Lio/github/ilyankin/rfc9457/xml/ProblemXml;
+	public static final field MEDIA_TYPE Ljava/lang/String;
+	public static final field NAMESPACE Ljava/lang/String;
+	public static final field ROOT_ELEMENT Ljava/lang/String;
+	public final fun decodeFromString (Ljava/lang/String;)Lio/github/ilyankin/rfc9457/Problem;
+	public final fun encodeToString (Lio/github/ilyankin/rfc9457/Problem;)Ljava/lang/String;
+}
+

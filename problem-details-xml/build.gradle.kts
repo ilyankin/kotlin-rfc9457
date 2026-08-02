@@ -3,10 +3,10 @@
 // xmlutil version cannot break this library's ABI.
 //
 // The serialization plugin serves `commonTest` alone; nothing in `commonMain` is `@Serializable`.
-// This module is not published yet, hence no `rfc9457.published`.
 plugins {
     id("rfc9457.kmp-library")
     id("rfc9457.kmp-serialization")
+    id("rfc9457.published")
 }
 
 kotlin {

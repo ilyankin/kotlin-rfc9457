@@ -7,6 +7,6 @@ plugins {
 dependencies {
     dokka(project(":problem-details-core"))
     dokka(project(":problem-details-ktor"))
-    // dokka(project(":problem-details-xml"))
+    dokka(project(":problem-details-xml"))
     // dokka(project(":problem-details-ktor-xml"))
 }
