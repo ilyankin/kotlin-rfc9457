@@ -3,7 +3,9 @@
 [![CI](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.10-7F52FF.svg?logo=kotlin)](https://kotlinlang.org)
-![Status](https://img.shields.io/badge/status-0.x%20pre--release-orange.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ilyankin/problem-details-core)](https://central.sonatype.com/artifact/io.github.ilyankin/problem-details-core)
+[![GitHub Release](https://img.shields.io/github/v/release/ilyankin/kotlin-rfc9457)](https://github.com/ilyankin/kotlin-rfc9457/releases)
+[![javadoc](https://javadoc.io/badge2/io.github.ilyankin/problem-details-core/javadoc.svg)](https://javadoc.io/doc/io.github.ilyankin/problem-details-core)
 
 [RFC 9457 Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457) for Kotlin, with a
 Ktor integration that generates the wiring you would otherwise hand-write into `StatusPages` and
