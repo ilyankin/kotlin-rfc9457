@@ -1,4 +1,4 @@
-// No `rfc9457.published`: like `problem-details-xml`, this module ships at 0.2.0 rather than 0.1.0.
+// No `rfc9457.published`: like `problem-details-xml`, this module is not released yet.
 plugins {
     id("rfc9457.kmp-library")
 }
