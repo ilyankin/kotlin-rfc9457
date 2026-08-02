@@ -36,7 +36,7 @@ jobs:
         with:
           cache-read-only: true
 
-      # The root project aggregates all four modules into build/dokka/html; the per-module
+      # The root project aggregates the modules into build/dokka/html; the per-module
       # publications are built for their package lists, see the next step.
       - name: Generate documentation
         run: ./gradlew dokkaGenerate
@@ -47,7 +47,7 @@ jobs:
       - name: Add per-module package lists to the site
         run: |
           set -euo pipefail
-          for module in problem-details-core problem-details-ktor problem-details-xml problem-details-ktor-xml; do
+          for module in problem-details-core problem-details-ktor; do
             cp "$module/build/dokka/html/$module/package-list" "build/dokka/html/$module/package-list"
           done
 
