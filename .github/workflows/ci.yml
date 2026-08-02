@@ -40,6 +40,18 @@ jobs:
       - name: Build
         run: ./gradlew build
 
+      # Kover instruments each module's tests (`rfc9457.kmp-library`); the root is the merging
+      # module (`kover(project(...))` in the root build file) that combines all four into one
+      # report. Not part of `build`/`check`, so it needs its own invocation.
+      - name: Generate coverage report
+        run: ./gradlew :koverXmlReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/reports/kover/report.xml
+
       # Dokka is deliberately off `check` — it needs network access and the local build must work
       # offline. CI is the only place `reportUndocumented` + `failOnWarning` can gate a PR.
       - name: Generate documentation

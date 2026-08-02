@@ -6,6 +6,7 @@ dependencies {
     implementation(pluginMarker(libs.plugins.kotlin.multiplatform))
     implementation(pluginMarker(libs.plugins.kotlin.serialization))
     implementation(pluginMarker(libs.plugins.dokka))
+    implementation(pluginMarker(libs.plugins.kover))
 
     // Precompiled script plugins get no generated `libs` accessor (gradle/gradle#15383); this puts
     // the accessor classes on the classpath so they can be reached via `the<LibrariesForLibs>()`.

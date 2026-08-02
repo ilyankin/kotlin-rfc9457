@@ -1,6 +1,7 @@
 # kotlin-rfc9457
 
 [![CI](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/github/ilyankin/kotlin-rfc9457/graph/badge.svg?token=8F1IBCDE94)](https://codecov.io/github/ilyankin/kotlin-rfc9457)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.10-7F52FF.svg?logo=kotlin)](https://kotlinlang.org)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ilyankin/problem-details-core)](https://central.sonatype.com/artifact/io.github.ilyankin/problem-details-core)
