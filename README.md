@@ -66,7 +66,7 @@ the call site, not a runtime `NoClassDefFoundError`.
 
 - JDK 17+
 - Kotlin 2.4+ (built with 2.4.10)
-- Ktor 3.5+ for `problem-details-ktor`
+- Ktor 3.5+ for the Ktor modules
 
 ## Installation
 
@@ -94,7 +94,9 @@ The plain coordinates work from Maven as well as Gradle: the root POM is publish
 and kotlinx-coroutines do it. You do **not** need to write `-jvm` yourself.
 
 Add `problem-details-xml` and `problem-details-ktor-xml` — first published in **0.2.0** — only if a
-client of yours asks for `application/problem+xml`. All modules always share one version.
+client of yours asks for `application/problem+xml`. Add `problem-details-ktor-client` — first
+published in **0.3.0** — if your own code calls an API that answers with problem documents. All
+modules always share one version.
 
 ## Quick start
 
