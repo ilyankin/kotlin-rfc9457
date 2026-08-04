@@ -1,0 +1,5 @@
+public final class io/github/ilyankin/rfc9457/ktor/client/ProblemJsonKt {
+	public static final fun problemJson (Lio/ktor/client/plugins/HttpCallValidatorConfig;ZLkotlinx/serialization/json/Json;)V
+	public static synthetic fun problemJson$default (Lio/ktor/client/plugins/HttpCallValidatorConfig;ZLkotlinx/serialization/json/Json;ILjava/lang/Object;)V
+}
+

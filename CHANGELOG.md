@@ -8,6 +8,15 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
 
 ## [Unreleased]
 
+### Added
+
+- **`problem-details-ktor-client`** — `problemJson()` registers a Ktor `HttpResponseValidator` hook
+  that turns a recognized `application/problem+json` error response into `problem-details-core`'s
+  existing `ProblemException`, the same type application code throws on the server side and
+  `problem-details-ktor` answers. JSON only, by artifact rather than by flag, so a client that never
+  speaks XML never resolves an XML parser; the `application/problem+xml` half is planned as its own
+  module. Requires `expectSuccess = true` on the client — Ktor's own default is `false`.
+
 ### Fixed
 
 - **`problem-details-xml`** — a body that is not markup at all (plain text, or a lone `<`) escaped

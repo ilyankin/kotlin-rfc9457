@@ -63,7 +63,7 @@ dokka {
             packageListUrl("https://kotlinlang.org/api/kotlinx.serialization/package-list")
         }
 
-        // A standalone publication has nothing to resolve `[Problem]` against, so KDoc in the three
+        // A standalone publication has nothing to resolve `[Problem]` against, so KDoc in the
         // dependent modules pointed nowhere — visible on javadoc.io, not on the aggregated site.
         // The package list carries locations relative to the site root, so links land on the
         // published aggregate. An unreachable list is not an error: links stay plain text, as they

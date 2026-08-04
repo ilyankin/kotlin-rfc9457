@@ -54,4 +54,5 @@ include(
     "problem-details-xml",
     "problem-details-ktor",
     "problem-details-ktor-xml",
+    "problem-details-ktor-client",
 )

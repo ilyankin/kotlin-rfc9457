@@ -33,6 +33,8 @@ adding a target is a line in `kotlin { }` rather than a redesign.
   (`Problem.MAX_NESTING_DEPTH`) and fail with `SerializationException`, not a `StackOverflowError`.
 - **RFC Appendix B XML codec**, byte-exact against the RFC's own example in both directions, in a
   separate artifact so a JSON-only application never resolves an XML parser.
+- **Client-side decoding, too.** `problemJson()` on Ktor Client turns a recognized problem response
+  back into the same `ProblemException` the server throws — no separate exception type to learn.
 - **Multiplatform-ready today.** Every module is `kotlin("multiplatform")` with all code in
   `commonMain`; a `jvm()` target is declared for v1, and adding another target is a one-line change.
 - **Throw a problem from domain code.** `throw OutOfCredit.exception(detail = "…")`. The throwable
@@ -49,8 +51,9 @@ adding a target is a line in `kotlin { }` rather than a redesign.
 | [`problem-details-ktor`](problem-details-ktor/README.md) | `respondProblem`, `ProblemDetailsCatalog`, `problemDetails { }`, `problemJson()` |
 | [`problem-details-xml`](problem-details-xml/README.md) | The RFC Appendix B XML codec (`ProblemXml`) |
 | [`problem-details-ktor-xml`](problem-details-ktor-xml/README.md) | Registers the XML codec with Ktor's `ContentNegotiation` (`problemXml()`) |
+| [`problem-details-ktor-client`](problem-details-ktor-client/README.md) | `problemJson()` — decode a recognized problem response into the same `ProblemException` the server throws |
 
-API reference for all four modules: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
+API reference for all five modules: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
 `main` on every push. Per-artifact documentation is also served by javadoc.io once a version is
 published.
 
@@ -196,12 +199,12 @@ islands out of a *stable* release, and at 0.x everything is unstable by declarat
 
 ## Roadmap
 
-**Planned, next phase** — independent optional modules, the same way the XML half is independent of
-JSON:
+**Planned, next phase** — the client half of the XML support, kept in its own artifact the same way
+the server half is:
 
 | Module | Would add |
 |---|---|
-| `problem-details-ktor-client` | Ktor Client support: parse an `application/problem+json`/`+xml` response body into a typed exception — the same `ProblemException` the server side throws. |
+| `problem-details-ktor-client-xml` | `problemXml()` on Ktor Client: decode an `application/problem+xml` response into the same `ProblemException`, so a JSON-only client never resolves an XML parser. |
 
 **Backlog** — scoped, timing intentionally undecided:
 
