@@ -6,6 +6,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Fixed
+
+- **`problem-details-xml`** — a body that is not markup at all (plain text, or a lone `<`) escaped
+  `ProblemXml.decodeFromString`'s wrapper as `IllegalStateException` instead of the documented
+  `SerializationException`. xmlutil reports that one case as a bare `IllegalStateException` rather
+  than an `XmlException`, which the wrapper did not expect.
+
 ## [0.2.0] — 2026-08-02
 
 `problem-details-xml` and `problem-details-ktor-xml` publish for the first time, alongside

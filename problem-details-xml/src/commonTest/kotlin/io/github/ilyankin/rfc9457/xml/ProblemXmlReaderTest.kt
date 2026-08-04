@@ -196,6 +196,13 @@ class ProblemXmlReaderTest :
             shouldThrow<SerializationException> { ProblemXml.decodeFromString("") }
         }
 
+        "a document that is not markup at all fails the same way" {
+            // Regression guard: xmlutil reports this one as a bare IllegalStateException rather than
+            // an XmlException, so it used to escape the wrapper and reach callers untranslated.
+            shouldThrow<SerializationException> { ProblemXml.decodeFromString("not xml at all") }
+            shouldThrow<SerializationException> { ProblemXml.decodeFromString("<") }
+        }
+
         "a root element that is not <problem> is rejected" {
             // RFC §3's leniency covers members, not the identity of the document. Accepting this
             // used to yield a valid-looking empty `about:blank` Problem — silent data loss.

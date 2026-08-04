@@ -76,6 +76,13 @@ internal fun readProblem(document: String): Problem {
         // Wrapped for the reason writeProblem wraps its own: xmlutil is an `implementation`
         // dependency, so none of its types may reach a caller. Chained, so nothing is lost.
         throw SerializationException("Malformed problem document: ${cause.message}", cause)
+    } catch (cause: IllegalStateException) {
+        // Text before the root element, or a lone `<`, leaves KtXmlReader.next as a bare
+        // IllegalStateException instead of an XmlException, so the clause above never sees it.
+        // Enumerated rather than caught broadly, as on the write path, and safe to catch here
+        // because nothing in this module raises one of its own — the root refusal above is a
+        // SerializationException, which is an IllegalArgumentException.
+        throw SerializationException("Malformed problem document: ${cause.message}", cause)
     } finally {
         reader.close()
     }
