@@ -8,9 +8,10 @@ Ktor Client integration: turn a recognized `application/problem+json` error resp
 how the other side of the connection is built — the same reasoning that keeps `problem-details-ktor`
 itself independent of either XML module.
 
-JSON only, likewise by artifact: decoding the Appendix B XML form is planned as its own module,
-exactly as `problemXml()` is on the server, so a client that never speaks XML never resolves an XML
-parser.
+JSON only, likewise by artifact: the Appendix B XML form is decoded by `problemXml()` in
+`problem-details-ktor-client-xml`, so a client that never speaks XML never resolves an XML parser.
+Registering both is order-independent — each gates on a `Content-Type` the other never matches —
+unlike the server's `ContentNegotiation` pair, where order decides an absent or wildcard `Accept`.
 
 ## `expectSuccess` must be `true`
 

@@ -41,7 +41,7 @@ jobs:
         run: ./gradlew build
 
       # Kover instruments each module's tests (`rfc9457.kmp-library`); the root is the merging
-      # module (`kover(project(...))` in the root build file) that combines all five into one
+      # module (`kover(project(...))` in the root build file) that combines all six into one
       # report. Not part of `build`/`check`, so it needs its own invocation.
       - name: Generate coverage report
         run: ./gradlew :koverXmlReport

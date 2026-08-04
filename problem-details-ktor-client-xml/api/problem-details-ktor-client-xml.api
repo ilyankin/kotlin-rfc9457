@@ -1,0 +1,4 @@
+public final class io/github/ilyankin/rfc9457/ktor/client/xml/ProblemXmlKt {
+	public static final fun problemXml (Lio/ktor/client/plugins/HttpCallValidatorConfig;)V
+}
+

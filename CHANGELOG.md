@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Added
+
+- **`problem-details-ktor-client-xml`** — `problemXml()` registers the same kind of
+  `HttpResponseValidator` hook as `problem-details-ktor-client`'s `problemJson()`, for responses
+  labeled `application/problem+xml`. Its own artifact, so a client that only decodes JSON never
+  resolves an XML parser. Registration order does not matter, unlike the server's
+  `ContentNegotiation` pair: each hook gates on a `Content-Type` the other never matches, so neither
+  can shadow the other. There is no lenient mode — plain `application/xml` never matches — and a body
+  labeled `application/problem+xml` that fails to decode propagates as `SerializationException`
+  rather than falling back to Ktor's own exception.
+
 ## [0.3.0] — 2026-08-04
 
 ### Added

@@ -14,8 +14,10 @@ import kotlinx.serialization.json.Json
  * Turns a recognized `application/problem+json` response into the same [ProblemException] that
  * application code throws on the server side and `problem-details-ktor` answers.
  *
- * JSON only, by artifact: decoding the Appendix B XML form is planned as its own module, exactly as
- * `problemXml()` is on the server, so a client that never speaks XML never resolves an XML parser.
+ * The XML half of RFC 9457 is a separate registration in a separate artifact,
+ * `problem-details-ktor-client-xml`, exactly as `problemXml()` is on the server. Registering both is
+ * order-independent here — each gates on a `Content-Type` the other never matches — unlike the
+ * server's `ContentNegotiation` pair, where order decides an absent or wildcard `Accept`.
  *
  * Ktor's own default response validation always runs first and throws `ClientRequestException`/
  * `ServerResponseException` for a non-2xx status before this handler gets a chance to run — so this

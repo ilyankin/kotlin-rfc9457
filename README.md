@@ -52,8 +52,9 @@ adding a target is a line in `kotlin { }` rather than a redesign.
 | [`problem-details-xml`](problem-details-xml/README.md) | The RFC Appendix B XML codec (`ProblemXml`) |
 | [`problem-details-ktor-xml`](problem-details-ktor-xml/README.md) | Registers the XML codec with Ktor's `ContentNegotiation` (`problemXml()`) |
 | [`problem-details-ktor-client`](problem-details-ktor-client/README.md) | `problemJson()` — decode a recognized problem response into the same `ProblemException` the server throws |
+| [`problem-details-ktor-client-xml`](problem-details-ktor-client-xml/README.md) | `problemXml()` — the same for `application/problem+xml` |
 
-API reference for all five modules: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
+API reference for all six modules: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
 `main` on every push. Per-artifact documentation is also served by javadoc.io once a version is
 published.
 
@@ -95,8 +96,9 @@ and kotlinx-coroutines do it. You do **not** need to write `-jvm` yourself.
 
 Add `problem-details-xml` and `problem-details-ktor-xml` — first published in **0.2.0** — only if a
 client of yours asks for `application/problem+xml`. Add `problem-details-ktor-client` — first
-published in **0.3.0** — if your own code calls an API that answers with problem documents. All
-modules always share one version.
+published in **0.3.0** — if your own code calls an API that answers with problem documents, and
+`problem-details-ktor-client-xml` beside it — **0.4.0** — if those answers can be XML. All modules
+always share one version.
 
 ## Quick start
 
@@ -200,13 +202,6 @@ There are consequently no `@RequiresOptIn` markers: opt-in annotations exist to 
 islands out of a *stable* release, and at 0.x everything is unstable by declaration.
 
 ## Roadmap
-
-**Planned, next phase** — the client half of the XML support, kept in its own artifact the same way
-the server half is:
-
-| Module | Would add |
-|---|---|
-| `problem-details-ktor-client-xml` | `problemXml()` on Ktor Client: decode an `application/problem+xml` response into the same `ProblemException`, so a JSON-only client never resolves an XML parser. |
 
 **Backlog** — scoped, timing intentionally undecided:
 
