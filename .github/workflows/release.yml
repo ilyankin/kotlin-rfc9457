@@ -35,7 +35,7 @@ jobs:
         with:
           cache-read-only: true
 
-      # `gradle.properties` holds the one version all four modules share; a tag that disagrees would
+      # `gradle.properties` holds the one version every module shares; a tag that disagrees would
       # publish coordinates nobody can trace back to this commit.
       - name: Check the tag against the project version
         if: github.event_name == 'push'
@@ -64,7 +64,7 @@ jobs:
       - name: Build
         run: ./gradlew build
 
-      # The aggregation carries whichever modules apply `rfc9457.published` — core and ktor today.
+      # The aggregation carries whichever modules apply `rfc9457.published` — every module today.
       - name: Publish
         run: ./gradlew ${{ github.event_name == 'workflow_dispatch' && 'publishAggregationToCentralPortalSnapshots' || 'publishAggregationToCentralPortal' }}
         env:
