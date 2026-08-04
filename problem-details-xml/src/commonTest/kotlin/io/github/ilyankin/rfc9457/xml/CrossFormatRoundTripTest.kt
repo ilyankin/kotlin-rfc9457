@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.serialization.json.Json
 
 /**
- * RFC 9457 §3.2's JSON example, restated here because core's test fixtures are not on this
+ * RFC 9457 §3's JSON example, restated here because core's test fixtures are not on this
  * module's test classpath. Chosen deliberately: it has no nulls, no empty collections and no
  * number-like strings, so it is expected to survive XML losslessly. The loss cases live in
  * [ProblemXmlReaderTest].
