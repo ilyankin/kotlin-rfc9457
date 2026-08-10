@@ -15,8 +15,8 @@ import kotlinx.serialization.json.Json
 
 /*
  * The samples in `samples/` are inlined into the API documentation by `@sample`. Compiling them
- * already stops them from referring to an API that no longer exists; running them here stops them
- * from being wiring that compiles but does not behave the way the surrounding prose claims.
+ * already rules out referring to an API that no longer exists. Running them here catches wiring
+ * that compiles but does not behave the way the surrounding prose claims.
  */
 class SamplesTest :
     StringSpec({

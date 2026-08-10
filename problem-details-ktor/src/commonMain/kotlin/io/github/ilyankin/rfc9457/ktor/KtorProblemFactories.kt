@@ -8,7 +8,7 @@ import io.ktor.http.HttpStatusCode
  * The `about:blank` problem for [status], with the title taken from Ktor's own reason phrase.
  *
  * RFC 9457 §4.2.1 says `about:blank` SHOULD carry the status code's standard reason phrase as
- * `title` — `HttpStatusCode.description` is exactly that table. Core can't offer this overload
+ * `title`. `HttpStatusCode.description` is exactly that table. Core can't offer this overload
  * itself, since it must not depend on Ktor.
  *
  * The title is only as good as [status]'s `description`: for a code Ktor doesn't know, that's the
@@ -20,7 +20,7 @@ public fun Problem.Companion.blank(status: HttpStatusCode): Problem = blank(stat
 /**
  * An `HttpStatusCode`-typed view over [ProblemType.status], which is a plain `Int` in core.
  *
- * `HttpStatusCode.fromValue` never rejects a value — for an unknown code it synthesizes one with
- * description `"Unknown Status Code"` rather than failing. See [blank] for where that shows up.
+ * `HttpStatusCode.fromValue` never rejects a value. For an unknown code it synthesizes one with
+ * description `"Unknown Status Code"` instead of failing. See [blank] for where that shows up.
  */
 public val ProblemType.httpStatus: HttpStatusCode get() = HttpStatusCode.fromValue(status)

@@ -36,7 +36,7 @@ class RespondProblemTest :
                 routing { get("/pay") { call.respondProblem(Problem(status = 403)) } }
                 // A problem document is read by the client and logged on both ends; §5 warns against
                 // putting anything in one the recipient should not have, and query strings routinely
-                // carry tokens. So instance is the path, never the full request target.
+                // carry tokens, so instance is the path, never the full request target.
                 val body =
                     Json.decodeFromString<Problem>(
                         client.get("/pay?api_key=s3cret&debug=true").bodyAsText(),

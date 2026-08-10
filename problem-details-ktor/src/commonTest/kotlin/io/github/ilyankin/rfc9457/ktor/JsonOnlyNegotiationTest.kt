@@ -86,7 +86,7 @@ class JsonOnlyNegotiationTest :
                 response.headers[HttpHeaders.ContentType].orEmpty().contains("json") shouldBe false
                 // What happens instead is Ktor's own behaviour, not this library's, and is pinned here
                 // because it is what a user turning the flag off actually sees: no converter matches the
-                // Accept header, so ContentNegotiation answers 406 with an empty body — the diagnosis of
+                // Accept header, so ContentNegotiation answers 406 with an empty body. The diagnosis of
                 // the failed problem response is lost along with it. That trade is the reason
                 // acceptPlainJson defaults to true.
                 response.status shouldBe HttpStatusCode.NotAcceptable

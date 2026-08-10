@@ -15,7 +15,7 @@ kotlin {
         implementation(libs.ktor.server.test.host)
     }
     // The library logs through Ktor's `Logger`, which on JVM is `org.slf4j.Logger`. Asserting on what
-    // it emits needs a real backend, so those tests live in `jvmTest` rather than `commonTest`.
+    // it emits needs a real backend, so those tests live in `jvmTest`, not `commonTest`.
     sourceSets.getByName("jvmTest").dependencies {
         implementation(libs.logback.classic)
     }
@@ -27,8 +27,8 @@ tasks.named<Jar>("jvmJar") {
 }
 
 // Dokka knows stdlib and coroutines, not Ktor, so `[HttpStatusCode]` and friends rendered as plain
-// text — an unresolved link is a dead reference, not a build failure. Not in the convention plugin:
-// modules without a Ktor dependency would fetch this package list for nothing.
+// text. An unresolved link is a dead reference, not a build failure. This isn't in the convention
+// plugin: modules without a Ktor dependency would fetch this package list for nothing.
 dokka {
     dokkaSourceSets.configureEach {
         externalDocumentationLinks.register("ktor") {

@@ -133,8 +133,8 @@ class CatalogIntegrationTest :
                 routing { get("/boom") { throw IllegalStateException("x") } }
 
                 // StatusPagesConfig.exceptions is a map keyed by class, so registering Throwable twice
-                // is last-one-wins rather than nearest-parent-class. The library registers its own
-                // catch-all first precisely so this entry is the survivor.
+                // is last-one-wins, not nearest-parent-class. The library registers its own catch-all
+                // first precisely so this entry is the survivor.
                 val response = client.get("/boom")
                 response.status.value shouldBe 599
                 Json.decodeFromString<Problem>(response.bodyAsText()).title shouldBe "user catch-all"
@@ -149,8 +149,8 @@ class CatalogIntegrationTest :
 
                 // Ktor cancels the call's coroutine when the client disconnects. Turning that into a
                 // 500 would write a document to a socket nobody is reading and log a stack trace per
-                // dropped connection, so the catch-all rethrows instead.
-                // What comes back is then the engine's business, not this library's — under
+                // dropped connection, so the catch-all rethrows.
+                // What comes back is then the engine's business, not this library's. Under
                 // `testApplication` that is Ktor's development-mode error page. In production a real
                 // disconnect means nothing is written at all. Either way the assertion is the same and
                 // is the one thing this library controls: no problem document was produced.
@@ -167,7 +167,7 @@ class CatalogIntegrationTest :
                 routing { get("/slow") { withTimeout(1.milliseconds) { delay(1_000.milliseconds) } } }
 
                 // TimeoutCancellationException is a CancellationException, but defaultExceptionStatusCode
-                // maps it to 504 — which is what separates it from a disconnect in the guard.
+                // maps it to 504. That is what separates it from a disconnect in the guard.
                 client.get("/slow").status shouldBe HttpStatusCode.GatewayTimeout
             }
         }

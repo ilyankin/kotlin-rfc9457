@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json
 /**
  * Reads and writes `application/problem+json` bodies for `ContentNegotiation`.
  *
- * Thin by design — the encoding lives in `ProblemSerializer` in core, this only delegates.
+ * Thin by design. The encoding lives in `ProblemSerializer` in core; this only delegates.
  * Registering it is a convenience, not a correctness requirement: an application's pre-existing
  * `json()` converter produces the same bytes, since [Problem] carries `ProblemSerializer` as its
  * own serializer.
@@ -29,11 +29,11 @@ public class ProblemJsonConverter(
     private val json: Json = Json,
 ) : ContentConverter {
     /**
-     * Writes [value] as `application/problem+json`, or `null` if it isn't a [Problem] — the
+     * Writes [value] as `application/problem+json`, or `null` if it isn't a [Problem]. That is the
      * interface's way of saying "not mine", so `ContentNegotiation` tries the next converter.
      *
      * The response is always labelled `application/problem+json`, regardless of the [contentType]
-     * this converter was matched under — echoing back `application/json` (see `acceptPlainJson`)
+     * this converter was matched under. Echoing back `application/json` (see `acceptPlainJson`)
      * would strip the only wire-level marker that the body is a problem document. RFC 9457 §3
      * permits the override.
      */
@@ -71,14 +71,14 @@ public class ProblemJsonConverter(
 /**
  * Registers the `application/problem+json` converter on Ktor's own `ContentNegotiation`.
  *
- * **Call this before `problemXml()` if you use both** — registration order breaks the tie when
+ * **Call this before `problemXml()` if you use both.** Registration order breaks the tie when
  * `Accept` is absent or a wildcard, and JSON should win it: RFC 9457 treats JSON as the canonical
  * serialization and the Appendix B XML form as an equivalent alternative. Everything about `Accept`
  * matching, quality values included, stays `ContentNegotiation`'s job; this only writes the two
  * `register` calls a developer would otherwise write by hand.
  *
  * [acceptPlainJson] additionally serves problem documents to clients asking for plain
- * `application/json` — strictly a client should ask for `application/problem+json`, but plenty of
+ * `application/json`. Strictly a client should ask for `application/problem+json`, but plenty of
  * tooling only ever sends `application/json`, and §3 lets a server use the problem format unasked.
  * The response is still labelled `application/problem+json` either way, since that's the only thing
  * marking the body as a problem document; the flag only widens which requests get one. Turn it off

@@ -27,19 +27,19 @@ public class ProblemDetailsCatalog internal constructor() {
      * The problem produced for an exception no mapping covers.
      *
      * `about:blank` with no `detail`: a problem document reaches the client (§5), so it must not
-     * carry a file path or SQL fragment. The status comes from `defaultExceptionStatusCode` rather
-     * than a flat 500 — the catch-all this backs would otherwise turn Ktor's own `NotFoundException`
-     * into a 500 just because this library was installed.
+     * carry a file path or SQL fragment. The status comes from `defaultExceptionStatusCode`, not a
+     * flat 500. The catch-all this backs would otherwise turn Ktor's own `NotFoundException` into a
+     * 500 just because this library was installed.
      */
     internal var unmapped: (ApplicationCall, Throwable) -> Problem = { _, cause ->
         Problem.blank(defaultExceptionStatusCode(cause) ?: HttpStatusCode.InternalServerError)
     }
 
     init {
-        // A catalog entry rather than a registration in `problemDetails`: this key is unique, so a
-        // caller's own `map<ProblemException>` replaces it by ordinary map semantics, without the
-        // ordering the `Throwable` catch-all needs. Must sit below `exceptionMappings` — initializers
-        // run in source order, and an `init` above it would seed into an uninitialized map.
+        // A catalog entry, not a registration in `problemDetails`: this key is unique, so a caller's
+        // own `map<ProblemException>` replaces it by ordinary map semantics, without the ordering the
+        // `Throwable` catch-all needs. This must sit below `exceptionMappings`. Initializers run in
+        // source order, and an `init` above it would seed into an uninitialized map.
         map<ProblemException> { call, cause ->
             // `StatusPages` logs nothing it handles, and the engine's own error/debug split runs
             // only when `StatusPages` rethrows, so an attached cause would otherwise vanish without
@@ -62,7 +62,7 @@ public class ProblemDetailsCatalog internal constructor() {
      * Maps [T] to a problem built from the call and the exception.
      *
      * Mapping `Throwable` itself is legal and replaces the built-in catch-all wholesale, cancellation
-     * guard included — a handler registered that way must rethrow `CancellationException` itself.
+     * guard included. A handler registered that way must rethrow `CancellationException` itself.
      * Prefer [onUnmapped], which keeps the guard.
      */
     public inline fun <reified T : Throwable> map(noinline toProblem: (ApplicationCall, T) -> Problem) {
@@ -85,7 +85,7 @@ public class ProblemDetailsCatalog internal constructor() {
     /**
      * Maps [T] to [type], taking `detail` from the exception message by default.
      *
-     * `title` is always [ProblemType.title] — §3.1 says it SHOULD stay constant across occurrences
+     * `title` is always [ProblemType.title]. §3.1 says it SHOULD stay constant across occurrences
      * of a type, so there's no per-call override. Localization, the one exception the RFC allows,
      * is out of scope for v1.
      */
@@ -102,13 +102,13 @@ public class ProblemDetailsCatalog internal constructor() {
      * Replaces the problem produced for an exception no mapping covers.
      *
      * The default is `about:blank` with no `detail`, carrying the status
-     * `defaultExceptionStatusCode` derives from the exception rather than a flat 500 — a problem
-     * document reaches the client (§5), so it must not leak a file path or SQL fragment, and Ktor's
-     * own `NotFoundException` must not become a 500 just because this library is installed.
+     * `defaultExceptionStatusCode` derives from the exception, not a flat 500. A problem document
+     * reaches the client (§5), so it must not leak a file path or SQL fragment, and Ktor's own
+     * `NotFoundException` must not become a 500 just because this library is installed.
      *
-     * The safe way to change catch-all behaviour: unlike `map<Throwable>` it only supplies the
-     * document, so the surrounding handler still rethrows cancellation and still picks log severity
-     * from the resulting status.
+     * This is the safe way to change catch-all behaviour. Unlike `map<Throwable>`, it only supplies
+     * the document, so the surrounding handler still rethrows cancellation and still picks log
+     * severity from the resulting status.
      */
     public fun onUnmapped(handler: (ApplicationCall, Throwable) -> Problem) {
         unmapped = handler
@@ -130,7 +130,7 @@ public class ProblemDetailsCatalog internal constructor() {
     /**
      * Covers the codes Ktor itself generates without an explicit body: 404, 405, 406, 415.
      *
-     * Still an explicit opt-in rather than a blanket 4xx/5xx registration — see [forStatusCode].
+     * Still an explicit opt-in, not a blanket 4xx/5xx registration. See [forStatusCode].
      */
     public fun standardStatusCodes() {
         listOf(

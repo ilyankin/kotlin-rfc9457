@@ -27,7 +27,7 @@ private val loggerSeq = AtomicInteger()
  * A logger of its own, wired to a list appender and detached from the root one.
  *
  * Handed to the application through `environment { log = … }`, so this records exactly what
- * `call.application.log` received — no global state, and specs stay independent under parallel runs.
+ * `call.application.log` received. No global state, and specs stay independent under parallel runs.
  */
 private class CapturedLog {
     private val appender = ListAppender<ILoggingEvent>().apply { start() }
@@ -40,7 +40,7 @@ private class CapturedLog {
                 addAppender(appender)
             }
 
-    /** Events carrying a throwable — the startup chatter Ktor emits carries none. */
+    /** Events carrying a throwable. The startup chatter Ktor emits carries none. */
     val withCause: List<ILoggingEvent> get() = appender.list.filter { it.throwableProxy != null }
 }
 

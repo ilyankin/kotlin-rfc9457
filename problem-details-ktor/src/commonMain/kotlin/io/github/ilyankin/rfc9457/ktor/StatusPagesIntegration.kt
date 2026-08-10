@@ -23,13 +23,13 @@ public fun StatusPagesConfig.problemDetails(configure: ProblemDetailsCatalog.() 
     exception<Throwable> { call, cause ->
         // A plain cancellation is a client disconnect: answering it writes a document nobody reads.
         // Rethrowing hands it back to the engine as transport noise. TimeoutCancellationException is
-        // the one cancellation that is a real status (504), and `defaultExceptionStatusCode` — the
-        // table `unmapped` also trusts — is what tells the two apart.
+        // the one cancellation that is a real status (504), and `defaultExceptionStatusCode`, the
+        // table `unmapped` also trusts, is what tells the two apart.
         if (cause is CancellationException && defaultExceptionStatusCode(cause) == null) throw cause
 
         val problem = catalog.unmapped(call, cause)
         // Full cause server-side, terse document to the client (§5). Severity follows the status: a
-        // 4xx is the client's fault, so it goes to `debug` rather than `error`.
+        // 4xx is the client's fault, so it goes to `debug`, not `error`.
         val message = "Unhandled exception; responding with a problem document"
         if ((problem.status ?: HttpStatusCode.InternalServerError.value) >= 500) {
             call.application.log.error(message, cause)
