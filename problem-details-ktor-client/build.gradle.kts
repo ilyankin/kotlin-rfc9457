@@ -1,4 +1,4 @@
-// No dependency on `problem-details-ktor` (server) or any XML module — this module only needs the
+// No dependency on `problem-details-ktor` (server) or any XML module. This module only needs the
 // wire format, not how the other side of the connection is built.
 plugins {
     id("rfc9457.kmp-library")

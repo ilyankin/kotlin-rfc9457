@@ -16,11 +16,11 @@ import kotlinx.serialization.json.Json
  *
  * The XML half of RFC 9457 is a separate registration in a separate artifact,
  * `problem-details-ktor-client-xml`, exactly as `problemXml()` is on the server. Registering both is
- * order-independent here — each gates on a `Content-Type` the other never matches — unlike the
+ * order-independent here. Each gates on a `Content-Type` the other never matches, unlike the
  * server's `ContentNegotiation` pair, where order decides an absent or wildcard `Accept`.
  *
  * Ktor's own default response validation always runs first and throws `ClientRequestException`/
- * `ServerResponseException` for a non-2xx status before this handler gets a chance to run — so this
+ * `ServerResponseException` for a non-2xx status before this handler gets a chance to run. This
  * cannot replace that exception by validating the response early; it has to intercept the exception
  * Ktor already threw and decide whether to replace it. `expectSuccess` must be `true` for that
  * exception to exist in the first place; `HttpClientConfig.expectSuccess` defaults to `false`, and
@@ -32,17 +32,17 @@ import kotlinx.serialization.json.Json
  * was never a promise about shape, so a decode failure there falls back silently to Ktor's own
  * exception, unchanged.
  *
- * Every status Ktor raises a `ResponseException` for qualifies, redirects included — a 3xx answered
+ * Every status Ktor raises a `ResponseException` for qualifies, redirects included. A 3xx answered
  * with a problem document is replaced just like a 4xx or 5xx.
  *
  * Ktor runs exception handlers in reverse registration order, so a handler the application registers
  * *after* this one runs *before* it and may keep this one from ever seeing the exception.
  *
  * @param acceptPlainJson also matches responses whose `Content-Type` is plain `application/json`.
- *   It reads that response header and says nothing about the `Accept` header — this module never
+ *   It reads that response header and says nothing about the `Accept` header. This module never
  *   touches outgoing requests. Defaults to `false`, unlike `problem-details-ktor`'s own
- *   `acceptPlainJson = true`, because it governs bodies from servers this project does not control
- *   rather than this project's own well-formed output.
+ *   `acceptPlainJson = true`: it governs bodies from servers this project does not control, not
+ *   this project's own well-formed output.
  * @param json governs parsing only; the document's shape comes from the serializer attached to
  *   [Problem].
  * @sample io.github.ilyankin.rfc9457.samples.problemJsonSample

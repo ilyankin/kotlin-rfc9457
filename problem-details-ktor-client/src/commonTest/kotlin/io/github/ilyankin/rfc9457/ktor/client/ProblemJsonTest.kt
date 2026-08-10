@@ -19,7 +19,7 @@ import io.ktor.http.headersOf
 import kotlinx.serialization.SerializationException
 
 /**
- * RFC 9457 §3's first example. Re-declared here rather than shared: test fixtures do not cross module
+ * RFC 9457 §3's first example. Re-declared here, not shared: test fixtures do not cross module
  * `commonTest` source sets, so each module that wants this one keeps its own copy.
  */
 private val OUT_OF_CREDIT_JSON =
@@ -61,8 +61,8 @@ class ProblemJsonTest :
             exception.problem.title shouldBe "You do not have enough credit."
             exception.problem.detail shouldBe "Your current balance is 30, but that costs 50."
             exception.problem.instance shouldBe "/account/12345/msgs/abc"
-            // Siblings of the standard members on the wire, not nested under an "extensions" key —
-            // the same shape `ProblemSerializer` produces, since this decodes through it.
+            // Siblings of the standard members on the wire, not nested under an "extensions" key.
+            // The same shape `ProblemSerializer` produces, since this decodes through it.
             exception.problem.extensions["balance"]?.int shouldBe 30
             exception.problem.extensions["accounts"]?.problemArray?.map { it.string } shouldBe
                 listOf("/account/12345", "/account/67890")
