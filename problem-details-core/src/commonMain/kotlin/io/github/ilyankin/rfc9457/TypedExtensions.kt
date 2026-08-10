@@ -6,12 +6,12 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.serializer
 
 /**
- * Decodes the whole extension map into [T] — the typed consuming edge.
+ * Decodes the whole extension map into [T]. This is the typed consuming edge.
  *
- * Extension members [T] does not declare are ignored, so a partial view is fine, as is reading a
- * document produced by a newer version of the problem type than [T] was written against. That is
- * §3.2 rather than a convenience: *"consumers MUST ignore extension members they don't recognize"*.
- * It therefore holds regardless of [json] — `ignoreUnknownKeys` is re-applied on top of a caller's
+ * Extension members [T] does not declare are ignored, so a partial view is fine. So is reading a
+ * document produced by a newer version of the problem type than [T] was written against. §3.2
+ * requires this, not just a convenience: "consumers MUST ignore extension members they don't
+ * recognize". It holds regardless of [json]. `ignoreUnknownKeys` gets re-applied on top of a caller's
  * instance, so a strictly configured application instance cannot turn a conforming document into an
  * exception. Everything else about [json], its `serializersModule` above all, stays the caller's.
  *
@@ -27,8 +27,8 @@ public fun <T> Problem.extensionsAs(
     )
 
 /**
- * Decodes the whole extension map into [T], with the deserializer found from [T] instead of passed
- * in. Members [T] does not declare are ignored, as RFC 9457 §3.2 requires.
+ * Decodes the whole extension map into [T], with the deserializer resolved from [T]. Members [T]
+ * does not declare are ignored, as RFC 9457 §3.2 requires.
  *
  * @sample io.github.ilyankin.rfc9457.samples.readTypedExtensions
  */
@@ -37,9 +37,9 @@ public inline fun <reified T> Problem.extensionsAs(json: Json = ProblemJson): T 
 /**
  * Decodes a single extension member, or returns `null` when it is absent.
  *
- * Absence and a present-but-undecodable member are *not* the same: a member of the wrong shape
- * throws rather than returning `null`. Read it through [Problem.extensions] and the lenient
- * accessors — [stringOrNull] and friends — to follow §3's "ignore it like an absent member" rule.
+ * Absence and a present-but-undecodable member are different cases. A member of the wrong shape
+ * throws; it does not return `null`. Read it through [Problem.extensions] and the lenient accessors,
+ * [stringOrNull] and friends, to follow §3's "ignore it like an absent member" rule.
  */
 public fun <T> Problem.extension(
     name: String,
@@ -51,8 +51,8 @@ public fun <T> Problem.extension(
     }
 
 /**
- * Decodes a single extension member with the deserializer found from [T], or returns `null` when the
- * member is absent.
+ * Decodes a single extension member with the deserializer resolved from [T], or returns `null` when
+ * the member is absent.
  */
 public inline fun <reified T> Problem.extension(
     name: String,

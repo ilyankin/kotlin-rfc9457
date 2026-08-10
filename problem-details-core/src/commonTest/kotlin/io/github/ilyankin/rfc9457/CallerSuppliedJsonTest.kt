@@ -18,7 +18,7 @@ import kotlinx.serialization.json.JsonNamingStrategy
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
 
-/** A type the library cannot serialize on its own — it needs the application's serializers module. */
+/** A type the library cannot serialize on its own; it needs the application's serializers module. */
 private class Money(
     val amount: String,
 )

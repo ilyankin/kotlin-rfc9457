@@ -14,7 +14,8 @@ public annotation class ProblemDsl
 
 /**
  * Builds a [Problem]. Obtain one through [problem], which also supplies the `Json` that encodes the
- * typed payloads handed to [extension] and [extensions] — [ProblemJson] unless overridden.
+ * typed payloads handed to [extension] and [extensions]. That defaults to [ProblemJson] unless the
+ * caller overrides it.
  */
 @ProblemDsl
 public class ProblemBuilder
@@ -36,13 +37,13 @@ public class ProblemBuilder
          */
         public var status: Int? = null
 
-        /** Short human-readable summary **of the problem type**, not of this occurrence (§3.1). */
+        /** Short human-readable summary of the problem type (§3.1). It stays the same across occurrences. */
         public var title: String? = null
 
         /**
-         * Human-readable explanation of *this* occurrence (§3.1). Meant to help the client correct
-         * the problem, not to carry debugging information and not to be parsed: anything a client
-         * should act on programmatically belongs in an extension member.
+         * A human-readable explanation of this occurrence (§3.1). Its job is helping the client
+         * correct the problem, and §3.1 asks consumers to leave it unparsed. Machine-readable data
+         * belongs in an extension member.
          */
         public var detail: String? = null
 
@@ -62,12 +63,11 @@ public class ProblemBuilder
         }
 
         /**
-         * Adds one extension member (§3.2), written as a *sibling* of the standard members rather
-         * than nested under an `extensions` key.
+         * Adds one extension member (§3.2), written as a sibling of the standard members, not nested
+         * under an `extensions` key.
          *
-         * Setting the same [name] twice is an error rather than an overwrite: a problem document is
-         * assembled in one place, where a silent overwrite is far likelier to be a mistake than an
-         * intent.
+         * Setting the same [name] twice throws. A problem document gets assembled in one place, and
+         * a silent overwrite there is far likelier to be a bug than something you meant to do.
          *
          * @throws IllegalArgumentException if [name] was already set on this builder.
          */
@@ -76,7 +76,7 @@ public class ProblemBuilder
             value: ProblemValue,
         ): Unit = put(name, value)
 
-        /** Adds a string extension member. It is written quoted, so `"30"` is not the number 30. */
+        /** Adds a string extension member, written quoted. `"30"` stays a string, not the number 30. */
         public fun extension(
             name: String,
             value: String,
@@ -97,7 +97,7 @@ public class ProblemBuilder
         /**
          * Adds a floating-point extension member.
          *
-         * @throws IllegalArgumentException if [value] is NaN or infinite — neither has a JSON
+         * @throws IllegalArgumentException if [value] is NaN or infinite. Neither has a JSON
          *   representation (RFC 8259 §6).
          */
         public fun extension(
@@ -121,12 +121,12 @@ public class ProblemBuilder
         }
 
         /**
-         * Spreads [value]'s own properties into the problem as sibling extension members (§3.2) —
-         * the typed producing edge. [value] must serialize to a JSON object.
+         * Spreads [value]'s own properties into the problem as sibling extension members (§3.2). This
+         * is the typed producing edge, and [value] must serialize to a JSON object.
          *
-         * A property named like one of the five §3.1 members is rejected here rather than at build
-         * time, so the error can name the offending type: the standard member already has a property
-         * of its own on [ProblemBuilder], and the wire format has no room for both.
+         * A property named like one of the five §3.1 members gets rejected here, at call time, so the
+         * error can name the offending type. The standard member already has its own property on
+         * [ProblemBuilder], and the wire format has no room for both.
          */
         public fun <T> extensions(
             value: T,
@@ -162,8 +162,8 @@ public class ProblemBuilder
     }
 
 /**
- * Adds one extension member holding an arbitrary `@Serializable` value, with the serializer found
- * from [T] instead of passed in.
+ * Adds one extension member holding an arbitrary `@Serializable` value, with the serializer resolved
+ * from [T].
  *
  * @sample io.github.ilyankin.rfc9457.samples.buildProblemWithTypedExtension
  */
@@ -174,7 +174,7 @@ public inline fun <reified T> ProblemBuilder.extension(
 
 /**
  * Spreads [value]'s own properties into the problem as sibling extension members, with the
- * serializer found from [T] instead of passed in.
+ * serializer resolved from [T].
  *
  * @throws IllegalArgumentException if [T] does not serialize to a JSON object, or if one of its
  *   properties is named like a standard RFC 9457 member.
@@ -184,8 +184,8 @@ public inline fun <reified T> ProblemBuilder.extensions(value: T): Unit = extens
 /**
  * Entry point for the builder DSL.
  *
- * [json] encodes every typed payload added inside [block] — pass the application's own instance when
- * its `serializersModule` or naming strategy matters. See [ProblemJson].
+ * [json] encodes every typed payload added inside [block]. Pass the application's own instance when
+ * its `serializersModule` or naming strategy matters; see [ProblemJson].
  *
  * @sample io.github.ilyankin.rfc9457.samples.buildProblem
  * @see <a href="https://www.rfc-editor.org/rfc/rfc9457#section-3.1">RFC 9457 §3.1, Members of a Problem Details Object</a>

@@ -7,9 +7,9 @@ import io.kotest.matchers.shouldBe
 /**
  * Pins the difference between the strict accessors and their `*OrNull` twins.
  *
- * The pair exists because reading an extension member can fail two independent ways — the member is
- * *absent*, or it is present with the *wrong* JSON type — and only the second one is what the pair
- * chooses between. The first is handled by `?.` on the map lookup, whichever half is used.
+ * Reading an extension member can fail two independent ways: the member is absent, or it is present
+ * with the wrong JSON type. Only the second is what the pair chooses between. The first gets handled
+ * by `?.` on the map lookup, whichever half is used.
  */
 class ProblemValueAccessorTest :
     StringSpec({
@@ -43,7 +43,7 @@ class ProblemValueAccessorTest :
         }
 
         "the safe call covers absence, so even the strict half yields null for a missing member" {
-            // `?.` short-circuits before the accessor runs — nothing to throw about, the member simply
+            // `?.` short-circuits before the accessor runs. Nothing to throw about; the member simply
             // is not there. This is why `problemObject` still needs a `?`, and why needing one says
             // nothing about which half was picked.
             problem.extensions["quota"]?.problemObject shouldBe null
@@ -88,7 +88,7 @@ class ProblemValueAccessorTest :
         }
 
         "the scalar accessors read the wire literal, not the JSON type" {
-            // A quoted "30" is a string on the wire, yet `int` parses it — matching
+            // A quoted "30" is a string on the wire, yet `int` parses it. That matches
             // kotlinx.serialization's own JsonPrimitive.int, which also ignores `isString`. Only
             // isString distinguishes the two, and the codecs keep it intact in both directions.
             ProblemPrimitive("30").int shouldBe 30

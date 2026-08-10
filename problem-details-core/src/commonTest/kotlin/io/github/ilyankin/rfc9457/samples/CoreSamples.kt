@@ -10,12 +10,12 @@ import kotlinx.serialization.Serializable
 
 /*
  * Bodies of these functions are inlined into the API documentation by the `@sample` KDoc tag, so
- * this file is documentation that the compiler checks: renaming an API breaks the build instead of
+ * this file is documentation that the compiler checks. Renaming an API breaks the build instead of
  * leaving a stale example behind. `SamplesTest` additionally runs them.
  *
- * Two constraints, both enforced by Dokka rather than by convention: nothing here may import a test
- * framework (Dokka analyses this directory against `commonMain`'s classpath, which has none), and
- * the directory is attached to the `commonMain` source set alone.
+ * Two constraints, both enforced by Dokka, not by convention: nothing here may import a test
+ * framework, since Dokka analyses this directory against `commonMain`'s classpath, which has none,
+ * and the directory is attached to the `commonMain` source set alone.
  */
 
 /** @see io.github.ilyankin.rfc9457.problem */
@@ -85,6 +85,6 @@ internal fun throwProblemForOutOfCredit(): Nothing {
 
 /** @see io.github.ilyankin.rfc9457.extensionsAs */
 internal fun readTypedExtensions(problem: Problem): OutOfCredit =
-    // Extension members the type does not declare are ignored, as RFC 9457 §3.2 requires — so this
-    // also reads a document produced by a newer version of the problem type.
+    // Extension members the type does not declare are ignored, as RFC 9457 §3.2 requires. That is
+    // also why this reads a document produced by a newer version of the problem type.
     problem.extensionsAs<OutOfCredit>()

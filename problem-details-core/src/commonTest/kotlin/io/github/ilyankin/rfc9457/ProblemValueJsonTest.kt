@@ -22,8 +22,8 @@ class ProblemValueJsonTest :
     StringSpec({
 
         "encoding an extension nested past the limit throws instead of overflowing the stack" {
-            // Both conversions recurse per level; unguarded, this was a StackOverflowError at
-            // ~10 000 levels — an Error, so it slips past ordinary handling. kotlinx has no setting
+            // Both conversions recurse per level. Unguarded, this was a StackOverflowError at
+            // ~10 000 levels, an Error, so it slips past ordinary handling. kotlinx has no setting
             // that could bound it: JsonConfiguration exposes no depth or size parameter at all.
             val problem = Problem(extensions = mapOf("deep" to nestedValue(Problem.MAX_NESTING_DEPTH + 5)))
             shouldThrow<SerializationException> { Json.encodeToString(problem) }

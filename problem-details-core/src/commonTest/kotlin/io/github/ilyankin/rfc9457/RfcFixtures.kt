@@ -2,10 +2,10 @@ package io.github.ilyankin.rfc9457
 
 /**
  * Reference documents taken verbatim from RFC 9457's own examples, so the codec tests check
- * conformance to the standard rather than internal round-trip consistency.
+ * conformance to the standard, not internal round-trip consistency.
  *
- * Note the JSON and XML `out-of-credit` examples are NOT the same problem instance: the JSON one
- * uses relative URIs, the XML one absolute. They are therefore separate fixtures.
+ * The JSON and XML `out-of-credit` examples are different problem instances. The JSON one uses
+ * relative URIs; the XML one uses absolute URIs. They stay separate fixtures for that reason.
  */
 internal object RfcFixtures {
     /** RFC 9457 §3.2, first example. */
@@ -37,7 +37,7 @@ internal object RfcFixtures {
                 ),
         )
 
-    /** RFC 9457 §3.2, validation-errors example. JSON only — the RFC publishes no XML form. */
+    /** RFC 9457 §3.2, validation-errors example. JSON only; the RFC publishes no XML form. */
     val VALIDATION_ERRORS_JSON: String =
         """
         {
