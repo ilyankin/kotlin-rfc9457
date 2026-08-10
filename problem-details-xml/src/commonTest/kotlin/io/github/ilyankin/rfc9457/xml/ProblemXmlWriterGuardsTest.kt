@@ -22,8 +22,8 @@ private fun encode(
  * What the writer refuses, and with which exception type.
  *
  * All three groups exist because XML constrains things JSON does not, and because `Problem`
- * deliberately does not enforce RFC 9457 §3.2's naming `SHOULD` — so a problem that is perfectly
- * valid for `application/problem+json` can be unrepresentable as `application/problem+xml`. That
+ * deliberately does not enforce RFC 9457 §3.2's naming `SHOULD`. A problem that is perfectly valid
+ * for `application/problem+json` can therefore be unrepresentable as `application/problem+xml`. That
  * asymmetry is the specified behaviour; these tests pin where it surfaces.
  */
 class ProblemXmlWriterGuardsTest :
@@ -47,7 +47,7 @@ class ProblemXmlWriterGuardsTest :
 
         "a hostile name cannot inject elements into the document" {
             // The finding the guard exists for: written verbatim, this name closed the element it
-            // was opening and opened two of its own — in the end tag as well as the start tag.
+            // was opening and opened two of its own, in the end tag as well as the start tag.
             val failure =
                 shouldThrow<SerializationException> {
                     encode("a><injected>owned</injected><b")
@@ -100,7 +100,7 @@ class ProblemXmlWriterGuardsTest :
 
         "U+0000 is rejected, in a standard member and in an extension alike" {
             // Before this check the byte went into the document, which xmlutil's own reader then
-            // read back happily while every other parser rejected it.
+            // read back happily. Every other parser rejected it.
             shouldThrow<SerializationException> {
                 ProblemXml.encodeToString(Problem(detail = "a\u0000b"))
             }
@@ -108,7 +108,7 @@ class ProblemXmlWriterGuardsTest :
         }
 
         "an unpaired surrogate is rejected rather than crashing the writer" {
-            // The high half crashed xmlutil outright; the low half was refused, but as a raw
+            // The high half crashed xmlutil outright; the low half was refused, as a raw
             // IllegalArgumentException.
             shouldThrow<SerializationException> {
                 ProblemXml.encodeToString(Problem(detail = "\uD800"))
@@ -131,7 +131,7 @@ class ProblemXmlWriterGuardsTest :
 
         "a character xmlutil rejects surfaces as SerializationException, not xmlutil's own type" {
             // Not one of the two cases guarded above: 0x1F is xmlutil's to reject, and the point
-            // here is only that its IllegalArgumentException does not escape — catching a write
+            // here is only that its IllegalArgumentException does not escape. Catching a write
             // failure must not require xmlutil on the caller's classpath.
             val failure =
                 shouldThrow<SerializationException> {

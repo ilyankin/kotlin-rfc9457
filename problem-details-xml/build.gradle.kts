@@ -1,6 +1,6 @@
 // `xmlutil` is `implementation`, not `api`: no xmlutil type appears in a public signature or as a
-// thrown type — the codec wraps XmlException in SerializationException — so a consumer's own
-// xmlutil version cannot break this library's ABI.
+// thrown type. The codec wraps XmlException in SerializationException, so a consumer's own xmlutil
+// version cannot break this library's ABI.
 //
 // The serialization plugin serves `commonTest` alone; nothing in `commonMain` is `@Serializable`.
 plugins {

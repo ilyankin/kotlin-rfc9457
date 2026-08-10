@@ -12,18 +12,17 @@ import nl.adaptivity.xmlutil.XmlReader
 import nl.adaptivity.xmlutil.xmlStreaming
 
 /**
- * Always the **generic** reader, never the default entry point.
+ * Always the generic reader. This function never reaches for the default entry point.
  *
  * xmlutil's `core-jdk` module documents that its mere presence on the classpath switches the default
  * to the JDK's parser, which resolves through `ServiceLoader` to whatever StAX implementation happens
- * to be installed — with that implementation's own defaults for DTDs and external entities. Naming
- * the generic reader makes three things true at once: a document arriving from the network cannot
- * pull in a DTD or an external entity (this is xmlutil's own documented remedy), behaviour does not
- * depend on the consumer's unrelated dependencies, and every target parses identically. Pinned by
- * the XXE test.
+ * to be installed, with that implementation's own defaults for DTDs and external entities. Naming the
+ * generic reader makes three things true at once. A document arriving from the network cannot pull in
+ * a DTD or an external entity, which is xmlutil's own documented remedy. Behaviour does not depend on
+ * the consumer's unrelated dependencies. Every target parses identically. The XXE test pins this.
  *
- * `expandEntities` is left at its default of `false` — stated because the safety of this function
- * rests on it, and a future overload that flips the default must not pass silently.
+ * `expandEntities` stays at its default of `false`. Stating that here matters because the safety of
+ * this function rests on it, and a future overload that flips the default must not pass silently.
  */
 private fun readerFor(document: String): XmlReader = xmlStreaming.newGenericReader(document)
 
@@ -31,8 +30,8 @@ private fun readerFor(document: String): XmlReader = xmlStreaming.newGenericRead
  * The five entities every XML processor must recognise without a DTD (XML 1.0 §4.6).
  *
  * Owning the table is what keeps entity handling independent of what a document declares about
- * itself. These five expand to fixed text and resolve nothing, so honouring them by name is safe —
- * and necessary, since this module's own writer escapes `<`, `&` and `>` into exactly these.
+ * itself. These five expand to fixed text and resolve nothing, so honouring them by name is safe. It
+ * is also necessary, since this module's own writer escapes `<`, `&` and `>` into exactly these.
  */
 private val PREDEFINED_ENTITIES =
     mapOf(
@@ -60,10 +59,11 @@ internal fun readProblem(document: String): Problem {
         while (reader.hasNext()) {
             if (reader.next() == EventType.START_ELEMENT) break
         }
-        // The root is checked, unlike the members inside it. §3's leniency is about *members* —
-        // ignore a wrong-typed one, ignore an unrecognised extension — not about accepting any
-        // document at all as a problem document. Without this, `<foo/>` parsed to a valid-looking
-        // `about:blank` Problem, turning "this is not a problem document" into silent data loss.
+        // The root is checked, unlike the members inside it. §3's leniency covers members: ignore a
+        // wrong-typed one, ignore an unrecognised extension. It says nothing about accepting any
+        // document at all as a problem document. Without this check, `<foo/>` parsed to a
+        // valid-looking `about:blank` Problem, turning "this is not a problem document" into silent
+        // data loss.
         if (reader.localName != ProblemXml.ROOT_ELEMENT || reader.isForeignNamespace) {
             throw SerializationException(
                 "Not an RFC 9457 problem document: expected a root <${ProblemXml.ROOT_ELEMENT}> " +
@@ -79,8 +79,8 @@ internal fun readProblem(document: String): Problem {
     } catch (cause: IllegalStateException) {
         // Text before the root element, or a lone `<`, leaves KtXmlReader.next as a bare
         // IllegalStateException instead of an XmlException, so the clause above never sees it.
-        // Enumerated rather than caught broadly, as on the write path, and safe to catch here
-        // because nothing in this module raises one of its own — the root refusal above is a
+        // This is enumerated, not caught broadly, matching the write path. It is safe to catch here
+        // because nothing in this module raises one of its own. The root refusal above throws a
         // SerializationException, which is an IllegalArgumentException.
         throw SerializationException("Malformed problem document: ${cause.message}", cause)
     } finally {
@@ -89,9 +89,9 @@ internal fun readProblem(document: String): Problem {
 }
 
 /**
- * Appendix B's schema admits exactly one namespace, so anything else is foreign. An *absent*
- * namespace is tolerated rather than rejected: some producers omit the declaration, the element name
- * is unambiguous without it, and this matches how the member loop below already treats children.
+ * Appendix B's schema admits exactly one namespace, so anything else is foreign. An absent namespace
+ * gets tolerated, not rejected. Some producers omit the declaration, the element name is unambiguous
+ * without it, and this matches how the member loop below already treats children.
  */
 private val XmlReader.isForeignNamespace: Boolean
     get() = namespaceURI.isNotEmpty() && namespaceURI != ProblemXml.NAMESPACE
@@ -99,7 +99,7 @@ private val XmlReader.isForeignNamespace: Boolean
 /**
  * Reads the children of the element the reader is currently positioned on.
  *
- * Members outside the document's namespace are skipped: Appendix B's schema admits only the one
+ * Members outside the document's namespace are skipped. Appendix B's schema admits only the one
  * namespace, so foreign content is never legitimate, and §3 forbids failing over it.
  *
  * **Attributes are ignored, deliberately.** Appendix B's RELAX NG admits `attribute * { text }`, so
@@ -131,17 +131,17 @@ private fun XmlReader.readChildren(depth: Int): Node.Children {
 
             // IGNORABLE_WHITESPACE belongs here despite the name. xmlutil has no schema and cannot
             // know an element's content model, so it uses that event for any run of text that
-            // happens to be *entirely* whitespace — including the whole content of `<detail> </detail>`.
-            // Inter-element whitespace still ends up discarded, because `content` is only ever read
-            // for an element that turned out to have no children.
+            // happens to be *entirely* whitespace. That includes the whole content of
+            // `<detail> </detail>`. Inter-element whitespace still ends up discarded, because
+            // `content` is only ever read for an element that turned out to have no children.
             EventType.TEXT, EventType.CDSECT, EventType.IGNORABLE_WHITESPACE -> {
                 content.append(text)
             }
 
-            // Note this deliberately does not consult `XmlReader.isKnownEntity`, which is also true
-            // for anything the document's own internal DTD subset declared — and a document arriving
-            // from the network is exactly where an attacker puts that, whether to reach a file (XXE)
-            // or merely to expand (billion laughs). Anything outside the table contributes nothing.
+            // This deliberately does not consult `XmlReader.isKnownEntity`, which is also true for
+            // anything the document's own internal DTD subset declared. A document arriving from the
+            // network is exactly where an attacker puts that, whether to reach a file (XXE) or merely
+            // to expand (billion laughs). Anything outside the table contributes nothing.
             EventType.ENTITY_REF -> {
                 PREDEFINED_ENTITIES[localName]?.let(content::append)
             }

@@ -7,7 +7,7 @@ import io.github.ilyankin.rfc9457.ProblemPrimitive
 internal object XmlFixtures {
     /**
      * RFC 9457 Appendix B's example, with insignificant inter-element whitespace removed because
-     * the writer emits none. Note the absolute URIs: this is NOT the same problem instance as the
+     * the writer emits none. The absolute URIs matter: this is a different problem instance from the
      * JSON `out-of-credit` example, which uses relative ones.
      */
     val OUT_OF_CREDIT_XML: String =

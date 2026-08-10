@@ -10,9 +10,9 @@ import io.kotest.matchers.shouldBe
 /**
  * What survives an XML round trip, what does not, and how much malformedness the reader tolerates.
  *
- * Every case here is *specified* behaviour rather than a defect: either it follows from Appendix B's
- * mapping, or it is a leniency RFC 9457 §3 asks for. Pinned so that a later refactor has to change
- * them deliberately — several of these used to be accidents of the parse loop.
+ * Every case here is specified behaviour, not a defect. Either it follows from Appendix B's mapping,
+ * or it is a leniency RFC 9457 §3 asks for. Pinned so that a later refactor has to change them
+ * deliberately; several of these used to be accidents of the parse loop.
  */
 class ProblemXmlFidelityTest :
     StringSpec({
@@ -60,7 +60,7 @@ class ProblemXmlFidelityTest :
         "an object whose keys are all i comes back as an array" {
             // An object that happens to use `i` as its only key is written exactly like an array,
             // so it cannot be told apart on the way back. Changing this would mean departing from
-            // Appendix B, not fixing a bug — it is the third specified loss, beside the
+            // Appendix B, not fixing a bug. It is the third specified loss, alongside the
             // null/empty-collection collapse and number widening.
             val original = Problem(extensions = mapOf("x" to ProblemObject(mapOf("i" to ProblemPrimitive("a")))))
             val back = ProblemXml.decodeFromString(ProblemXml.encodeToString(original))
@@ -69,7 +69,7 @@ class ProblemXmlFidelityTest :
 
         "an extension named i at the top level is not affected" {
             // The array rule applies to an element's children, and the standard members are read by
-            // name rather than by shape, so a top-level `i` is an ordinary extension member.
+            // name, not by shape, so a top-level `i` is an ordinary extension member.
             val original = Problem(extensions = mapOf("i" to ProblemPrimitive("a")))
             ProblemXml.decodeFromString(ProblemXml.encodeToString(original)) shouldBe original
         }

@@ -84,8 +84,8 @@ class ProblemXmlWriterTest :
                         ),
                 )
             // Unspaced because the writer sets addTrailingSpaceBeforeEnd = false; xmlutil's default
-            // would be `<nothing />`. Indistinguishable to a parser — the reader test pins that
-            // both forms parse — so this only fixes which one we emit.
+            // would be `<nothing />`. Indistinguishable to a parser (the reader test pins that both
+            // forms parse), so this only fixes which one we emit.
             val xml = ProblemXml.encodeToString(problem)
             xml shouldContain "<nothing/>"
             xml shouldContain "<emptyList/>"
@@ -94,8 +94,8 @@ class ProblemXmlWriterTest :
 
         "writing past the depth limit fails with an exception, not a StackOverflowError" {
             // Bounded on the way out too. Such a Problem can only come from the caller's own code
-            // now that reading caps at the same limit, but a document this codec could not read
-            // back is not one it should emit.
+            // now that reading caps at the same limit. A document this codec could not read back
+            // should not be one it emits.
             var value: ProblemValue = ProblemPrimitive("leaf")
             repeat(Problem.MAX_NESTING_DEPTH + 5) { value = ProblemObject(mapOf("a" to value)) }
             shouldThrow<SerializationException> {

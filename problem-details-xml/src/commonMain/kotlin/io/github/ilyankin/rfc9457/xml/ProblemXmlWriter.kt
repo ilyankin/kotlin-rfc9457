@@ -12,11 +12,11 @@ import nl.adaptivity.xmlutil.XmlWriter
 import nl.adaptivity.xmlutil.core.KtXmlWriter
 
 /**
- * Written by hand rather than by `XmlDeclMode.Charset`, which would be the obvious way.
+ * Written by hand, not by `XmlDeclMode.Charset`, which would be the obvious way.
  *
  * `KtXmlWriter` hardcodes apostrophes around both pseudo-attributes and exposes nothing to change
- * them with. XML 1.0 §2.8 permits either quote character, so that is conformant — it is simply not
- * the one RFC 9457 Appendix B prints, and the conformance test compares against the RFC's published
+ * them with. XML 1.0 §2.8 permits either quote character, so that is conformant. It simply is not the
+ * one RFC 9457 Appendix B prints, and the conformance test compares against the RFC's published
  * example verbatim. Emitting the declaration here also keeps an xmlutil release that changes its
  * quoting from breaking that test over something that carries no meaning.
  */
@@ -31,7 +31,7 @@ private const val XML_DECLARATION = """<?xml version="1.0" encoding="UTF-8"?>"""
  * invalid character would surface as xmlutil's `IllegalArgumentException`.
  *
  * **The first `catch` is load-bearing.** `SerializationException` extends `IllegalArgumentException`,
- * so without it every guard reachable from here — depth, name, text — would be caught by the second
+ * so without it every guard reachable from here (depth, name, text) would be caught by the second
  * arm and wrapped inside itself. The `IndexOutOfBoundsException` arm is a backstop for what an
  * xmlutil upgrade might add; [requireWritableText] already stops the one input known to reach it.
  */
@@ -65,9 +65,9 @@ private fun writeProblemDocument(problem: Problem): String =
                 isRepairNamespaces = true,
                 xmlDeclMode = XmlDeclMode.None,
             ).apply {
-                // Off, so an empty element is `<nothing/>` rather than xmlutil's default
-                // `<nothing />`. Both are the same element to any parser, but the spaced form
-                // surprises readers and diff tools for no gain.
+                // Off, so an empty element is `<nothing/>`, not xmlutil's default `<nothing />`.
+                // Both are the same element to any parser, but the spaced form surprises readers and
+                // diff tools for no gain.
                 addTrailingSpaceBeforeEnd = false
             }
         writer.use { writer ->
@@ -89,8 +89,8 @@ private fun writeProblemDocument(problem: Problem): String =
     }
 
 /**
- * The single funnel for every piece of caller-supplied *text* — the five standard members and every
- * scalar extension value — which is why [requireWritableText] sits here and nowhere else. Names are
+ * The single funnel for every piece of caller-supplied text: the five standard members and every
+ * scalar extension value. That is why [requireWritableText] sits here and nowhere else. Names get
  * checked in [writeValue] instead; the ones reaching this function are either RFC-fixed literals or
  * have already been vetted there.
  */
@@ -110,16 +110,16 @@ private fun XmlWriter.writeValue(
     depth: Int,
 ) {
     // Bounded on the way out as well as in. Reading caps at the same limit, so a Problem deep enough
-    // to overflow here can only come from the caller's own code — but a document this codec could
-    // not read back is not one it should emit.
+    // to overflow here can only come from the caller's own code. A document this codec could not
+    // read back should not be one it emits.
     if (depth > Problem.MAX_NESTING_DEPTH) {
         throw SerializationException(
             "Problem extensions nest deeper than ${Problem.MAX_NESTING_DEPTH} levels",
         )
     }
     // The single funnel for every element name this codec emits: top-level extension members, the
-    // keys of a nested object, and the RFC's own `i` for array items. Checked here rather than in
-    // [textElement] so that the opening tag of an array or an object is covered too.
+    // keys of a nested object, and the RFC's own `i` for array items. This check lives here, not in
+    // [textElement], so the opening tag of an array or an object is covered too.
     requireXmlName(name)
     when (value) {
         is ProblemPrimitive -> {
@@ -128,7 +128,7 @@ private fun XmlWriter.writeValue(
 
         // Appendix B has no representation for null, nor for an empty collection. All three become
         // an empty element, and the reader therefore returns them as the empty string. This loss is
-        // a property of the format; it is pinned by tests rather than papered over.
+        // a property of the format. Tests pin it down instead of hiding it.
         ProblemNull -> {
             textElement(name, "")
         }

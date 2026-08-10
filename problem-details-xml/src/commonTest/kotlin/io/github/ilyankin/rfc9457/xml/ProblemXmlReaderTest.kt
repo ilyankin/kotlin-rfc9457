@@ -120,17 +120,17 @@ class ProblemXmlReaderTest :
         }
 
         "attributes are ignored wherever they appear" {
-            // Appendix B's RELAX NG admits `attribute * { text }`, so an attribute is *valid* — but
-            // the prose defines the mapping over elements only ("elements containing a child or
-            // children represent an object, except elements containing only children named i, which
-            // are arrays"). An attribute has no member to map onto, so honouring one would mean
-            // inventing semantics the RFC withholds, and freezing a collision policy it never
-            // specifies. Microsoft's ProblemDetailsWrapper — the most widely deployed
-            // implementation of this appendix — drops them the same way. This module's writer never
-            // emits an attribute, so nothing it produces is lost either.
+            // Appendix B's RELAX NG admits `attribute * { text }`, so an attribute is *valid*. The
+            // prose defines the mapping over elements only ("elements containing a child or children
+            // represent an object, except elements containing only children named i, which are
+            // arrays"). An attribute has no member to map onto, so honouring one would mean inventing
+            // semantics the RFC withholds, and freezing a collision policy it never specifies.
+            // Microsoft's ProblemDetailsWrapper, the most widely deployed implementation of this
+            // appendix, drops them the same way. This module's writer never emits an attribute, so
+            // nothing it produces is lost either.
             //
-            // Pinned because today the behaviour is a *consequence* of never reading attributes
-            // rather than a decision, and a refactor could start mapping them without noticing.
+            // Pinned because today the behaviour is a consequence of never reading attributes, not a
+            // decision, and a refactor could start mapping them without noticing.
             ProblemXml.decodeFromString(xml("""<balance currency="EUR">30</balance>""")).extensions shouldBe
                 mapOf("balance" to ProblemPrimitive(30))
 
@@ -161,9 +161,9 @@ class ProblemXmlReaderTest :
 
         "text needing escapes survives a writer-to-reader round trip" {
             // The half the Appendix B fixture cannot cover: its example contains no character that
-            // needs escaping, so nothing else would notice if the writer escaped and the reader
-            // then dropped the result. It did — the five predefined entities arrive as ENTITY_REF
-            // events, which the XXE guard was discarding along with everything else.
+            // needs escaping, so nothing else would notice if the writer escaped and the reader then
+            // dropped the result. It did: the five predefined entities arrive as ENTITY_REF events,
+            // which the XXE guard was discarding along with everything else.
             val original = Problem(detail = """1 < 2 && "x" > 'y'""", title = "a & b")
             ProblemXml.decodeFromString(ProblemXml.encodeToString(original)) shouldBe original
         }
@@ -197,15 +197,15 @@ class ProblemXmlReaderTest :
         }
 
         "a document that is not markup at all fails the same way" {
-            // Regression guard: xmlutil reports this one as a bare IllegalStateException rather than
-            // an XmlException, so it used to escape the wrapper and reach callers untranslated.
+            // Regression guard: xmlutil reports this one as a bare IllegalStateException, not an
+            // XmlException, so it used to escape the wrapper and reach callers untranslated.
             shouldThrow<SerializationException> { ProblemXml.decodeFromString("not xml at all") }
             shouldThrow<SerializationException> { ProblemXml.decodeFromString("<") }
         }
 
         "a root element that is not <problem> is rejected" {
             // RFC §3's leniency covers members, not the identity of the document. Accepting this
-            // used to yield a valid-looking empty `about:blank` Problem — silent data loss.
+            // used to yield a valid-looking empty `about:blank` Problem: silent data loss.
             shouldThrow<SerializationException> {
                 ProblemXml.decodeFromString("""<foo xmlns="urn:ietf:rfc:7807"/>""")
             }
@@ -224,9 +224,9 @@ class ProblemXmlReaderTest :
         }
 
         "nesting past the depth limit fails with an exception, not a StackOverflowError" {
-            // The recursion is entirely ours — xmlutil's reader is a pull parser and never recurses
-            // per element — so nothing below this library can bound it. Unbounded, a ~70 KB document
-            // exhausted the stack; StackOverflowError is an Error, so it slips past ordinary
+            // The recursion is entirely ours. xmlutil's reader is a pull parser and never recurses
+            // per element, so nothing below this library can bound it. Unbounded, a ~70 KB document
+            // exhausted the stack. StackOverflowError is an Error, so it slips past ordinary
             // handling entirely.
             val tooDeep = Problem.MAX_NESTING_DEPTH + 5
             val document =
