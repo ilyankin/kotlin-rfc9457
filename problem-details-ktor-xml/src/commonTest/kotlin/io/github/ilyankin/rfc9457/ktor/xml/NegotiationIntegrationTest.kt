@@ -34,7 +34,7 @@ private fun ApplicationTestBuilder.problemApp(acceptPlainJson: Boolean = true) {
 /**
  * The only module that can see both codecs, so the only place the two can be negotiated against each
  * other. Every case asserts the response's **content type**, not just its body: the 2026-07-31 review
- * found that a converter echoing back the type it was matched underpassed every body-only assertion.
+ * found that a converter echoing back the type it was matched under passed every body-only assertion.
  */
 class NegotiationIntegrationTest :
     StringSpec({
@@ -64,8 +64,8 @@ class NegotiationIntegrationTest :
                     ContentType.parse("application/problem+xml")
                 val body = response.bodyAsText()
                 body shouldContain "<problem xmlns=\"urn:ietf:rfc:7807\">"
-                // Parsed rather than string-matched, so the served bytes are proven to be a document
-                // this library can read back, not merely one that looks right.
+                // Parsed, not string-matched, so the served bytes are proven to be a document this
+                // library can read back, not merely one that looks right.
                 ProblemXml.decodeFromString(body).status shouldBe 500
             }
         }
@@ -135,7 +135,7 @@ class NegotiationIntegrationTest :
         }
 
         // The single-function shape guaranteed JSON-first internally; with the split, the guarantee
-        // moved to the call site. This makes that a documented consequence rather than a trap.
+        // moved to the call site. This makes that a documented consequence, not a trap.
         "registering XML first reverses the wildcard tie" {
             testApplication {
                 install(ContentNegotiation) {

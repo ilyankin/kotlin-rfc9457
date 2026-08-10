@@ -22,31 +22,32 @@ import kotlinx.io.readString
  * The same shape as `ProblemJsonConverter`, with `ProblemXml` in place of `Json`, and thin for the
  * same reason: the encoding lives in `problem-details-xml`, so this only delegates.
  *
- * It lives in this module rather than beside its JSON twin so that `problem-details-ktor` never
- * depends on `problem-details-xml`. That edge is the whole point of the split — an application
- * without the XML dependency gets a compile error at the [problemXml] call site rather than a
- * runtime `NoClassDefFoundError`.
+ * It lives in this module, not beside its JSON twin, so that `problem-details-ktor` never depends on
+ * `problem-details-xml`. That edge is the whole point of the split. An application without the XML
+ * dependency gets a compile error at the [problemXml] call site instead of a runtime
+ * `NoClassDefFoundError`.
  *
- * Unlike the JSON side there is no `Json` parameter to accept: `ProblemXml` deliberately exposes no
- * configuration, because pinning the parser implementation (which is what keeps external entities
- * unresolved) and accepting a caller's parser are mutually exclusive.
+ * Unlike the JSON side there is no `Json` parameter to accept. `ProblemXml` deliberately exposes no
+ * configuration, because pinning the parser implementation, which is what keeps external entities
+ * unresolved, and accepting a caller's parser are mutually exclusive.
  */
 public class ProblemXmlConverter : ContentConverter {
     /**
-     * Writes [value] as `application/problem+xml`, or returns `null` if it is not a [Problem] — the
-     * interface's way of saying "not mine", which lets `ContentNegotiation` try the next converter.
+     * Writes [value] as `application/problem+xml`, or returns `null` if it is not a [Problem]. That
+     * is the interface's way of saying "not mine", which lets `ContentNegotiation` try the next
+     * converter.
      *
      * As on the JSON side, the [contentType] this converter was matched under is ignored and the
      * response is labelled `application/problem+xml`: the media type is the only wire-level marker
      * identifying a problem document. Today the two always coincide, since there is no
-     * `acceptPlainXml` flag; writing rather than echoing is pinned by a test so that adding one
-     * later cannot silently reintroduce the bug the JSON converter shipped with.
+     * `acceptPlainXml` flag. Writing instead of echoing is pinned by a test so that adding one later
+     * cannot silently reintroduce the bug the JSON converter shipped with.
      *
      * **The response is always UTF-8**, whatever [charset] was negotiated. An XML document states its
      * own encoding in-band and `ProblemXml` writes that declaration as a literal `encoding="UTF-8"`,
      * so honouring a negotiated `ISO-8859-1` would put latin-1 bytes inside a document claiming to be
-     * UTF-8 — wrong for anything reading the bytes without the HTTP header, which is any parser
-     * handed a saved file or a queued message.
+     * UTF-8. That is wrong for anything reading the bytes without the HTTP header, which is any
+     * parser handed a saved file or a queued message.
      */
     override suspend fun serialize(
         contentType: ContentType,
@@ -66,13 +67,13 @@ public class ProblemXmlConverter : ContentConverter {
      * else, leaving the body to the next converter.
      *
      * **The body is decoded as UTF-8**, whatever [charset] the request declared, and a document's own
-     * `encoding` pseudo-attribute is likewise not honoured — by the time the codec runs the bytes are
-     * already text. Stated rather than left implicit: it matches `ProblemJsonConverter`, so the two
-     * formats never disagree about the same request.
+     * `encoding` pseudo-attribute is likewise not honoured. By the time the codec runs the bytes are
+     * already text. This is stated explicitly, not left implicit: it matches `ProblemJsonConverter`,
+     * so the two formats never disagree about the same request.
      *
      * @throws kotlinx.serialization.SerializationException if the body is not a valid problem
-     *   document. xmlutil's own `XmlException` is wrapped rather than propagated, so catching a
-     *   parse failure never requires xmlutil on the caller's classpath.
+     *   document. xmlutil's own `XmlException` is wrapped, not propagated, so catching a parse
+     *   failure never requires xmlutil on the caller's classpath.
      */
     override suspend fun deserialize(
         charset: Charset,

@@ -28,8 +28,8 @@ import io.ktor.utils.io.charsets.name
  * negotiated" is not a safe answer for this converter the way it is for `ProblemJsonConverter`.
  *
  * Before this was pinned, `Accept-Charset: ISO-8859-1` produced latin-1 bytes inside a document whose
- * declaration read `encoding="UTF-8"` — `café` arrived as `caf?` to anything parsing the bytes
- * without the HTTP header. The header and the declaration contradicted each other outright.
+ * declaration read `encoding="UTF-8"`. `café` arrived as `caf?` to anything parsing the bytes without
+ * the HTTP header. The header and the declaration contradicted each other outright.
  */
 class CharsetTest :
     StringSpec({
