@@ -1,0 +1,28 @@
+public final class io/github/ilyankin/rfc9457/ktor/validation/InvalidFieldKt {
+	public static final fun decodeValidationReason (Ljava/lang/String;)Lio/github/ilyankin/rfc9457/ktor/validation/ValidationReason;
+	public static final fun invalidField (Ljava/lang/String;Ljava/lang/String;)Lio/ktor/server/plugins/requestvalidation/ValidationResult$Invalid;
+	public static final fun invalidFields (Ljava/util/List;)Lio/ktor/server/plugins/requestvalidation/ValidationResult$Invalid;
+	public static final fun invalidFields ([Lkotlin/Pair;)Lio/ktor/server/plugins/requestvalidation/ValidationResult$Invalid;
+}
+
+public final class io/github/ilyankin/rfc9457/ktor/validation/JsonPointerKt {
+	public static final fun buildJsonPointer (Lkotlinx/serialization/descriptors/SerialDescriptor;Ljava/util/List;)Ljava/lang/String;
+}
+
+public final class io/github/ilyankin/rfc9457/ktor/validation/RequestValidationCatalogKt {
+	public static final fun requestValidation (Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;Lio/github/ilyankin/rfc9457/ProblemType;)V
+}
+
+public final class io/github/ilyankin/rfc9457/ktor/validation/ValidationReason {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lio/github/ilyankin/rfc9457/ktor/validation/ValidationReason;
+	public static synthetic fun copy$default (Lio/github/ilyankin/rfc9457/ktor/validation/ValidationReason;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/ilyankin/rfc9457/ktor/validation/ValidationReason;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDetail ()Ljava/lang/String;
+	public final fun getPointer ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
