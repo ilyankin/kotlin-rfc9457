@@ -12,9 +12,10 @@ dependencies {
     dokka(project(":problem-details-ktor-xml"))
     dokka(project(":problem-details-ktor-client"))
     dokka(project(":problem-details-ktor-client-xml"))
+    dokka(project(":problem-details-ktor-validation"))
 
     // Kover is also applied per module (`rfc9457.kmp-library`, so each module's own tests get
-    // instrumented); this declares the root as the merging module that combines all six into one
+    // instrumented); this declares the root as the merging module that combines them all into one
     // report. `:koverXmlReport` here is what a Codecov upload step will consume.
     kover(project(":problem-details-core"))
     kover(project(":problem-details-ktor"))
@@ -22,4 +23,5 @@ dependencies {
     kover(project(":problem-details-ktor-xml"))
     kover(project(":problem-details-ktor-client"))
     kover(project(":problem-details-ktor-client-xml"))
+    kover(project(":problem-details-ktor-validation"))
 }

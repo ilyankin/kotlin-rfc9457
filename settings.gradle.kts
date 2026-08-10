@@ -12,9 +12,9 @@ plugins {
     id("com.gradleup.nmcp.settings") version "1.6.1"
 }
 
-// Read into strings rather than passed as providers: nmcp captures its config into a
+// Read into strings, not passed as providers: nmcp captures its config into a
 // `gradle.lifecycle.beforeProject` action that Gradle isolates per project, where a provider fails
-// to serialize. Both remain configuration-cache inputs either way.
+// to serialize. Both remain configuration-cache inputs.
 val portalUsername: String? =
     providers
         .gradleProperty("mavenCentralUsername")
@@ -50,4 +50,5 @@ include(
     "problem-details-ktor-xml",
     "problem-details-ktor-client",
     "problem-details-ktor-client-xml",
+    "problem-details-ktor-validation",
 )
