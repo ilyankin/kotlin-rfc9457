@@ -6,6 +6,31 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Added
+
+- **`problem-details-ktor-validation`** — integration with Ktor's `RequestValidation` plugin.
+  `requestValidation(type)` maps a `RequestValidationException` to a `Problem` carrying an `errors[]`
+  extension array — the multi-field validation pattern RFC 9457 itself recommends. `invalidField`/
+  `invalidFields` let a `validate<T> { }` block attach a JSON Pointer (RFC 6901) to each failure reason;
+  a reason produced any other way still degrades gracefully to a `detail`-only entry. Entries carry the
+  member names RFC 9457's own example uses, `detail` and `pointer`. `decodeValidationReason` is public,
+  so a mapping that needs a shape `requestValidation` cannot produce — e.g. a typed `errors[]` entry via
+  `problem-details-core`'s new `encodeToProblemValue` — can still read the pointer/detail that
+  `invalidField`/`invalidFields` encoded. `jsonPointer(Customer::age)` and
+  `jsonPointer<Customer>("profile", "color")` build a pointer checked against the body type's serial
+  descriptor rather than written out as a string, so a renamed member is a compile error or a loud
+  failure instead of a pointer to something that is gone; `invalidField` takes a property reference
+  directly for the single-field case. Segments are escaped per RFC 6901 §3 and percent-encoded for the
+  URI fragment form. A property renamed with `@SerialName` has to be named by its serial name — the
+  property-to-serial-name mapping is not reachable without `kotlin-reflect`, which this library
+  does not use.
+- **`problem-details-core`** — `Json.encodeToProblemValue(value)` encodes any `@Serializable` value to a
+  standalone `ProblemValue`, the same conversion `ProblemBuilder.extension(name, value)` already did for
+  one whole extension member, now usable for a value that is not itself a member — one element of a
+  `ProblemArray`, for instance.
+
 ## [0.4.0] — 2026-08-04
 
 ### Added
