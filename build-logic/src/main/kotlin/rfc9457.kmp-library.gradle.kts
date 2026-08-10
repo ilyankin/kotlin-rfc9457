@@ -64,10 +64,10 @@ dokka {
         }
 
         // A standalone publication has nothing to resolve `[Problem]` against, so KDoc in the
-        // dependent modules pointed nowhere — visible on javadoc.io, not on the aggregated site.
-        // The package list carries locations relative to the site root, so links land on the
+        // dependent modules pointed nowhere. That's visible on javadoc.io, not on the aggregated
+        // site. The package list carries locations relative to the site root, so links land on the
         // published aggregate. An unreachable list is not an error: links stay plain text, as they
-        // already were. Core is skipped — its own types are local.
+        // already were. Core is skipped; its own types are local.
         if (project.name != "problem-details-core") {
             externalDocumentationLinks.register("problem-details-core") {
                 url("https://ilyankin.github.io/kotlin-rfc9457/")

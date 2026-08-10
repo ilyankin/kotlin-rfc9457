@@ -9,7 +9,7 @@ import org.gradle.api.XmlProvider
  * Rewrites the root POM of a Kotlin Multiplatform publication into `packaging: pom` plus a single
  * compile-scoped dependency on the `-jvm` artifact, the way kotlinx-serialization and
  * kotlinx-coroutines publish theirs. Without it, a consumer who writes the plain coordinates gets
- * the metadata jar — no classes — and has to find the `-jvm` suffix the hard way.
+ * the metadata jar, no classes, and has to find the `-jvm` suffix the hard way.
  *
  * A class rather than a lambda on purpose: `withXml` runs during task execution, so anything it
  * closes over is serialized into the configuration cache. A lambda here failed with "cannot

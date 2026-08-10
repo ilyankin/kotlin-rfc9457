@@ -18,7 +18,7 @@ val javadocJar =
         from(dokkaHtml.flatMap { it.outputDirectory })
     }
 
-// Captured here, not read inside `withXml`: that action runs at execution time, so whatever it
+// Captured here, not read inside `withXml`. That action runs at execution time, so whatever it
 // closes over is serialized into the configuration cache, and `project` cannot be. The failure shows
 // only on `publish*` tasks, never on `build`.
 val artifactGroup = project.group.toString()
@@ -59,7 +59,7 @@ publishing {
         // A multiplatform root publication carries Kotlin metadata, not JVM classes, so plain
         // coordinates would hand a consumer an empty jar. Rewritten to packaging `pom` plus a
         // compile-scoped dependency on the `-jvm` artifact so they resolve transitively.
-        // Irreversible once published: changing it breaks everyone who wrote either form.
+        // This is irreversible once published: changing it breaks everyone who wrote either form.
         if (name == "kotlinMultiplatform") {
             pom.withXml(RewriteRootPomToJvmRedirect(artifactGroup, jvmArtifactId, artifactVersion))
         }
