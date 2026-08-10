@@ -20,11 +20,11 @@ import io.ktor.http.headersOf
 import kotlinx.serialization.SerializationException
 
 /**
- * RFC 9457 Appendix B's example, indentation aside. Re-declared here rather than shared: test
- * fixtures do not cross module `commonTest` source sets, so each module that wants this one keeps its
- * own copy. Unlike `problem-details-xml`'s `XmlFixtures`, which drops the inter-element whitespace to
- * match what the writer emits, this one keeps it — the read path has to cope with a hand-formatted
- * document from a server it does not control.
+ * RFC 9457 Appendix B's example, indentation aside. Re-declared here, not shared: test fixtures do
+ * not cross module `commonTest` source sets, so each module that wants this one keeps its own copy.
+ * Unlike `problem-details-xml`'s `XmlFixtures`, which drops the inter-element whitespace to match
+ * what the writer emits, this one keeps it. The read path has to cope with a hand-formatted document
+ * from a server it does not control.
  */
 private val OUT_OF_CREDIT_XML =
     """
@@ -162,7 +162,7 @@ class ProblemXmlTest :
     })
 
 /**
- * The server's `problemJson()`/`problemXml()` pair is order-sensitive — registration order breaks the
+ * The server's `problemJson()`/`problemXml()` pair is order-sensitive: registration order breaks the
  * `Accept` tie. This pair is not, because each handler returns untouched anything the other matches.
  * Pinned in both directions so that a future change which makes one of them greedier fails here.
  */

@@ -15,8 +15,8 @@ import io.ktor.http.headersOf
 
 /*
  * The sample in `samples/` is inlined into the API documentation by `@sample`. Compiling it already
- * stops it from referring to an API that no longer exists; running it here stops it from being wiring
- * that compiles but does not behave the way the surrounding prose claims.
+ * rules out referring to an API that no longer exists. Running it here catches wiring that compiles
+ * but does not behave the way the surrounding prose claims.
  */
 class SamplesTest :
     StringSpec({

@@ -10,7 +10,7 @@ kotlin {
     }
     sourceSets.getByName("commonTest").dependencies {
         implementation(libs.ktor.client.mock)
-        // Test-only, mirroring the JSON module: proves this decodes what problem-details-ktor-xml
+        // Test-only, mirroring the JSON module. Proves this decodes what problem-details-ktor-xml
         // actually emits, not just hand-built mock bytes.
         implementation(project(":problem-details-ktor-xml"))
         implementation(libs.ktor.server.test.host)
