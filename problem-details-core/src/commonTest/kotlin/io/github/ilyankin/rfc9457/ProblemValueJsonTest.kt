@@ -3,6 +3,7 @@ package io.github.ilyankin.rfc9457
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
@@ -99,5 +100,18 @@ class ProblemValueJsonTest :
             val text = ProblemPrimitive("30")
             number.toJsonElement().toProblemValue() shouldBe number
             text.toJsonElement().toProblemValue() shouldBe text
+        }
+
+        "encodeToProblemValue encodes a typed value the same way extension(name, value) would" {
+            @Serializable
+            data class Account(val id: String, val balance: Int)
+
+            val account = Account(id = "12345", balance = 30)
+            Json.encodeToProblemValue(account) shouldBe
+                ProblemObject(mapOf("id" to ProblemPrimitive("12345"), "balance" to ProblemPrimitive(30)))
+        }
+
+        "encodeToProblemValue works on a scalar, not just an object" {
+            Json.encodeToProblemValue("age must be positive") shouldBe ProblemPrimitive("age must be positive")
         }
     })

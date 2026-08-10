@@ -2,11 +2,13 @@ package io.github.ilyankin.rfc9457
 
 import io.github.ilyankin.rfc9457.samples.buildProblem
 import io.github.ilyankin.rfc9457.samples.buildProblemWithTypedExtension
+import io.github.ilyankin.rfc9457.samples.encodeListToProblemArray
 import io.github.ilyankin.rfc9457.samples.problemFromProblemType
 import io.github.ilyankin.rfc9457.samples.readTypedExtensions
 import io.github.ilyankin.rfc9457.samples.throwProblemForOutOfCredit
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 /*
@@ -60,5 +62,13 @@ class SamplesTest :
             val decoded = readTypedExtensions(problem)
             decoded.balance shouldBe 30
             decoded.accounts shouldBe listOf("/account/12345")
+        }
+
+        "encodeListToProblemArray encodes each element from its own typed object" {
+            val errors = encodeListToProblemArray().extensions.getValue("errors").problemArray
+            errors shouldHaveSize 2
+            errors[0].problemObject.getValue("field").string shouldBe "#/age"
+            errors[0].problemObject.getValue("message").string shouldBe "must be a positive integer"
+            errors[1].problemObject.getValue("field").string shouldBe "#/profile/color"
         }
     })

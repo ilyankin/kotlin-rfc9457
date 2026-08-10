@@ -200,6 +200,7 @@ public abstract interface class io/github/ilyankin/rfc9457/ProblemValue {
 }
 
 public final class io/github/ilyankin/rfc9457/ProblemValueJsonKt {
+	public static final fun encodeToProblemValue (Lkotlinx/serialization/json/Json;Lkotlinx/serialization/SerializationStrategy;Ljava/lang/Object;)Lio/github/ilyankin/rfc9457/ProblemValue;
 	public static final fun getProblemJson ()Lkotlinx/serialization/json/Json;
 	public static final fun toJsonElement (Lio/github/ilyankin/rfc9457/ProblemValue;)Lkotlinx/serialization/json/JsonElement;
 	public static final fun toProblemValue (Lkotlinx/serialization/json/JsonElement;)Lio/github/ilyankin/rfc9457/ProblemValue;

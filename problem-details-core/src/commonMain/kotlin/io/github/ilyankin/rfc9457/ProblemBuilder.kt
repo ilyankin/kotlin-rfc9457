@@ -117,7 +117,7 @@ public class ProblemBuilder
             value: T,
             serializer: SerializationStrategy<T>,
         ) {
-            put(name, json.encodeToJsonElement(serializer, value).toProblemValue())
+            put(name, json.encodeToProblemValue(serializer, value))
         }
 
         /**

@@ -1,6 +1,7 @@
 package io.github.ilyankin.rfc9457
 
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -8,6 +9,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.JsonUnquotedLiteral
+import kotlinx.serialization.serializer
 
 /**
  * The [Json] used to convert typed extension payloads when the caller supplies none. That covers the
@@ -55,6 +57,24 @@ internal fun ProblemValue.toJsonElement(): JsonElement = toJsonElement(depth = 0
  */
 @PublishedApi
 internal fun JsonElement.toProblemValue(): ProblemValue = toProblemValue(depth = 0)
+
+/**
+ * Encodes [value] to a standalone [ProblemValue]. [ProblemBuilder.extension] does the same thing for
+ * one whole extension member; this is for callers building a [ProblemValue] that is not itself a
+ * member, such as one element of a [ProblemArray].
+ *
+ * @sample io.github.ilyankin.rfc9457.samples.encodeListToProblemArray
+ */
+public fun <T> Json.encodeToProblemValue(
+    serializer: SerializationStrategy<T>,
+    value: T,
+): ProblemValue = encodeToJsonElement(serializer, value).toProblemValue()
+
+/**
+ * Encodes [value] to a standalone [ProblemValue], with the serializer resolved from [T].
+ */
+public inline fun <reified T> Json.encodeToProblemValue(value: T): ProblemValue =
+    encodeToProblemValue(serializer(), value)
 
 /**
  * The recursion the library owns, bounded by [Problem.MAX_NESTING_DEPTH].

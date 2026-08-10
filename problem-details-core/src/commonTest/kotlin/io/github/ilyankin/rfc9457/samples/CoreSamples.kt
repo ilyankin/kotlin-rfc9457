@@ -1,12 +1,16 @@
 package io.github.ilyankin.rfc9457.samples
 
 import io.github.ilyankin.rfc9457.Problem
+import io.github.ilyankin.rfc9457.ProblemArray
 import io.github.ilyankin.rfc9457.ProblemType
+import io.github.ilyankin.rfc9457.ProblemValue
+import io.github.ilyankin.rfc9457.encodeToProblemValue
 import io.github.ilyankin.rfc9457.exception
 import io.github.ilyankin.rfc9457.extension
 import io.github.ilyankin.rfc9457.extensionsAs
 import io.github.ilyankin.rfc9457.problem
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 /*
  * Bodies of these functions are inlined into the API documentation by the `@sample` KDoc tag, so
@@ -88,3 +92,27 @@ internal fun readTypedExtensions(problem: Problem): OutOfCredit =
     // Extension members the type does not declare are ignored, as RFC 9457 §3.2 requires. That is
     // also why this reads a document produced by a newer version of the problem type.
     problem.extensionsAs<OutOfCredit>()
+
+@Serializable
+internal data class FieldError(
+    val field: String,
+    val message: String,
+)
+
+/** @see io.github.ilyankin.rfc9457.encodeToProblemValue */
+internal fun encodeListToProblemArray(): Problem {
+    val errors =
+        listOf(
+            FieldError(field = "#/age", message = "must be a positive integer"),
+            FieldError(field = "#/profile/color", message = "must be 'green', 'red' or 'blue'"),
+        )
+
+    return problem {
+        type = "https://example.net/validation-error"
+        title = "Your request is not valid."
+
+        // Each element is a typed object, not hand-built ProblemPrimitive/ProblemObject calls.
+        val array: ProblemValue = ProblemArray(errors.map { Json.encodeToProblemValue(it) })
+        extension("errors", array)
+    }
+}
