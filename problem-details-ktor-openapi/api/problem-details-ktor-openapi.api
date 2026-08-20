@@ -1,0 +1,22 @@
+public final class io/github/ilyankin/rfc9457/ktor/openapi/ProblemResponsesKt {
+	public static final fun problemDefault (Lio/ktor/openapi/Responses$Builder;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun problemDefault$default (Lio/ktor/openapi/Responses$Builder;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun problemResponse (Lio/ktor/openapi/Responses$Builder;Lio/github/ilyankin/rfc9457/ProblemType;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;)V
+	public static final fun problemResponse (Lio/ktor/openapi/Responses$Builder;Lio/ktor/http/HttpStatusCode;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun problemResponse$default (Lio/ktor/openapi/Responses$Builder;Lio/github/ilyankin/rfc9457/ProblemType;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun problemResponse$default (Lio/ktor/openapi/Responses$Builder;Lio/ktor/http/HttpStatusCode;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun problemsFrom (Lio/ktor/openapi/Responses$Builder;Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun problemsFrom$default (Lio/ktor/openapi/Responses$Builder;Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class io/github/ilyankin/rfc9457/ktor/openapi/ProblemRoutesKt {
+	public static final fun problemResponses (Lio/ktor/server/routing/Route;Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
+	public static synthetic fun problemResponses$default (Lio/ktor/server/routing/Route;Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lio/ktor/server/routing/Route;
+}
+
+public final class io/github/ilyankin/rfc9457/ktor/openapi/ProblemSchemas {
+	public static final field INSTANCE Lio/github/ilyankin/rfc9457/ktor/openapi/ProblemSchemas;
+	public final fun getProblem ()Lio/ktor/openapi/JsonSchema;
+	public final fun getProblemWithErrors ()Lio/ktor/openapi/JsonSchema;
+}
+

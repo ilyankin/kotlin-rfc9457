@@ -13,6 +13,7 @@ dependencies {
     dokka(project(":problem-details-ktor-client"))
     dokka(project(":problem-details-ktor-client-xml"))
     dokka(project(":problem-details-ktor-validation"))
+    dokka(project(":problem-details-ktor-openapi"))
 
     // Kover is also applied per module (`rfc9457.kmp-library`, so each module's own tests get
     // instrumented); this declares the root as the merging module that combines them all into one
@@ -24,4 +25,5 @@ dependencies {
     kover(project(":problem-details-ktor-client"))
     kover(project(":problem-details-ktor-client-xml"))
     kover(project(":problem-details-ktor-validation"))
+    kover(project(":problem-details-ktor-openapi"))
 }
