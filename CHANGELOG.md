@@ -6,6 +6,40 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Added
+
+- **`problem-details-ktor-openapi`** — teaches Ktor's first-party OpenAPI generator to describe the
+  problem responses an application actually produces. Ktor infers an operation's responses from what
+  its route handler calls, and problem documents come from `StatusPages`, outside every route lambda,
+  so inference can never see them.
+  - `Route.problemResponses(catalog)` attaches a catalog's universally-applicable responses to a route
+    and everything below it. Ktor folds route metadata from the routing root downwards, so one call
+    inside `routing { }` documents a whole application and a `describe` on a leaf merges with it.
+  - `problemsFrom(catalog)` is the same thing inside a `responses { }` block. It emits the catch-all
+    and one response per status registered through `forStatusCode`/`standardStatusCodes()` — the half
+    of a catalog that holds for every operation. Types declared with `map<T>(type)` are deliberately
+    excluded: a catalog records no route, so attaching them everywhere would document `GET /health` as
+    returning 403.
+  - `problemResponse(type)`, `problemResponse(status)` and `problemDefault()` document one response at
+    a time. Two types sharing a status collapse into a single response naming both, with one example
+    per type keyed by its type URI, since OpenAPI allows only one response object per code.
+  - `ProblemSchemas.problem` and `ProblemSchemas.problemWithErrors` are hand-written rather than
+    inferred: `ProblemSerializer`'s descriptor marks `type` non-optional and cannot describe extension
+    members at all, so an inferred schema would require a member RFC 9457 §3.1 makes optional and omit
+    the sibling extensions of §3.2 entirely.
+  - Bodies are always keyed by `application/problem+json`, never `application/json`.
+- **`problem-details-ktor-openapi-xml`** — `problemXmlContent()` adds `application/problem+xml` to a
+  response already documenting JSON, carrying RFC 9457 Appendix B's root element and namespace. The
+  XML schema is retitled with an `Xml` suffix so it hoists into its own component: Ktor keys
+  `components/schemas` by title alone and the last registration wins, so a shared title would let the
+  routing walk order decide whether the XML metadata survived at all.
+- **`problem-details-ktor`** — `problemCatalog { }` builds a `ProblemDetailsCatalog` as a standalone
+  value, and `problemDetails(catalog)` installs an already-built one. `problemTypes` and `statusCodes`
+  expose what a catalog declares, which is what makes documenting it possible.
+  `install(StatusPages) { problemDetails { } }` is unchanged.
+
 ## [0.5.0] — 2026-08-10
 
 ### Added
