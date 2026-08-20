@@ -11,7 +11,10 @@ public final class io/github/ilyankin/rfc9457/ktor/ProblemContentTypes {
 
 public final class io/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog {
 	public final fun addMapping (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function2;)V
+	public final fun declareType (Lio/github/ilyankin/rfc9457/ProblemType;)V
 	public final fun forStatusCode (Lio/ktor/http/HttpStatusCode;Lkotlin/jvm/functions/Function1;)V
+	public final fun getProblemTypes ()Ljava/util/List;
+	public final fun getStatusCodes ()Ljava/util/Set;
 	public final fun onUnmapped (Lkotlin/jvm/functions/Function2;)V
 	public final fun standardStatusCodes ()V
 }
@@ -35,6 +38,8 @@ public final class io/github/ilyankin/rfc9457/ktor/RespondProblemKt {
 }
 
 public final class io/github/ilyankin/rfc9457/ktor/StatusPagesIntegrationKt {
+	public static final fun problemCatalog (Lkotlin/jvm/functions/Function1;)Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;
+	public static final fun problemDetails (Lio/ktor/server/plugins/statuspages/StatusPagesConfig;Lio/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog;)V
 	public static final fun problemDetails (Lio/ktor/server/plugins/statuspages/StatusPagesConfig;Lkotlin/jvm/functions/Function1;)V
 }
 

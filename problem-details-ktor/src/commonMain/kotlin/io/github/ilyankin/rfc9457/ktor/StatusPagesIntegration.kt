@@ -8,6 +8,15 @@ import io.ktor.server.plugins.statuspages.StatusPagesConfig
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
+ * Builds a [ProblemDetailsCatalog] as a standalone value.
+ *
+ * Use this when something besides `StatusPages` needs the catalog — documenting it, for instance.
+ * `install(StatusPages) { problemDetails { } }` remains the shorter form when nothing does.
+ */
+public fun problemCatalog(configure: ProblemDetailsCatalog.() -> Unit): ProblemDetailsCatalog =
+    ProblemDetailsCatalog().apply(configure)
+
+/**
  * Registers a [ProblemDetailsCatalog] against Ktor's own `StatusPages` configuration.
  *
  * Each catalog entry becomes one `exception(...)`/`status(...)` registration and nothing more: the
@@ -16,8 +25,16 @@ import kotlin.coroutines.cancellation.CancellationException
  * @sample io.github.ilyankin.rfc9457.samples.problemDetailsSample
  */
 public fun StatusPagesConfig.problemDetails(configure: ProblemDetailsCatalog.() -> Unit) {
-    val catalog = ProblemDetailsCatalog().apply(configure)
+    problemDetails(problemCatalog(configure))
+}
 
+/**
+ * Registers an already-built [catalog] against Ktor's own `StatusPages` configuration.
+ *
+ * The counterpart of [problemCatalog]: build the catalog once, install it here and hand the same
+ * value to whatever else needs to read it.
+ */
+public fun StatusPagesConfig.problemDetails(catalog: ProblemDetailsCatalog) {
     // `StatusPagesConfig.exceptions` is keyed by class, so two Throwable registrations collide and
     // the later one wins. Registered first, before the catalog's, so `map<Throwable>` can replace it.
     exception<Throwable> { call, cause ->

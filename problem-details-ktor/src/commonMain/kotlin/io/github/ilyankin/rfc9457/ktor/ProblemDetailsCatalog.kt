@@ -15,13 +15,26 @@ import kotlin.reflect.KClass
  *
  * Every entry becomes exactly one registration on Ktor's own `StatusPages` configuration; dispatch,
  * including nearest-parent-class resolution, stays `StatusPages`'s job. Obtain one through
- * [problemDetails].
+ * [problemDetails], or through [problemCatalog] when something besides `StatusPages` needs it too.
  */
 public class ProblemDetailsCatalog internal constructor() {
     internal val exceptionMappings: MutableMap<KClass<out Throwable>, (ApplicationCall, Throwable) -> Problem> =
         LinkedHashMap()
 
     internal val statusMappings: MutableMap<HttpStatusCode, (ApplicationCall) -> Problem> = LinkedHashMap()
+
+    internal val declaredTypes: MutableList<ProblemType> = mutableListOf()
+
+    /**
+     * The problem types declared through [map] with a [ProblemType] argument, in declaration order.
+     *
+     * A mapping written as a lambda is not here: it produces its document at call time and has no
+     * type to report. Consumers that document a catalog therefore see the declarative half only.
+     */
+    public val problemTypes: List<ProblemType> get() = declaredTypes
+
+    /** The status codes registered through [forStatusCode], including via [standardStatusCodes]. */
+    public val statusCodes: Set<HttpStatusCode> get() = statusMappings.keys
 
     /**
      * The problem produced for an exception no mapping covers.
@@ -95,7 +108,17 @@ public class ProblemDetailsCatalog internal constructor() {
         // ProblemBuilder.detail and fail to resolve as a function call.
         noinline detailFrom: (T) -> String? = { it.message },
     ) {
+        declareType(type)
         map<T> { _, cause -> type.problem(detail = detailFrom(cause)) }
+    }
+
+    /**
+     * The non-inline half of [map]. Exists so that only this signature, and not the backing list,
+     * is pinned into the public ABI by the inline call sites.
+     */
+    @PublishedApi
+    internal fun declareType(type: ProblemType) {
+        declaredTypes.add(type)
     }
 
     /**
