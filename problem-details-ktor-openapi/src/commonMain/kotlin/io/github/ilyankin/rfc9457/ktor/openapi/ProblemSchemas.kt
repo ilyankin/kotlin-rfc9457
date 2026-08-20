@@ -38,7 +38,8 @@ private val standardMembers: Map<String, ReferenceOr<JsonSchema>> =
  *
  * Each schema's non-null `title` is load-bearing: Ktor lifts a titled schema into
  * `components/schemas` and rewrites every use to a `$ref`. Clearing it inlines the whole schema at
- * every response instead.
+ * every response instead. Through Ktor 3.5.2 the lifting skips `default` responses (KTOR-9657, fixed
+ * in 3.6.0), so a catch-all body stays inline whatever its title.
  */
 public object ProblemSchemas {
     /**
