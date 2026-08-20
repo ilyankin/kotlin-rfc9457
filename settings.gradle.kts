@@ -52,4 +52,5 @@ include(
     "problem-details-ktor-client-xml",
     "problem-details-ktor-validation",
     "problem-details-ktor-openapi",
+    "problem-details-ktor-openapi-xml",
 )

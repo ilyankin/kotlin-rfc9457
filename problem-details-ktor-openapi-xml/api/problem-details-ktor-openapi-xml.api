@@ -1,0 +1,5 @@
+public final class io/github/ilyankin/rfc9457/ktor/openapi/xml/ProblemXmlContentKt {
+	public static final fun problemXmlContent (Lio/ktor/openapi/Response$Builder;Lio/ktor/openapi/JsonSchema;)V
+	public static synthetic fun problemXmlContent$default (Lio/ktor/openapi/Response$Builder;Lio/ktor/openapi/JsonSchema;ILjava/lang/Object;)V
+}
+
