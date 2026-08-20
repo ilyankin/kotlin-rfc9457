@@ -83,9 +83,10 @@ tests, because Ktor's `Logger` is an `expect interface` whose JVM `actual` is a 
   consumers at compile time.
 
 - **Module boundaries.** `problem-details-ktor` must never depend on the XML modules: an application
-  that emits only JSON should never resolve an XML parser. Optionality is expressed by *which
-  artifact declares the registration function*, so a missing dependency is a compile error at the
-  call site rather than a runtime `NoClassDefFoundError`.
+  that emits only JSON should never resolve an XML parser. The same holds for
+  `problem-details-ktor-openapi`, whose XML half is `problem-details-ktor-openapi-xml`. Optionality is
+  expressed by *which artifact declares the registration function*, so a missing dependency is a
+  compile error at the call site rather than a runtime `NoClassDefFoundError`.
 
 ## Pull requests
 

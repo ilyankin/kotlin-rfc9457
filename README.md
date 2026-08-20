@@ -82,6 +82,12 @@ into the `errors[]` array with JSON Pointer references that the RFC itself recom
 validation, and `jsonPointer(Customer::age)` derives each pointer from the property so it cannot
 drift away from the DTO it points into.
 
+**In the OpenAPI document, not just on the wire.** `problemResponses(catalog)` inside `routing { }`
+documents the catch-all and every status the catalog answers, for the whole application, in one line.
+Ktor's own inference cannot find these: it reads route handler bodies, and problem documents come from
+`StatusPages`, which sits outside them. Bodies are keyed `application/problem+json`, which most
+implementations still get wrong.
+
 **Reading problems, not only writing them.** `problemJson()` on Ktor Client turns a problem response
 from an API you call back into the same `ProblemException` your own server throws — one exception
 type for both directions, not two.
@@ -96,13 +102,14 @@ in both directions, in artifacts of its own so a JSON-only application never res
 | Return RFC 9457 documents from a Ktor server | `problem-details-core` + `problem-details-ktor` | 0.1.0 |
 | Build or read the documents with no web framework at all | `problem-details-core` | 0.1.0 |
 | Map `RequestValidation` failures to `errors[]` | …plus `problem-details-ktor-validation` | 0.5.0 |
+| Show those failures in a generated OpenAPI document | …plus `problem-details-ktor-openapi`, and `problem-details-ktor-openapi-xml` if you also answer XML | 0.6.0 |
 | Answer `application/problem+xml` as well as JSON | …plus `problem-details-xml` and `problem-details-ktor-xml` | 0.2.0 |
 | Decode problem responses from APIs you call | …plus `problem-details-ktor-client`, and `problem-details-ktor-client-xml` if those answers can be XML | 0.3.0 / 0.4.0 |
 
 All modules always share one version, so you choose a version once and use it everywhere.
 
 <details>
-<summary>All seven artifacts, with per-module documentation</summary>
+<summary>All nine artifacts, with per-module documentation</summary>
 
 | Artifact | Contains | Javadoc |
 |---|---|---|
@@ -113,6 +120,8 @@ All modules always share one version, so you choose a version once and use it ev
 | [`problem-details-ktor-client`](problem-details-ktor-client/README.md) | `problemJson()` — decode a recognized problem response into the same `ProblemException` the server throws | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-client) |
 | [`problem-details-ktor-client-xml`](problem-details-ktor-client-xml/README.md) | `problemXml()` — the same for `application/problem+xml` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-client-xml) |
 | [`problem-details-ktor-validation`](problem-details-ktor-validation/README.md) | `invalidField`/`invalidFields`, `jsonPointer`, `requestValidation(type)` — `RequestValidationException` to `errors[]` with JSON Pointer | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-validation) |
+| [`problem-details-ktor-openapi`](problem-details-ktor-openapi/README.md) | `Route.problemResponses(catalog)`, `problemsFrom`, `problemResponse`, `problemDefault`, `ProblemSchemas` — problem responses in a generated OpenAPI document | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi) |
+| [`problem-details-ktor-openapi-xml`](problem-details-ktor-openapi-xml/README.md) | `problemXmlContent()` — the same, for `application/problem+xml` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi-xml) |
 
 </details>
 
@@ -274,7 +283,6 @@ islands out of a *stable* release, and at 0.x everything is unstable by declarat
 
 | Module | Would add |
 |---|---|
-| `problem-details-ktor-openapi` | Auto-documents problem responses in a generated OpenAPI spec. |
 | `problem-details-ktor-i18n` | `Accept-Language`-based localization of `title`/`detail` (Spring `MessageSource`-style). |
 | `problem-details-ktor-hooks` | A global enrichment hook (ASP.NET `CustomizeProblemDetails`-style) for adding fields like `traceId` to every response. |
 
