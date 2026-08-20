@@ -14,6 +14,7 @@ import io.ktor.openapi.OpenApiDoc
 import io.ktor.openapi.OpenApiInfo
 import io.ktor.server.application.Application
 import io.ktor.server.response.respondText
+import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.openapi.describe
 import io.ktor.server.routing.openapi.hide
@@ -24,10 +25,21 @@ import io.ktor.server.routing.routingRoot
 import io.ktor.server.testing.testApplication
 import io.ktor.utils.io.ExperimentalKtorApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-private fun Application.documentedApi() {
+/** Serves the document these specs read. Hidden, so it never appears in what it describes. */
+private fun Route.openApiDocument() {
+    get("/docs.json") {
+        val doc =
+            OpenApiDoc(info = OpenApiInfo("Test API", "1.0")) +
+                call.application.routingRoot.descendants()
+        call.respondText(Json.encodeToString(doc), ContentType.Application.Json)
+    }.hide()
+}
+
+private fun Application.rootApi() {
     routing {
         problemResponses(problemCatalog { standardStatusCodes() })
 
@@ -35,101 +47,88 @@ private fun Application.documentedApi() {
             get("/{id}") { call.respondText("an order") }
         }
 
-        get("/docs.json") {
-            val doc =
-                OpenApiDoc(info = OpenApiInfo("Test API", "1.0")) +
-                    call.application.routingRoot.descendants()
-            call.respondText(Json.encodeToString(doc), ContentType.Application.Json)
-        }.hide()
+        openApiDocument()
     }
 }
+
+private fun Application.leafDescribingApi() {
+    routing {
+        problemResponses(problemCatalog { standardStatusCodes() })
+
+        get("/orders") { call.respondText("orders") }
+            .describe { responses { problemResponse(HttpStatusCode.Conflict) } }
+
+        openApiDocument()
+    }
+}
+
+private fun Application.subtreeApi() {
+    routing {
+        route("/api") {
+            problemResponses(problemCatalog { standardStatusCodes() })
+            get("/orders") { call.respondText("orders") }
+        }
+
+        get("/health") { call.respondText("ok") }
+
+        openApiDocument()
+    }
+}
+
+private fun withDocument(
+    api: Application.() -> Unit,
+    assert: (JsonObject) -> Unit,
+) = testApplication {
+    application { api() }
+    assert(Json.parseToJsonElement(client.get("/docs.json").bodyAsText()).jsonObject)
+}
+
+private fun JsonObject.at(vararg path: String): JsonObject =
+    path.fold(this) { node, key ->
+        node.getValue(key).jsonObject
+    }
 
 class ProblemRoutesTest :
     StringSpec({
 
         "a describe at the routing root reaches a nested endpoint" {
-            testApplication {
-                application { documentedApi() }
-
-                val doc = Json.parseToJsonElement(client.get("/docs.json").bodyAsText()).jsonObject
-                val responses =
-                    doc["paths"]!!
-                        .jsonObject["/orders/{id}"]!!
-                        .jsonObject["get"]!!
-                        .jsonObject["responses"]!!
-                        .jsonObject
-
-                responses.keys shouldBe setOf("default", "404", "405", "406", "415")
+            withDocument(Application::rootApi) { doc ->
+                doc
+                    .at("paths", "/orders/{id}", "get", "responses")
+                    .keys shouldBe setOf("default", "404", "405", "406", "415")
             }
         }
 
-        "the schema is hoisted into components and referenced" {
-            testApplication {
-                application { documentedApi() }
+        "the body is a reference to one hoisted schema, keyed application/problem+json" {
+            withDocument(Application::rootApi) { doc ->
+                doc.at("components", "schemas")["ProblemDetails"] shouldNotBe null
 
-                val doc = Json.parseToJsonElement(client.get("/docs.json").bodyAsText()).jsonObject
-
-                doc["components"]!!.jsonObject["schemas"]!!.jsonObject["ProblemDetails"] shouldNotBe null
-
-                val schema =
-                    doc["paths"]!!
-                        .jsonObject["/orders/{id}"]!!
-                        .jsonObject["get"]!!
-                        .jsonObject["responses"]!!
-                        .jsonObject["404"]!!
-                        .jsonObject["content"]!!
-                        .jsonObject["application/problem+json"]!!
-                        .jsonObject["schema"]!!
-                        .jsonObject
-                schema["\$ref"]!!.jsonPrimitive.content shouldBe "#/components/schemas/ProblemDetails"
-            }
-        }
-
-        "the content type is application/problem+json, not application/json" {
-            testApplication {
-                application { documentedApi() }
-
-                val doc = Json.parseToJsonElement(client.get("/docs.json").bodyAsText()).jsonObject
-                val content =
-                    doc["paths"]!!
-                        .jsonObject["/orders/{id}"]!!
-                        .jsonObject["get"]!!
-                        .jsonObject["responses"]!!
-                        .jsonObject["404"]!!
-                        .jsonObject["content"]!!
-                        .jsonObject
-
+                val content = doc.at("paths", "/orders/{id}", "get", "responses", "404", "content")
                 content.keys shouldBe setOf("application/problem+json")
+                content
+                    .at("application/problem+json", "schema")[$$"$ref"]
+                    ?.jsonPrimitive
+                    ?.content shouldBe "#/components/schemas/ProblemDetails"
             }
         }
 
         "a leaf describe merges with the root one rather than replacing it" {
-            testApplication {
-                application {
-                    routing {
-                        problemResponses(problemCatalog { standardStatusCodes() })
+            withDocument(Application::leafDescribingApi) { doc ->
+                doc
+                    .at("paths", "/orders", "get", "responses")
+                    .keys shouldBe setOf("default", "404", "405", "406", "415", "409")
+            }
+        }
 
-                        get("/orders") { call.respondText("orders") }
-                            .describe { responses { problemResponse(HttpStatusCode.Conflict) } }
+        // The other half of the claim: a subtree call documents its subtree, and a sibling route
+        // outside it stays undocumented rather than inheriting responses it cannot produce.
+        "a subtree describe covers that subtree and nothing beside it" {
+            withDocument(Application::subtreeApi) { doc ->
+                doc
+                    .at("paths", "/api/orders", "get", "responses")
+                    .keys shouldBe setOf("default", "404", "405", "406", "415")
 
-                        get("/docs.json") {
-                            val doc =
-                                OpenApiDoc(info = OpenApiInfo("Test API", "1.0")) +
-                                    call.application.routingRoot.descendants()
-                            call.respondText(Json.encodeToString(doc), ContentType.Application.Json)
-                        }.hide()
-                    }
-                }
-
-                val doc = Json.parseToJsonElement(client.get("/docs.json").bodyAsText()).jsonObject
-                val responses =
-                    doc["paths"]!!
-                        .jsonObject["/orders"]!!
-                        .jsonObject["get"]!!
-                        .jsonObject["responses"]!!
-                        .jsonObject
-
-                responses.keys shouldBe setOf("default", "404", "405", "406", "415", "409")
+                doc.at("paths", "/health", "get")["responses"] shouldBe null
             }
         }
     })

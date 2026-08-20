@@ -42,6 +42,27 @@ class ProblemXmlContentTest :
             xml.namespace shouldBe "urn:ietf:rfc:7807"
         }
 
+        // The `Xml` suffix is only applied to a title that exists; an untitled schema is one the
+        // caller wants inlined, and inventing a title would hoist it against their wishes.
+        "an untitled schema stays untitled, and still carries the XML object" {
+            val untitled = ProblemSchemas.problem.copy(title = null)
+            val operation =
+                Operation.build {
+                    responses {
+                        problemResponse(OutOfCredit, schema = untitled) { problemXmlContent(untitled) }
+                    }
+                }
+
+            val schema =
+                operation.responses.shouldNotBeNull().responses.shouldNotBeNull()
+                    .getValue(403).valueOrNull().shouldNotBeNull()
+                    .content.shouldNotBeNull().getValue(ProblemContentTypes.Xml)
+                    .schema.shouldNotBeNull().valueOrNull().shouldNotBeNull()
+
+            schema.title shouldBe null
+            schema.xml.shouldNotBeNull().name shouldBe "problem"
+        }
+
         "the errors variant can be documented in XML too, under its own component title" {
             val operation =
                 Operation.build {

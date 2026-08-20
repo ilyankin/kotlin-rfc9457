@@ -1,6 +1,5 @@
 package io.github.ilyankin.rfc9457.ktor.openapi
 
-import io.github.ilyankin.rfc9457.ProblemType
 import io.github.ilyankin.rfc9457.ktor.ProblemContentTypes
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -8,18 +7,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.ktor.http.HttpStatusCode
 import io.ktor.openapi.Operation
-
-private object OutOfCredit : ProblemType {
-    override val typeUri: String = "https://example.com/probs/out-of-credit"
-    override val title: String = "You do not have enough credit."
-    override val status: Int = 403
-}
-
-private object AccountLocked : ProblemType {
-    override val typeUri: String = "https://example.com/probs/account-locked"
-    override val title: String = "This account is locked."
-    override val status: Int = 403
-}
 
 class ProblemResponsesTest :
     StringSpec({
@@ -61,19 +48,18 @@ class ProblemResponsesTest :
                 .title shouldBe "ProblemDetails"
         }
 
-        "a bare status code becomes a response with the problem schema" {
+        "a bare status code answers at that code, described by its reason phrase" {
             val operation =
                 Operation.build { responses { problemResponse(HttpStatusCode.NotFound) } }
 
-            val response =
-                operation.responses
-                    .shouldNotBeNull()
-                    .responses
-                    .shouldNotBeNull()
-                    .getValue(404)
-                    .valueOrNull()
-                    .shouldNotBeNull()
-            response.content.shouldNotBeNull().keys shouldBe setOf(ProblemContentTypes.Json)
+            operation.responses
+                .shouldNotBeNull()
+                .responses
+                .shouldNotBeNull()
+                .getValue(404)
+                .valueOrNull()
+                .shouldNotBeNull()
+                .description shouldBe HttpStatusCode.NotFound.description
         }
 
         "problemDefault fills the catch-all slot" {
@@ -110,6 +96,28 @@ class ProblemResponsesTest :
             response.description shouldContain "This account is locked."
         }
 
+        // A root `problemResponses(catalog)` and a leaf naming the same code both write a
+        // description into the one builder Ktor keeps per status; without the guard the reader
+        // would be told "Not Found Not Found".
+        "a description already written is not written again" {
+            val operation =
+                Operation.build {
+                    responses {
+                        problemResponse(HttpStatusCode.NotFound)
+                        problemResponse(HttpStatusCode.NotFound)
+                    }
+                }
+
+            operation.responses
+                .shouldNotBeNull()
+                .responses
+                .shouldNotBeNull()
+                .getValue(404)
+                .valueOrNull()
+                .shouldNotBeNull()
+                .description shouldBe HttpStatusCode.NotFound.description
+        }
+
         "each colliding type contributes an example keyed by its type URI" {
             val operation =
                 Operation.build {
@@ -139,20 +147,34 @@ class ProblemResponsesTest :
                 )
         }
 
-        "an explicit description replaces the type's title" {
+        "an explicit description replaces the default one, in every overload" {
             val operation =
                 Operation.build {
-                    responses { problemResponse(OutOfCredit, description = "Top up first.") }
+                    responses {
+                        problemResponse(OutOfCredit, description = "Top up first.")
+                        problemResponse(HttpStatusCode.NotFound, description = "No such order.")
+                        problemDefault(description = "Something else went wrong.")
+                    }
                 }
 
-            operation.responses
-                .shouldNotBeNull()
-                .responses
-                .shouldNotBeNull()
+            val responses = operation.responses.shouldNotBeNull()
+            val byCode = responses.responses.shouldNotBeNull()
+
+            byCode
                 .getValue(403)
                 .valueOrNull()
                 .shouldNotBeNull()
                 .description shouldBe "Top up first."
+            byCode
+                .getValue(404)
+                .valueOrNull()
+                .shouldNotBeNull()
+                .description shouldBe "No such order."
+            responses.default
+                .shouldNotBeNull()
+                .valueOrNull()
+                .shouldNotBeNull()
+                .description shouldBe "Something else went wrong."
         }
 
         "the errors schema reaches the response through the schema parameter" {
@@ -160,14 +182,28 @@ class ProblemResponsesTest :
                 Operation.build {
                     responses {
                         problemResponse(OutOfCredit, schema = ProblemSchemas.problemWithErrors)
+                        problemDefault(schema = ProblemSchemas.problemWithErrors)
                     }
                 }
 
-            operation.responses
-                .shouldNotBeNull()
-                .responses
+            val responses = operation.responses.shouldNotBeNull()
+
+            responses.responses
                 .shouldNotBeNull()
                 .getValue(403)
+                .valueOrNull()
+                .shouldNotBeNull()
+                .content
+                .shouldNotBeNull()
+                .getValue(ProblemContentTypes.Json)
+                .schema
+                .shouldNotBeNull()
+                .valueOrNull()
+                .shouldNotBeNull()
+                .title shouldBe "ProblemDetailsWithErrors"
+
+            responses.default
+                .shouldNotBeNull()
                 .valueOrNull()
                 .shouldNotBeNull()
                 .content

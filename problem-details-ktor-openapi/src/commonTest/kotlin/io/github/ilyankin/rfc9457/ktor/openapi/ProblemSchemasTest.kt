@@ -22,24 +22,12 @@ class ProblemSchemasTest :
             ProblemSchemas.problem.additionalProperties shouldBe AdditionalProperties.Allowed(true)
         }
 
-        "the five standard members are described" {
-            ProblemSchemas.problem.properties
-                .shouldNotBeNull()
-                .keys shouldBe
-                setOf("type", "title", "status", "detail", "instance")
-        }
+        "the standard members carry the shapes RFC 9457 3.1 gives them" {
+            ProblemSchemas.problem.type shouldBe JsonType.OBJECT
 
-        "status is bounded to the HTTP range" {
-            val status =
-                ProblemSchemas.problem.properties
-                    .shouldNotBeNull()
-                    .getValue("status")
-            status.valueOrNull().shouldNotBeNull().minimum shouldBe 100.0
-            status.valueOrNull().shouldNotBeNull().maximum shouldBe 599.0
-        }
-
-        "type and instance are URI references" {
             val properties = ProblemSchemas.problem.properties.shouldNotBeNull()
+            properties.keys shouldBe setOf("type", "title", "status", "detail", "instance")
+
             properties
                 .getValue("type")
                 .valueOrNull()
@@ -50,10 +38,10 @@ class ProblemSchemasTest :
                 .valueOrNull()
                 .shouldNotBeNull()
                 .format shouldBe "uri-reference"
-        }
 
-        "the object type is declared" {
-            ProblemSchemas.problem.type shouldBe JsonType.OBJECT
+            val status = properties.getValue("status").valueOrNull().shouldNotBeNull()
+            status.minimum shouldBe 100.0
+            status.maximum shouldBe 599.0
         }
 
         "the errors variant adds an errors array of detail and pointer entries" {
