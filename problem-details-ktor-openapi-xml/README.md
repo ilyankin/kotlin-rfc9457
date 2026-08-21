@@ -8,6 +8,10 @@ Add it only if your application actually serves XML — that is, only if it alre
 `problem-details-ktor-xml`. Depending on this module is the sole way XML reaches the generated
 document, the same split `problem-details-ktor-xml` makes for the runtime codec.
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## Usage
 
 ```kotlin

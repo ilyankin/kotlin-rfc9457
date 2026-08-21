@@ -8,6 +8,10 @@ Add it only if a client of yours asks for XML. Depending on it is the *only* way
 an application — that is the point of the split, and why this module exists instead of a flag on
 `problemJson()`.
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## Registration order is part of the contract
 
 ```kotlin

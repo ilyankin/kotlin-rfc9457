@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Changed
+
+- **Every module now publishes for these platforms**: `jvm`, `js`, `wasmJs`, `linuxX64`,
+  `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64` and `iosSimulatorArm64`. Coordinates stay as
+  they were and the root artifact still resolves to `-jvm` for Maven, so a JVM build sees no
+  difference. A Kotlin Multiplatform build can now depend on the root coordinates from `commonMain`.
+- `respondProblem` builds its "response already committed" warning by string interpolation. Ktor's
+  common `Logger` declares no overload taking SLF4J's `{}` placeholders. The message text is the
+  same as before.
+
 ## [0.6.0] — 2026-09-21
 
 ### Added

@@ -21,6 +21,10 @@ with no `pointer`.
 | [requestValidation] | Inside `problemDetails { }`: register the `RequestValidationException` → `Problem` mapping. |
 | [decodeValidationReason] | Reads a [invalidField]/[invalidFields]-encoded reason back into pointer + detail, for a mapping that does not go through `requestValidation`. |
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## Usage
 
 ```kotlin

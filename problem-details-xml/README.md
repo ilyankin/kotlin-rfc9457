@@ -12,6 +12,10 @@ visible in this module's API — including as a thrown type.** `decodeFromString
 `XmlException` in `kotlinx.serialization.SerializationException` with the cause chained, so catching
 a parse failure never requires xmlutil in your build.
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## Not every problem can be written as XML
 
 A `Problem` that encodes to JSON without complaint may be refused here, and finding out on write is

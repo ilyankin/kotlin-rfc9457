@@ -8,6 +8,10 @@ Registering the XML codec is what pulls in an XML parser, exactly as on the serv
 that only ever decodes JSON depends on `problem-details-ktor-client` alone and never resolves
 `xmlutil`.
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## Both formats
 
 ```kotlin

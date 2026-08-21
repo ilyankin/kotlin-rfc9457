@@ -13,6 +13,10 @@ JSON only, likewise by artifact: the Appendix B XML form is decoded by `problemX
 Registering both is order-independent — each gates on a `Content-Type` the other never matches —
 unlike the server's `ContentNegotiation` pair, where order decides an absent or wildcard `Accept`.
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## `expectSuccess` must be `true`
 
 Ktor's own `HttpClientConfig.expectSuccess` defaults to `false`. Without it, nothing throws for a

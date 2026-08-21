@@ -262,11 +262,13 @@ Things that are easy to get wrong and are therefore settled here once:
   application that only emits JSON does not resolve an XML parser, and optionality is expressed by
   *which artifact declares the registration function* — so a missing dependency is a compile error at
   the call site, not a runtime `NoClassDefFoundError`.
-- **Multiplatform-shaped already.** Every module is `kotlin("multiplatform")` with all code in
-  `commonMain` and no `expect`/`actual`; a `jvm()` target is what ships today, and adding another is a
-  line in `kotlin { }` rather than a redesign.
-- **The public surface is reviewed as a diff.** `explicitApi()` everywhere and `api/*.api` ABI dumps
-  checked on every build, so any accidental widening shows up in review before 1.0 freezes it.
+- **Multiplatform.** Every module publishes for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`,
+  `mingwX64`, `macosArm64`, `iosArm64` and `iosSimulatorArm64`, with all code in `commonMain` and no
+  `expect`/`actual`. Depend on the plain coordinates from `commonMain` and Gradle resolves the
+  variant.
+- **The public surface is reviewed as a diff.** `explicitApi()` everywhere, plus `api/*.api` and
+  `api/*.klib.api` ABI dumps checked on every build, so any accidental widening shows up in review
+  before 1.0 freezes it.
 
 ## Stability
 

@@ -8,6 +8,10 @@ at all — an application that only emits JSON does not resolve an XML parser. X
 separate artifact declaring its own registration function, so a missing dependency is a compile error
 at the call site rather than a `NoClassDefFoundError` at runtime.
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## What it does not do
 
 It does not reimplement dispatch or content negotiation. Everything here generates the calls you
