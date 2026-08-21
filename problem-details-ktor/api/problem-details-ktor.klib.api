@@ -1,0 +1,47 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-ktor>
+final class io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog { // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog|null[0]
+    final val problemTypes // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.problemTypes|{}problemTypes[0]
+        final fun <get-problemTypes>(): kotlin.collections/List<io.github.ilyankin.rfc9457/ProblemType> // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.problemTypes.<get-problemTypes>|<get-problemTypes>(){}[0]
+    final val statusCodes // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.statusCodes|{}statusCodes[0]
+        final fun <get-statusCodes>(): kotlin.collections/Set<io.ktor.http/HttpStatusCode> // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.statusCodes.<get-statusCodes>|<get-statusCodes>(){}[0]
+
+    final fun addMapping(kotlin.reflect/KClass<out kotlin/Throwable>, kotlin/Function2<io.ktor.server.application/ApplicationCall, kotlin/Throwable, io.github.ilyankin.rfc9457/Problem>) // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.addMapping|addMapping(kotlin.reflect.KClass<out|kotlin.Throwable>;kotlin.Function2<io.ktor.server.application.ApplicationCall,kotlin.Throwable,io.github.ilyankin.rfc9457.Problem>){}[0]
+    final fun declareType(io.github.ilyankin.rfc9457/ProblemType) // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.declareType|declareType(io.github.ilyankin.rfc9457.ProblemType){}[0]
+    final fun forStatusCode(io.ktor.http/HttpStatusCode, kotlin/Function1<io.ktor.server.application/ApplicationCall, io.github.ilyankin.rfc9457/Problem>) // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.forStatusCode|forStatusCode(io.ktor.http.HttpStatusCode;kotlin.Function1<io.ktor.server.application.ApplicationCall,io.github.ilyankin.rfc9457.Problem>){}[0]
+    final fun onUnmapped(kotlin/Function2<io.ktor.server.application/ApplicationCall, kotlin/Throwable, io.github.ilyankin.rfc9457/Problem>) // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.onUnmapped|onUnmapped(kotlin.Function2<io.ktor.server.application.ApplicationCall,kotlin.Throwable,io.github.ilyankin.rfc9457.Problem>){}[0]
+    final fun standardStatusCodes() // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.standardStatusCodes|standardStatusCodes(){}[0]
+    final inline fun <#A1: reified kotlin/Throwable> map(io.github.ilyankin.rfc9457/ProblemType, noinline kotlin/Function1<#A1, kotlin/String?> = ...) // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.map|map(io.github.ilyankin.rfc9457.ProblemType;kotlin.Function1<0:0,kotlin.String?>){0§<kotlin.Throwable>}[0]
+    final inline fun <#A1: reified kotlin/Throwable> map(noinline kotlin/Function2<io.ktor.server.application/ApplicationCall, #A1, io.github.ilyankin.rfc9457/Problem>) // io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog.map|map(kotlin.Function2<io.ktor.server.application.ApplicationCall,0:0,io.github.ilyankin.rfc9457.Problem>){0§<kotlin.Throwable>}[0]
+}
+
+final class io.github.ilyankin.rfc9457.ktor/ProblemJsonConverter : io.ktor.serialization/ContentConverter { // io.github.ilyankin.rfc9457.ktor/ProblemJsonConverter|null[0]
+    constructor <init>(kotlinx.serialization.json/Json = ...) // io.github.ilyankin.rfc9457.ktor/ProblemJsonConverter.<init>|<init>(kotlinx.serialization.json.Json){}[0]
+
+    final suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.utils.io/ByteReadChannel): kotlin/Any? // io.github.ilyankin.rfc9457.ktor/ProblemJsonConverter.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.utils.io.ByteReadChannel){}[0]
+    final suspend fun serialize(io.ktor.http/ContentType, io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.http.content/OutgoingContent? // io.github.ilyankin.rfc9457.ktor/ProblemJsonConverter.serialize|serialize(io.ktor.http.ContentType;io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+final object io.github.ilyankin.rfc9457.ktor/ProblemContentTypes { // io.github.ilyankin.rfc9457.ktor/ProblemContentTypes|null[0]
+    final val Json // io.github.ilyankin.rfc9457.ktor/ProblemContentTypes.Json|{}Json[0]
+        final fun <get-Json>(): io.ktor.http/ContentType // io.github.ilyankin.rfc9457.ktor/ProblemContentTypes.Json.<get-Json>|<get-Json>(){}[0]
+    final val Xml // io.github.ilyankin.rfc9457.ktor/ProblemContentTypes.Xml|{}Xml[0]
+        final fun <get-Xml>(): io.ktor.http/ContentType // io.github.ilyankin.rfc9457.ktor/ProblemContentTypes.Xml.<get-Xml>|<get-Xml>(){}[0]
+}
+
+final val io.github.ilyankin.rfc9457.ktor/httpStatus // io.github.ilyankin.rfc9457.ktor/httpStatus|@io.github.ilyankin.rfc9457.ProblemType{}httpStatus[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemType).<get-httpStatus>(): io.ktor.http/HttpStatusCode // io.github.ilyankin.rfc9457.ktor/httpStatus.<get-httpStatus>|<get-httpStatus>@io.github.ilyankin.rfc9457.ProblemType(){}[0]
+
+final fun (io.github.ilyankin.rfc9457/Problem.Companion).io.github.ilyankin.rfc9457.ktor/blank(io.ktor.http/HttpStatusCode): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457.ktor/blank|blank@io.github.ilyankin.rfc9457.Problem.Companion(io.ktor.http.HttpStatusCode){}[0]
+final fun (io.ktor.server.plugins.contentnegotiation/ContentNegotiationConfig).io.github.ilyankin.rfc9457.ktor/problemJson(kotlin/Boolean = ..., kotlinx.serialization.json/Json = ...) // io.github.ilyankin.rfc9457.ktor/problemJson|problemJson@io.ktor.server.plugins.contentnegotiation.ContentNegotiationConfig(kotlin.Boolean;kotlinx.serialization.json.Json){}[0]
+final fun (io.ktor.server.plugins.statuspages/StatusPagesConfig).io.github.ilyankin.rfc9457.ktor/problemDetails(io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog) // io.github.ilyankin.rfc9457.ktor/problemDetails|problemDetails@io.ktor.server.plugins.statuspages.StatusPagesConfig(io.github.ilyankin.rfc9457.ktor.ProblemDetailsCatalog){}[0]
+final fun (io.ktor.server.plugins.statuspages/StatusPagesConfig).io.github.ilyankin.rfc9457.ktor/problemDetails(kotlin/Function1<io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog, kotlin/Unit>) // io.github.ilyankin.rfc9457.ktor/problemDetails|problemDetails@io.ktor.server.plugins.statuspages.StatusPagesConfig(kotlin.Function1<io.github.ilyankin.rfc9457.ktor.ProblemDetailsCatalog,kotlin.Unit>){}[0]
+final fun io.github.ilyankin.rfc9457.ktor/problemCatalog(kotlin/Function1<io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog, kotlin/Unit>): io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog // io.github.ilyankin.rfc9457.ktor/problemCatalog|problemCatalog(kotlin.Function1<io.github.ilyankin.rfc9457.ktor.ProblemDetailsCatalog,kotlin.Unit>){}[0]
+final suspend fun (io.ktor.server.application/ApplicationCall).io.github.ilyankin.rfc9457.ktor/respondProblem(io.github.ilyankin.rfc9457/Problem) // io.github.ilyankin.rfc9457.ktor/respondProblem|respondProblem@io.ktor.server.application.ApplicationCall(io.github.ilyankin.rfc9457.Problem){}[0]
+final suspend fun (io.ktor.server.application/ApplicationCall).io.github.ilyankin.rfc9457.ktor/respondProblem(io.ktor.http/HttpStatusCode, io.github.ilyankin.rfc9457/Problem) // io.github.ilyankin.rfc9457.ktor/respondProblem|respondProblem@io.ktor.server.application.ApplicationCall(io.ktor.http.HttpStatusCode;io.github.ilyankin.rfc9457.Problem){}[0]

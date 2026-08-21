@@ -1,0 +1,33 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-ktor-validation>
+final class io.github.ilyankin.rfc9457.ktor.validation/ValidationReason { // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason|null[0]
+    constructor <init>(kotlin/String?, kotlin/String) // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.<init>|<init>(kotlin.String?;kotlin.String){}[0]
+
+    final val detail // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.detail|{}detail[0]
+        final fun <get-detail>(): kotlin/String // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.detail.<get-detail>|<get-detail>(){}[0]
+    final val pointer // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.pointer|{}pointer[0]
+        final fun <get-pointer>(): kotlin/String? // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.pointer.<get-pointer>|<get-pointer>(){}[0]
+
+    final fun component1(): kotlin/String? // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.component1|component1(){}[0]
+    final fun component2(): kotlin/String // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.component2|component2(){}[0]
+    final fun copy(kotlin/String? = ..., kotlin/String = ...): io.github.ilyankin.rfc9457.ktor.validation/ValidationReason // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.copy|copy(kotlin.String?;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.ilyankin.rfc9457.ktor.validation/ValidationReason.toString|toString(){}[0]
+}
+
+final fun (io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog).io.github.ilyankin.rfc9457.ktor.validation/requestValidation(io.github.ilyankin.rfc9457/ProblemType) // io.github.ilyankin.rfc9457.ktor.validation/requestValidation|requestValidation@io.github.ilyankin.rfc9457.ktor.ProblemDetailsCatalog(io.github.ilyankin.rfc9457.ProblemType){}[0]
+final fun io.github.ilyankin.rfc9457.ktor.validation/buildJsonPointer(kotlinx.serialization.descriptors/SerialDescriptor, kotlin.collections/List<kotlin/String>): kotlin/String // io.github.ilyankin.rfc9457.ktor.validation/buildJsonPointer|buildJsonPointer(kotlinx.serialization.descriptors.SerialDescriptor;kotlin.collections.List<kotlin.String>){}[0]
+final fun io.github.ilyankin.rfc9457.ktor.validation/decodeValidationReason(kotlin/String): io.github.ilyankin.rfc9457.ktor.validation/ValidationReason // io.github.ilyankin.rfc9457.ktor.validation/decodeValidationReason|decodeValidationReason(kotlin.String){}[0]
+final fun io.github.ilyankin.rfc9457.ktor.validation/invalidField(kotlin/String, kotlin/String): io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid // io.github.ilyankin.rfc9457.ktor.validation/invalidField|invalidField(kotlin.String;kotlin.String){}[0]
+final fun io.github.ilyankin.rfc9457.ktor.validation/invalidFields(kotlin.collections/List<kotlin/Pair<kotlin/String, kotlin/String>>): io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid // io.github.ilyankin.rfc9457.ktor.validation/invalidFields|invalidFields(kotlin.collections.List<kotlin.Pair<kotlin.String,kotlin.String>>){}[0]
+final fun io.github.ilyankin.rfc9457.ktor.validation/invalidFields(kotlin/Array<out kotlin/Pair<kotlin/String, kotlin/String>>...): io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid // io.github.ilyankin.rfc9457.ktor.validation/invalidFields|invalidFields(kotlin.Array<out|kotlin.Pair<kotlin.String,kotlin.String>>...){}[0]
+final inline fun <#A: reified kotlin/Any?> io.github.ilyankin.rfc9457.ktor.validation/invalidField(kotlin.reflect/KProperty1<#A, *>, kotlin/String): io.ktor.server.plugins.requestvalidation/ValidationResult.Invalid // io.github.ilyankin.rfc9457.ktor.validation/invalidField|invalidField(kotlin.reflect.KProperty1<0:0,*>;kotlin.String){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> io.github.ilyankin.rfc9457.ktor.validation/jsonPointer(kotlin.reflect/KProperty1<#A, *>): kotlin/String // io.github.ilyankin.rfc9457.ktor.validation/jsonPointer|jsonPointer(kotlin.reflect.KProperty1<0:0,*>){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> io.github.ilyankin.rfc9457.ktor.validation/jsonPointer(kotlin/Array<out kotlin/String>...): kotlin/String // io.github.ilyankin.rfc9457.ktor.validation/jsonPointer|jsonPointer(kotlin.Array<out|kotlin.String>...){0§<kotlin.Any?>}[0]
