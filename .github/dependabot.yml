@@ -2,8 +2,13 @@ version: 2
 
 updates:
   # Rewrites the SHA pins and their version comments, which nobody refreshes by hand.
+  # Both paths are needed. `/` covers `.github/workflows` alone, and GitHub's docs say Dependabot
+  # ignores locally referenced actions, so the composite action under `.github/actions` has to be
+  # listed for its own pins to be updated (dependabot-core#6345).
   - package-ecosystem: github-actions
-    directory: /
+    directories:
+      - /
+      - /.github/actions/*
     schedule:
       interval: weekly
     groups:

@@ -1,0 +1,39 @@
+name: Set up the build
+description: The JDK, Gradle and the caches every Gradle job in this repository needs.
+
+# `actions/checkout` deliberately stays in the calling job. A local composite action is resolved
+# from the workspace, so this file exists only after checkout has run.
+
+inputs:
+  cache-encryption-key:
+    description: >-
+      Base64 AES key for the configuration-cache entries, which may hold credentials. Composite
+      actions cannot read `secrets`, so the caller passes it in. Empty on a forked PR, where the
+      configuration cache is then skipped and the build still passes.
+    required: false
+    default: ''
+  cache-read-only:
+    description: >-
+      Read cache entries without writing them back. Set it on a job that shares a key space with
+      another one, since two writers race for a single entry.
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    # 21 is the daemon JVM (`gradle/gradle-daemon-jvm.properties`); the 17 toolchain the code
+    # compiles against is provisioned by the foojay resolver and cached as `jdks` below.
+    - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      with:
+        distribution: temurin
+        java-version: '21'
+
+    - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+      with:
+        cache-encryption-key: ${{ inputs.cache-encryption-key }}
+        cache-read-only: ${{ inputs.cache-read-only }}
+        gradle-home-cache-includes: |
+          caches
+          notifications
+          jdks

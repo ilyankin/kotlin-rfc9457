@@ -20,22 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # 21 is the daemon JVM (`gradle/gradle-daemon-jvm.properties`); the 17 toolchain the code
-      # compiles against is provisioned by the foojay resolver and cached as `jdks` below.
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      - uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: '21'
-
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        with:
-          # Configuration-cache entries are not cached without it. Absent on forked PRs; caching is
-          # then skipped, the build still passes.
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          gradle-home-cache-includes: |
-            caches
-            notifications
-            jdks
 
       # Compiles every target, runs the suites this host can, and checks both ABI dumps.
       - name: Build
@@ -88,15 +75,10 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
-        with:
-          distribution: temurin
-          java-version: '21'
-
       # Cache keys carry the runner OS, and entries never cross between operating systems
       # (gradle/actions#27, closed as won't-do). No Linux job can seed a macOS entry, so this one
       # has to write its own or start cold on every run forever.
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+      - uses: ./.github/actions/setup
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
@@ -126,13 +108,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
-        with:
-          distribution: temurin
-          java-version: '21'
-
       # Its own entry, for the same reason as the Apple job above.
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+      - uses: ./.github/actions/setup
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
@@ -156,13 +133,9 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      - uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: '21'
-
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
           # This job shares the Linux key space with `build`, which is the one that writes there.
           # Two writers would race for a single entry.
           cache-read-only: true
