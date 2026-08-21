@@ -93,10 +93,12 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      # Cache keys carry the runner OS, and entries never cross between operating systems
+      # (gradle/actions#27, closed as won't-do). No Linux job can seed a macOS entry, so this one
+      # has to write its own or start cold on every run forever.
       - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
         with:
-          # Only the `build` job writes the shared cache entry.
-          cache-read-only: true
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       # `gradle.properties` is tuned for a workstation. This is the smallest runner in the fleet
       # (3 CPU / 7 GB), where its 4g + 3g of daemon heap would ask for the whole machine before the
@@ -129,9 +131,10 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      # Its own entry, for the same reason as the Apple job above.
       - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
         with:
-          cache-read-only: true
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - name: Test
         run: ./gradlew mingwX64Test
@@ -160,7 +163,8 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
         with:
-          # Only the `build` job writes the shared cache entry.
+          # This job shares the Linux key space with `build`, which is the one that writes there.
+          # Two writers would race for a single entry.
           cache-read-only: true
 
       - name: Build with Isolated Projects
