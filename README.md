@@ -8,6 +8,8 @@
 [![GitHub Release](https://img.shields.io/github/v/release/ilyankin/kotlin-rfc9457)](https://github.com/ilyankin/kotlin-rfc9457/releases)
 [![javadoc](https://javadoc.io/badge2/io.github.ilyankin/problem-details-core/javadoc.svg)](https://javadoc.io/doc/io.github.ilyankin/problem-details-core)
 
+![jvm][badge-jvm] ![js][badge-js] ![wasm][badge-wasm] ![linux][badge-linux] ![windows][badge-windows] ![macos][badge-macos] ![ios][badge-ios]
+
 [RFC 9457 Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457) for Kotlin — the
 standard way for an HTTP API to say *what went wrong*, in one machine-readable body shape instead of
 a different error format per service. This library models that document, serializes it correctly, and
@@ -301,3 +303,11 @@ is ordered by demand, so saying you need something counts as a contribution.
 ## License
 
 Apache License 2.0 — see [`LICENSE`](LICENSE).
+
+[badge-jvm]: https://img.shields.io/badge/-jvm-DB413D.svg?style=flat
+[badge-js]: https://img.shields.io/badge/-js-F8DB5D.svg?style=flat
+[badge-wasm]: https://img.shields.io/badge/-wasm-624FE8.svg?style=flat
+[badge-linux]: https://img.shields.io/badge/-linux-2D3F6C.svg?style=flat
+[badge-windows]: https://img.shields.io/badge/-windows-4D76CD.svg?style=flat
+[badge-macos]: https://img.shields.io/badge/-macos-111111.svg?style=flat
+[badge-ios]: https://img.shields.io/badge/-ios-CDCDCD.svg?style=flat
