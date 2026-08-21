@@ -16,6 +16,7 @@ jobs:
   build:
     name: Build, test, ABI, docs
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -83,6 +84,7 @@ jobs:
     # what this job provides.
     name: Apple targets
     runs-on: macos-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -96,8 +98,14 @@ jobs:
           # Only the `build` job writes the shared cache entry.
           cache-read-only: true
 
+      # `gradle.properties` is tuned for a workstation. This is the smallest runner in the fleet
+      # (3 CPU / 7 GB), where its 4g + 3g of daemon heap would ask for the whole machine before the
+      # OS, the test binaries and the simulator get any.
       - name: Test
-        run: ./gradlew macosArm64Test iosSimulatorArm64Test
+        run: >-
+          ./gradlew macosArm64Test iosSimulatorArm64Test --max-workers=2
+          -Dorg.gradle.jvmargs=-Xmx2g
+          -Dkotlin.daemon.jvmargs=-Xmx3g
 
       - name: Upload test reports
         if: failure()
@@ -112,6 +120,7 @@ jobs:
     # Windows runner.
     name: Windows target
     runs-on: windows-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -140,6 +149,7 @@ jobs:
     # regression that breaks it. See docs/gradle-build-structure.md.
     name: Isolated Projects
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -162,6 +172,7 @@ jobs:
     name: Dependency graph
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: write
     steps:
