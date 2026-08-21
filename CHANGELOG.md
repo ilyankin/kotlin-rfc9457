@@ -18,7 +18,7 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
   common `Logger` declares no overload taking SLF4J's `{}` placeholders. The message text is the
   same as before.
 
-## [0.6.0] — 2026-09-21
+## [0.6.0] — 2026-08-21
 
 ### Added
 
