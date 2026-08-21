@@ -36,7 +36,7 @@ jobs:
             notifications
             jdks
 
-      # Compiles, runs the Kotest suites and checks `api/*.api`.
+      # Compiles every target, runs the suites this host can, and checks both ABI dumps.
       - name: Build
         run: ./gradlew build
 
@@ -74,7 +74,64 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: test-reports
+          name: test-reports-linux
+          path: '**/build/reports/tests/'
+          retention-days: 7
+
+  test-apple:
+    # Apple targets compile on any host. Running their tests takes a macOS arm64 machine, which is
+    # what this job provides.
+    name: Apple targets
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          # Only the `build` job writes the shared cache entry.
+          cache-read-only: true
+
+      - name: Test
+        run: ./gradlew macosArm64Test iosSimulatorArm64Test
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: test-reports-apple
+          path: '**/build/reports/tests/'
+          retention-days: 7
+
+  test-windows:
+    # `mingwX64` is tier 3 and its tests run on Windows, which is why this repository keeps a
+    # Windows runner.
+    name: Windows target
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          cache-read-only: true
+
+      - name: Test
+        run: ./gradlew mingwX64Test
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: test-reports-windows
           path: '**/build/reports/tests/'
           retention-days: 7
 
