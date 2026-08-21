@@ -3,17 +3,22 @@ package io.github.ilyankin.rfc9457.ktor
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
+import io.github.ilyankin.rfc9457.Problem
 import io.github.ilyankin.rfc9457.ProblemException
 import io.github.ilyankin.rfc9457.problem
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
@@ -42,6 +47,9 @@ private class CapturedLog {
 
     /** Events carrying a throwable. The startup chatter Ktor emits carries none. */
     val withCause: List<ILoggingEvent> get() = appender.list.filter { it.throwableProxy != null }
+
+    /** Everything recorded, for the cases that log without a cause. */
+    val all: List<ILoggingEvent> get() = appender.list
 }
 
 private fun ApplicationTestBuilder.installProblemJsonForCapture() {
@@ -160,5 +168,27 @@ class ProblemLoggingTest :
             }
 
             capture.withCause.single().level shouldBe Level.DEBUG
+        }
+
+        // Characterises the `isCommitted`/`isSent` guard in `respondProblem`, which had no test
+        // before. By the time it runs the response has gone out, so the warning is all it leaves.
+        "respondProblem warns instead of overwriting an already-committed response" {
+            val capture = CapturedLog()
+            testApplication {
+                environment { log = capture.logger }
+                routing {
+                    get("/twice") {
+                        call.respondText("first")
+                        call.respondProblem(Problem(status = 500, title = "Too late"))
+                    }
+                }
+                val response = client.get("/twice")
+                response.status shouldBe HttpStatusCode.OK
+                response.bodyAsText() shouldBe "first"
+            }
+
+            val warnings = capture.all.filter { it.level == Level.WARN }
+            warnings shouldHaveSize 1
+            warnings.single().formattedMessage shouldContain "Response already committed"
         }
     })

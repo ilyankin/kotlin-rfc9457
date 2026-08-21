@@ -48,9 +48,7 @@ public suspend fun ApplicationCall.respondProblem(
         // Nothing left to write. Throwing here would replace a partially sent response with an
         // exception the engine can no longer report, so a warning is the honest outcome.
         application.log.warn(
-            "Response already committed; not writing a problem document for {} {}",
-            request.uri,
-            status,
+            "Response already committed; not writing a problem document for ${request.uri} $status",
         )
         return
     }
