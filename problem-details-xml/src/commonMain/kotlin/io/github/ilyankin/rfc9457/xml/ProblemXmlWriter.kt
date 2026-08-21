@@ -70,7 +70,7 @@ private fun writeProblemDocument(problem: Problem): String =
                 // diff tools for no gain.
                 addTrailingSpaceBeforeEnd = false
             }
-        writer.use { writer ->
+        try {
             writer.startTag(ProblemXml.NAMESPACE, ProblemXml.ROOT_ELEMENT, "")
 
             // Appendix B's interleave makes the five standard members order-free, but the
@@ -85,6 +85,8 @@ private fun writeProblemDocument(problem: Problem): String =
             problem.extensions.forEach { (name, value) -> writer.writeValue(name, value, depth = 1) }
 
             writer.endTag(ProblemXml.NAMESPACE, ProblemXml.ROOT_ELEMENT, "")
+        } finally {
+            writer.close()
         }
     }
 
