@@ -1,5 +1,6 @@
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import java.net.URI
 
@@ -8,6 +9,13 @@ plugins {
 
     id("org.jetbrains.dokka")
     id("org.jetbrains.kotlinx.kover")
+
+    // Non-JVM targets discover Kotest specs through generated code, so the framework needs its
+    // Gradle plugin and KSP to produce that code. The ids here are bare, like the one in
+    // `rfc9457.kmp-serialization`; a versioned request loads a second copy of the plugin into its
+    // own classloader scope.
+    id("com.google.devtools.ksp")
+    id("io.kotest")
 }
 
 // No `libs` accessor inside a precompiled script plugin; looked up by type instead.
@@ -16,8 +24,28 @@ val libs = the<LibrariesForLibs>()
 kotlin {
     explicitApi()
 
+    // The full published set, kept here so every module shares it. All of them depend on the same
+    // ktor/xmlutil/serialization artifacts, and those publish everything listed below. A set that
+    // varied per module would leave a dependency graph that fails to resolve wherever two modules
+    // disagree.
+    //
+    // Both web targets run on Node. `browser()` would drag in Karma and a headless Chrome to test a
+    // library that touches no DOM API.
     jvm()
     jvmToolchain(17)
+
+    js { nodejs() }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs { nodejs() }
+
+    linuxX64()
+    linuxArm64()
+    mingwX64()
+
+    macosArm64()
+    iosArm64()
+    iosSimulatorArm64()
 
     // Dumps the public API to `api/*.api`, checked by `check`, so accidental widening shows in a diff.
     @OptIn(ExperimentalAbiValidation::class)

@@ -1,0 +1,21 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-xml>
+final object io.github.ilyankin.rfc9457.xml/ProblemXml { // io.github.ilyankin.rfc9457.xml/ProblemXml|null[0]
+    final const val ARRAY_ITEM_ELEMENT // io.github.ilyankin.rfc9457.xml/ProblemXml.ARRAY_ITEM_ELEMENT|{}ARRAY_ITEM_ELEMENT[0]
+        final fun <get-ARRAY_ITEM_ELEMENT>(): kotlin/String // io.github.ilyankin.rfc9457.xml/ProblemXml.ARRAY_ITEM_ELEMENT.<get-ARRAY_ITEM_ELEMENT>|<get-ARRAY_ITEM_ELEMENT>(){}[0]
+    final const val MEDIA_TYPE // io.github.ilyankin.rfc9457.xml/ProblemXml.MEDIA_TYPE|{}MEDIA_TYPE[0]
+        final fun <get-MEDIA_TYPE>(): kotlin/String // io.github.ilyankin.rfc9457.xml/ProblemXml.MEDIA_TYPE.<get-MEDIA_TYPE>|<get-MEDIA_TYPE>(){}[0]
+    final const val NAMESPACE // io.github.ilyankin.rfc9457.xml/ProblemXml.NAMESPACE|{}NAMESPACE[0]
+        final fun <get-NAMESPACE>(): kotlin/String // io.github.ilyankin.rfc9457.xml/ProblemXml.NAMESPACE.<get-NAMESPACE>|<get-NAMESPACE>(){}[0]
+    final const val ROOT_ELEMENT // io.github.ilyankin.rfc9457.xml/ProblemXml.ROOT_ELEMENT|{}ROOT_ELEMENT[0]
+        final fun <get-ROOT_ELEMENT>(): kotlin/String // io.github.ilyankin.rfc9457.xml/ProblemXml.ROOT_ELEMENT.<get-ROOT_ELEMENT>|<get-ROOT_ELEMENT>(){}[0]
+
+    final fun decodeFromString(kotlin/String): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457.xml/ProblemXml.decodeFromString|decodeFromString(kotlin.String){}[0]
+    final fun encodeToString(io.github.ilyankin.rfc9457/Problem): kotlin/String // io.github.ilyankin.rfc9457.xml/ProblemXml.encodeToString|encodeToString(io.github.ilyankin.rfc9457.Problem){}[0]
+}

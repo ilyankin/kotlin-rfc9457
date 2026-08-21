@@ -19,6 +19,10 @@ complete document says nothing about failures. This module supplies them explici
 | [problemDefault] | Inside `responses { }`: document the catch-all `default` response as a problem document. |
 | [ProblemSchemas] | The RFC 9457 JSON Schemas — `problem` and the `errors[]`-carrying `problemWithErrors`. Hand-written, because the serializer's descriptor describes neither optionality nor extension members. |
 
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
+
 ## Usage
 
 ```kotlin

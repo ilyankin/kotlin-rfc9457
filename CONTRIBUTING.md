@@ -27,25 +27,33 @@ once both sides are looking at the same paragraph.
 You do not need a JDK installed: the wrapper provisions the daemon JVM (21) and the compile
 toolchain (17) itself.
 
-This is a Kotlin Multiplatform build with a single `jvm()` target, which changes two commands from
-what you may expect:
+This is a Kotlin Multiplatform build, so there is no `test` task. Every target has its own:
 
 ```bash
-./gradlew :problem-details-core:jvmTest    # `jvmTest`, not `test` — `test` is not a registered task
+./gradlew :problem-details-core:jvmTest    # `jvmTest`, since `test` is not a registered task
+./gradlew :problem-details-core:macosArm64Test
 ./gradlew :problem-details-core:jvmTest --tests "io.github.ilyankin.rfc9457.ProblemBuilderTest"
 ```
 
-Tests use [Kotest](https://kotest.io) on the JUnit Platform. Nearly all of them live in
-`commonTest`; the only exception is `problem-details-ktor/src/jvmTest`, which holds the logging
-tests, because Ktor's `Logger` is an `expect interface` whose JVM `actual` is a typealias for
-`org.slf4j.Logger` and a recording logger cannot be written in common code.
+The others are `jsNodeTest`, `wasmJsNodeTest`, `linuxX64Test`, `mingwX64Test` and
+`iosSimulatorArm64Test`. A target's tests run only on a host that supports it: Apple on macOS,
+`mingwX64` on Windows, `linuxX64` on Linux. `./gradlew build` runs whatever your machine can and
+warns about the rest. CI runs those on their own runners.
+
+Tests use [Kotest](https://kotest.io). The JVM runs it on the JUnit Platform. Other targets cannot
+scan a classpath to find specs, so the `io.kotest` Gradle plugin and KSP generate the registration
+code for them. Nearly all specs live in `commonTest`. The exception is
+`problem-details-ktor/src/jvmTest`, which holds the logging tests, because Ktor's `Logger` is an
+`expect interface` whose JVM `actual` is a typealias for `org.slf4j.Logger`, and a recording logger
+cannot be written in common code.
 
 ## Things that will fail CI if you miss them
 
-- **`api/*.api` is the API review.** Every module dumps its public surface, and `check` compares
-  against the dump. Change a public declaration and the build fails until you run
-  `./gradlew updateKotlinAbi` and commit the result. Read that diff before you push — if it exposes
-  something you did not mean to expose, the fix belongs in the source, not the dump.
+- **`api/*.api` and `api/*.klib.api` are the API review.** Every module dumps its public surface
+  twice, once for the JVM and once for the klib targets, and `check` compares against both dumps.
+  Change a public declaration and the build fails until you run `./gradlew updateKotlinAbi` and
+  commit the result. Read both diffs before you push. If either exposes something you did not mean
+  to expose, fix the source rather than the dump.
 
 - **Undocumented public declarations fail the documentation build.** `reportUndocumented` and
   `failOnWarning` are both on. This is not wired into `check` (Dokka needs network access and the
@@ -74,8 +82,11 @@ tests, because Ktor's `Logger` is an `expect interface` whose JVM `actual` is a 
   absent. A new accessor should ship both halves rather than pick one.
 
 - **Multiplatform-first.** All library code lives in `commonMain`, there are no `expect`/`actual`
-  declarations, and there is exactly one target today. A JVM-only public declaration closes a door
-  this build is deliberately holding open — if you think you need one, open an issue first.
+  declarations, and every module publishes for every target the build declares. A construct that
+  exists only on the JVM breaks all the others, and it seldom looks JVM-only while you are writing
+  it. `writer.use { }` compiled here for years because xmlutil's `Closeable` is a JVM typealias, and
+  `log.warn("{} {}", a, b)` because Ktor's `Logger` is one too. Open an issue first if you think you
+  need a JVM-only public declaration.
 
 - **`api` versus `implementation` is load-bearing.** Gradle `api` becomes POM `compile` and
   `implementation` becomes `runtime`, so anything whose type appears in a public signature — a

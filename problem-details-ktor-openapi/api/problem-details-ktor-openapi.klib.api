@@ -1,0 +1,20 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-ktor-openapi>
+final object io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas { // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas|null[0]
+    final val problem // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas.problem|{}problem[0]
+        final fun <get-problem>(): io.ktor.openapi/JsonSchema // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas.problem.<get-problem>|<get-problem>(){}[0]
+    final val problemWithErrors // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas.problemWithErrors|{}problemWithErrors[0]
+        final fun <get-problemWithErrors>(): io.ktor.openapi/JsonSchema // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas.problemWithErrors.<get-problemWithErrors>|<get-problemWithErrors>(){}[0]
+}
+
+final fun (io.ktor.openapi/Responses.Builder).io.github.ilyankin.rfc9457.ktor.openapi/problemDefault(kotlin/String? = ..., io.ktor.openapi/JsonSchema = ..., kotlin/Function1<io.ktor.openapi/Response.Builder, kotlin/Unit> = ...) // io.github.ilyankin.rfc9457.ktor.openapi/problemDefault|problemDefault@io.ktor.openapi.Responses.Builder(kotlin.String?;io.ktor.openapi.JsonSchema;kotlin.Function1<io.ktor.openapi.Response.Builder,kotlin.Unit>){}[0]
+final fun (io.ktor.openapi/Responses.Builder).io.github.ilyankin.rfc9457.ktor.openapi/problemResponse(io.github.ilyankin.rfc9457/ProblemType, kotlin/String? = ..., io.ktor.openapi/JsonSchema = ..., kotlin/Function1<io.ktor.openapi/Response.Builder, kotlin/Unit> = ...) // io.github.ilyankin.rfc9457.ktor.openapi/problemResponse|problemResponse@io.ktor.openapi.Responses.Builder(io.github.ilyankin.rfc9457.ProblemType;kotlin.String?;io.ktor.openapi.JsonSchema;kotlin.Function1<io.ktor.openapi.Response.Builder,kotlin.Unit>){}[0]
+final fun (io.ktor.openapi/Responses.Builder).io.github.ilyankin.rfc9457.ktor.openapi/problemResponse(io.ktor.http/HttpStatusCode, kotlin/String? = ..., io.ktor.openapi/JsonSchema = ..., kotlin/Function1<io.ktor.openapi/Response.Builder, kotlin/Unit> = ...) // io.github.ilyankin.rfc9457.ktor.openapi/problemResponse|problemResponse@io.ktor.openapi.Responses.Builder(io.ktor.http.HttpStatusCode;kotlin.String?;io.ktor.openapi.JsonSchema;kotlin.Function1<io.ktor.openapi.Response.Builder,kotlin.Unit>){}[0]
+final fun (io.ktor.openapi/Responses.Builder).io.github.ilyankin.rfc9457.ktor.openapi/problemsFrom(io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog, kotlin/Function1<io.ktor.openapi/Response.Builder, kotlin/Unit> = ...) // io.github.ilyankin.rfc9457.ktor.openapi/problemsFrom|problemsFrom@io.ktor.openapi.Responses.Builder(io.github.ilyankin.rfc9457.ktor.ProblemDetailsCatalog;kotlin.Function1<io.ktor.openapi.Response.Builder,kotlin.Unit>){}[0]
+final fun (io.ktor.server.routing/Route).io.github.ilyankin.rfc9457.ktor.openapi/problemResponses(io.github.ilyankin.rfc9457.ktor/ProblemDetailsCatalog, kotlin/Function1<io.ktor.openapi/Response.Builder, kotlin/Unit> = ...): io.ktor.server.routing/Route // io.github.ilyankin.rfc9457.ktor.openapi/problemResponses|problemResponses@io.ktor.server.routing.Route(io.github.ilyankin.rfc9457.ktor.ProblemDetailsCatalog;kotlin.Function1<io.ktor.openapi.Response.Builder,kotlin.Unit>){}[0]

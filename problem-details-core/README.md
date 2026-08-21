@@ -1,9 +1,14 @@
 # Module problem-details-core
 
 The RFC 9457 model and the JSON codec. This is the only module a library or an application needs in
-order to *build* and *read* problem documents; the other three add a wire format or a framework.
+order to *build* and *read* problem documents. The others add a wire format or a framework
+integration.
 
 Depends on `kotlinx-serialization-json` and nothing else.
+
+Published for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`, `mingwX64`, `macosArm64`, `iosArm64`
+and `iosSimulatorArm64`. Depend on the plain coordinates from `commonMain` and Gradle picks the
+variant.
 
 ## Where to start
 

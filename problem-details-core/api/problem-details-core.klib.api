@@ -1,0 +1,229 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-core>
+open annotation class io.github.ilyankin.rfc9457/ProblemDsl : kotlin/Annotation { // io.github.ilyankin.rfc9457/ProblemDsl|null[0]
+    constructor <init>() // io.github.ilyankin.rfc9457/ProblemDsl.<init>|<init>(){}[0]
+}
+
+abstract interface io.github.ilyankin.rfc9457/ProblemType { // io.github.ilyankin.rfc9457/ProblemType|null[0]
+    abstract val status // io.github.ilyankin.rfc9457/ProblemType.status|{}status[0]
+        abstract fun <get-status>(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemType.status.<get-status>|<get-status>(){}[0]
+    abstract val title // io.github.ilyankin.rfc9457/ProblemType.title|{}title[0]
+        abstract fun <get-title>(): kotlin/String // io.github.ilyankin.rfc9457/ProblemType.title.<get-title>|<get-title>(){}[0]
+    abstract val typeUri // io.github.ilyankin.rfc9457/ProblemType.typeUri|{}typeUri[0]
+        abstract fun <get-typeUri>(): kotlin/String // io.github.ilyankin.rfc9457/ProblemType.typeUri.<get-typeUri>|<get-typeUri>(){}[0]
+}
+
+sealed interface io.github.ilyankin.rfc9457/ProblemValue // io.github.ilyankin.rfc9457/ProblemValue|null[0]
+
+final class io.github.ilyankin.rfc9457/Problem { // io.github.ilyankin.rfc9457/Problem|null[0]
+    constructor <init>(kotlin/String = ..., kotlin/Int? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue> = ...) // io.github.ilyankin.rfc9457/Problem.<init>|<init>(kotlin.String;kotlin.Int?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,io.github.ilyankin.rfc9457.ProblemValue>){}[0]
+
+    final val detail // io.github.ilyankin.rfc9457/Problem.detail|{}detail[0]
+        final fun <get-detail>(): kotlin/String? // io.github.ilyankin.rfc9457/Problem.detail.<get-detail>|<get-detail>(){}[0]
+    final val extensions // io.github.ilyankin.rfc9457/Problem.extensions|{}extensions[0]
+        final fun <get-extensions>(): kotlin.collections/Map<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/Problem.extensions.<get-extensions>|<get-extensions>(){}[0]
+    final val instance // io.github.ilyankin.rfc9457/Problem.instance|{}instance[0]
+        final fun <get-instance>(): kotlin/String? // io.github.ilyankin.rfc9457/Problem.instance.<get-instance>|<get-instance>(){}[0]
+    final val status // io.github.ilyankin.rfc9457/Problem.status|{}status[0]
+        final fun <get-status>(): kotlin/Int? // io.github.ilyankin.rfc9457/Problem.status.<get-status>|<get-status>(){}[0]
+    final val title // io.github.ilyankin.rfc9457/Problem.title|{}title[0]
+        final fun <get-title>(): kotlin/String? // io.github.ilyankin.rfc9457/Problem.title.<get-title>|<get-title>(){}[0]
+    final val type // io.github.ilyankin.rfc9457/Problem.type|{}type[0]
+        final fun <get-type>(): kotlin/String // io.github.ilyankin.rfc9457/Problem.type.<get-type>|<get-type>(){}[0]
+
+    final fun component1(): kotlin/String // io.github.ilyankin.rfc9457/Problem.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // io.github.ilyankin.rfc9457/Problem.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // io.github.ilyankin.rfc9457/Problem.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // io.github.ilyankin.rfc9457/Problem.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // io.github.ilyankin.rfc9457/Problem.component5|component5(){}[0]
+    final fun component6(): kotlin.collections/Map<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/Problem.component6|component6(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Int? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin.collections/Map<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue> = ...): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/Problem.copy|copy(kotlin.String;kotlin.Int?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,io.github.ilyankin.rfc9457.ProblemValue>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.ilyankin.rfc9457/Problem.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.ilyankin.rfc9457/Problem.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.ilyankin.rfc9457/Problem.toString|toString(){}[0]
+
+    final object Companion { // io.github.ilyankin.rfc9457/Problem.Companion|null[0]
+        final const val ABOUT_BLANK // io.github.ilyankin.rfc9457/Problem.Companion.ABOUT_BLANK|{}ABOUT_BLANK[0]
+            final fun <get-ABOUT_BLANK>(): kotlin/String // io.github.ilyankin.rfc9457/Problem.Companion.ABOUT_BLANK.<get-ABOUT_BLANK>|<get-ABOUT_BLANK>(){}[0]
+
+        final val MAX_NESTING_DEPTH // io.github.ilyankin.rfc9457/Problem.Companion.MAX_NESTING_DEPTH|{}MAX_NESTING_DEPTH[0]
+            final fun <get-MAX_NESTING_DEPTH>(): kotlin/Int // io.github.ilyankin.rfc9457/Problem.Companion.MAX_NESTING_DEPTH.<get-MAX_NESTING_DEPTH>|<get-MAX_NESTING_DEPTH>(){}[0]
+        final val RESERVED_MEMBERS // io.github.ilyankin.rfc9457/Problem.Companion.RESERVED_MEMBERS|{}RESERVED_MEMBERS[0]
+            final fun <get-RESERVED_MEMBERS>(): kotlin.collections/Set<kotlin/String> // io.github.ilyankin.rfc9457/Problem.Companion.RESERVED_MEMBERS.<get-RESERVED_MEMBERS>|<get-RESERVED_MEMBERS>(){}[0]
+
+        final fun blank(kotlin/Int, kotlin/String): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/Problem.Companion.blank|blank(kotlin.Int;kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<io.github.ilyankin.rfc9457/Problem> // io.github.ilyankin.rfc9457/Problem.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class io.github.ilyankin.rfc9457/ProblemArray : io.github.ilyankin.rfc9457/ProblemValue, kotlin.collections/List<io.github.ilyankin.rfc9457/ProblemValue> { // io.github.ilyankin.rfc9457/ProblemArray|null[0]
+    constructor <init>(kotlin.collections/List<io.github.ilyankin.rfc9457/ProblemValue>) // io.github.ilyankin.rfc9457/ProblemArray.<init>|<init>(kotlin.collections.List<io.github.ilyankin.rfc9457.ProblemValue>){}[0]
+
+    final val size // io.github.ilyankin.rfc9457/ProblemArray.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemArray.size.<get-size>|<get-size>(){}[0]
+
+    final fun contains(io.github.ilyankin.rfc9457/ProblemValue): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemArray.contains|contains(io.github.ilyankin.rfc9457.ProblemValue){}[0]
+    final fun containsAll(kotlin.collections/Collection<io.github.ilyankin.rfc9457/ProblemValue>): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemArray.containsAll|containsAll(kotlin.collections.Collection<io.github.ilyankin.rfc9457.ProblemValue>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemArray.equals|equals(kotlin.Any?){}[0]
+    final fun get(kotlin/Int): io.github.ilyankin.rfc9457/ProblemValue // io.github.ilyankin.rfc9457/ProblemArray.get|get(kotlin.Int){}[0]
+    final fun hashCode(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemArray.hashCode|hashCode(){}[0]
+    final fun indexOf(io.github.ilyankin.rfc9457/ProblemValue): kotlin/Int // io.github.ilyankin.rfc9457/ProblemArray.indexOf|indexOf(io.github.ilyankin.rfc9457.ProblemValue){}[0]
+    final fun isEmpty(): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemArray.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemArray.iterator|iterator(){}[0]
+    final fun lastIndexOf(io.github.ilyankin.rfc9457/ProblemValue): kotlin/Int // io.github.ilyankin.rfc9457/ProblemArray.lastIndexOf|lastIndexOf(io.github.ilyankin.rfc9457.ProblemValue){}[0]
+    final fun listIterator(): kotlin.collections/ListIterator<io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemArray.listIterator|listIterator(){}[0]
+    final fun listIterator(kotlin/Int): kotlin.collections/ListIterator<io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemArray.listIterator|listIterator(kotlin.Int){}[0]
+    final fun subList(kotlin/Int, kotlin/Int): kotlin.collections/List<io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemArray.subList|subList(kotlin.Int;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // io.github.ilyankin.rfc9457/ProblemArray.toString|toString(){}[0]
+
+    // Targets: [js]
+    final fun asJsReadonlyArrayView(): kotlin.js.collections/JsReadonlyArray<io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemArray.asJsReadonlyArrayView|asJsReadonlyArrayView(){}[0]
+}
+
+final class io.github.ilyankin.rfc9457/ProblemBuilder { // io.github.ilyankin.rfc9457/ProblemBuilder|null[0]
+    constructor <init>(kotlinx.serialization.json/Json = ...) // io.github.ilyankin.rfc9457/ProblemBuilder.<init>|<init>(kotlinx.serialization.json.Json){}[0]
+
+    final var detail // io.github.ilyankin.rfc9457/ProblemBuilder.detail|{}detail[0]
+        final fun <get-detail>(): kotlin/String? // io.github.ilyankin.rfc9457/ProblemBuilder.detail.<get-detail>|<get-detail>(){}[0]
+        final fun <set-detail>(kotlin/String?) // io.github.ilyankin.rfc9457/ProblemBuilder.detail.<set-detail>|<set-detail>(kotlin.String?){}[0]
+    final var instance // io.github.ilyankin.rfc9457/ProblemBuilder.instance|{}instance[0]
+        final fun <get-instance>(): kotlin/String? // io.github.ilyankin.rfc9457/ProblemBuilder.instance.<get-instance>|<get-instance>(){}[0]
+        final fun <set-instance>(kotlin/String?) // io.github.ilyankin.rfc9457/ProblemBuilder.instance.<set-instance>|<set-instance>(kotlin.String?){}[0]
+    final var status // io.github.ilyankin.rfc9457/ProblemBuilder.status|{}status[0]
+        final fun <get-status>(): kotlin/Int? // io.github.ilyankin.rfc9457/ProblemBuilder.status.<get-status>|<get-status>(){}[0]
+        final fun <set-status>(kotlin/Int?) // io.github.ilyankin.rfc9457/ProblemBuilder.status.<set-status>|<set-status>(kotlin.Int?){}[0]
+    final var title // io.github.ilyankin.rfc9457/ProblemBuilder.title|{}title[0]
+        final fun <get-title>(): kotlin/String? // io.github.ilyankin.rfc9457/ProblemBuilder.title.<get-title>|<get-title>(){}[0]
+        final fun <set-title>(kotlin/String?) // io.github.ilyankin.rfc9457/ProblemBuilder.title.<set-title>|<set-title>(kotlin.String?){}[0]
+    final var type // io.github.ilyankin.rfc9457/ProblemBuilder.type|{}type[0]
+        final fun <get-type>(): kotlin/String // io.github.ilyankin.rfc9457/ProblemBuilder.type.<get-type>|<get-type>(){}[0]
+        final fun <set-type>(kotlin/String) // io.github.ilyankin.rfc9457/ProblemBuilder.type.<set-type>|<set-type>(kotlin.String){}[0]
+
+    final fun <#A1: kotlin/Any?> extension(kotlin/String, #A1, kotlinx.serialization/SerializationStrategy<#A1>) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;0:0;kotlinx.serialization.SerializationStrategy<0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> extensions(#A1, kotlinx.serialization/SerializationStrategy<#A1>) // io.github.ilyankin.rfc9457/ProblemBuilder.extensions|extensions(0:0;kotlinx.serialization.SerializationStrategy<0:0>){0§<kotlin.Any?>}[0]
+    final fun build(): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/ProblemBuilder.build|build(){}[0]
+    final fun extension(kotlin/String, io.github.ilyankin.rfc9457/ProblemValue) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;io.github.ilyankin.rfc9457.ProblemValue){}[0]
+    final fun extension(kotlin/String, kotlin/Boolean) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;kotlin.Boolean){}[0]
+    final fun extension(kotlin/String, kotlin/Double) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;kotlin.Double){}[0]
+    final fun extension(kotlin/String, kotlin/Int) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;kotlin.Int){}[0]
+    final fun extension(kotlin/String, kotlin/Long) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;kotlin.Long){}[0]
+    final fun extension(kotlin/String, kotlin/String) // io.github.ilyankin.rfc9457/ProblemBuilder.extension|extension(kotlin.String;kotlin.String){}[0]
+    final fun type(io.github.ilyankin.rfc9457/ProblemType) // io.github.ilyankin.rfc9457/ProblemBuilder.type|type(io.github.ilyankin.rfc9457.ProblemType){}[0]
+}
+
+final class io.github.ilyankin.rfc9457/ProblemException : kotlin/RuntimeException { // io.github.ilyankin.rfc9457/ProblemException|null[0]
+    constructor <init>(io.github.ilyankin.rfc9457/Problem, kotlin/Throwable? = ...) // io.github.ilyankin.rfc9457/ProblemException.<init>|<init>(io.github.ilyankin.rfc9457.Problem;kotlin.Throwable?){}[0]
+
+    final val problem // io.github.ilyankin.rfc9457/ProblemException.problem|{}problem[0]
+        final fun <get-problem>(): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/ProblemException.problem.<get-problem>|<get-problem>(){}[0]
+}
+
+final class io.github.ilyankin.rfc9457/ProblemObject : io.github.ilyankin.rfc9457/ProblemValue, kotlin.collections/Map<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue> { // io.github.ilyankin.rfc9457/ProblemObject|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue>) // io.github.ilyankin.rfc9457/ProblemObject.<init>|<init>(kotlin.collections.Map<kotlin.String,io.github.ilyankin.rfc9457.ProblemValue>){}[0]
+
+    final val entries // io.github.ilyankin.rfc9457/ProblemObject.entries|{}entries[0]
+        final fun <get-entries>(): kotlin.collections/Set<kotlin.collections/Map.Entry<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue>> // io.github.ilyankin.rfc9457/ProblemObject.entries.<get-entries>|<get-entries>(){}[0]
+    final val keys // io.github.ilyankin.rfc9457/ProblemObject.keys|{}keys[0]
+        final fun <get-keys>(): kotlin.collections/Set<kotlin/String> // io.github.ilyankin.rfc9457/ProblemObject.keys.<get-keys>|<get-keys>(){}[0]
+    final val size // io.github.ilyankin.rfc9457/ProblemObject.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemObject.size.<get-size>|<get-size>(){}[0]
+    final val values // io.github.ilyankin.rfc9457/ProblemObject.values|{}values[0]
+        final fun <get-values>(): kotlin.collections/Collection<io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemObject.values.<get-values>|<get-values>(){}[0]
+
+    final fun containsKey(kotlin/String): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemObject.containsKey|containsKey(kotlin.String){}[0]
+    final fun containsValue(io.github.ilyankin.rfc9457/ProblemValue): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemObject.containsValue|containsValue(io.github.ilyankin.rfc9457.ProblemValue){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemObject.equals|equals(kotlin.Any?){}[0]
+    final fun get(kotlin/String): io.github.ilyankin.rfc9457/ProblemValue? // io.github.ilyankin.rfc9457/ProblemObject.get|get(kotlin.String){}[0]
+    final fun hashCode(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemObject.hashCode|hashCode(){}[0]
+    final fun isEmpty(): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemObject.isEmpty|isEmpty(){}[0]
+    final fun toString(): kotlin/String // io.github.ilyankin.rfc9457/ProblemObject.toString|toString(){}[0]
+
+    // Targets: [js]
+    final fun asJsReadonlyMapView(): kotlin.js.collections/JsReadonlyMap<kotlin/String, io.github.ilyankin.rfc9457/ProblemValue> // io.github.ilyankin.rfc9457/ProblemObject.asJsReadonlyMapView|asJsReadonlyMapView(){}[0]
+}
+
+final class io.github.ilyankin.rfc9457/ProblemPrimitive : io.github.ilyankin.rfc9457/ProblemValue { // io.github.ilyankin.rfc9457/ProblemPrimitive|null[0]
+    final val content // io.github.ilyankin.rfc9457/ProblemPrimitive.content|{}content[0]
+        final fun <get-content>(): kotlin/String // io.github.ilyankin.rfc9457/ProblemPrimitive.content.<get-content>|<get-content>(){}[0]
+    final val isString // io.github.ilyankin.rfc9457/ProblemPrimitive.isString|{}isString[0]
+        final fun <get-isString>(): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemPrimitive.isString.<get-isString>|<get-isString>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemPrimitive.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemPrimitive.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.ilyankin.rfc9457/ProblemPrimitive.toString|toString(){}[0]
+}
+
+final object io.github.ilyankin.rfc9457/ProblemNull : io.github.ilyankin.rfc9457/ProblemValue { // io.github.ilyankin.rfc9457/ProblemNull|null[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.ilyankin.rfc9457/ProblemNull.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.ilyankin.rfc9457/ProblemNull.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.ilyankin.rfc9457/ProblemNull.toString|toString(){}[0]
+}
+
+final object io.github.ilyankin.rfc9457/ProblemSerializer : kotlinx.serialization/KSerializer<io.github.ilyankin.rfc9457/Problem> { // io.github.ilyankin.rfc9457/ProblemSerializer|null[0]
+    final val descriptor // io.github.ilyankin.rfc9457/ProblemSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // io.github.ilyankin.rfc9457/ProblemSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/ProblemSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, io.github.ilyankin.rfc9457/Problem) // io.github.ilyankin.rfc9457/ProblemSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;io.github.ilyankin.rfc9457.Problem){}[0]
+}
+
+final val io.github.ilyankin.rfc9457/ProblemJson // io.github.ilyankin.rfc9457/ProblemJson|{}ProblemJson[0]
+    final fun <get-ProblemJson>(): kotlinx.serialization.json/Json // io.github.ilyankin.rfc9457/ProblemJson.<get-ProblemJson>|<get-ProblemJson>(){}[0]
+final val io.github.ilyankin.rfc9457/boolean // io.github.ilyankin.rfc9457/boolean|@io.github.ilyankin.rfc9457.ProblemValue{}boolean[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-boolean>(): kotlin/Boolean // io.github.ilyankin.rfc9457/boolean.<get-boolean>|<get-boolean>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/booleanOrNull // io.github.ilyankin.rfc9457/booleanOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}booleanOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-booleanOrNull>(): kotlin/Boolean? // io.github.ilyankin.rfc9457/booleanOrNull.<get-booleanOrNull>|<get-booleanOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/double // io.github.ilyankin.rfc9457/double|@io.github.ilyankin.rfc9457.ProblemValue{}double[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-double>(): kotlin/Double // io.github.ilyankin.rfc9457/double.<get-double>|<get-double>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/doubleOrNull // io.github.ilyankin.rfc9457/doubleOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}doubleOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-doubleOrNull>(): kotlin/Double? // io.github.ilyankin.rfc9457/doubleOrNull.<get-doubleOrNull>|<get-doubleOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/int // io.github.ilyankin.rfc9457/int|@io.github.ilyankin.rfc9457.ProblemValue{}int[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-int>(): kotlin/Int // io.github.ilyankin.rfc9457/int.<get-int>|<get-int>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/intOrNull // io.github.ilyankin.rfc9457/intOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}intOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-intOrNull>(): kotlin/Int? // io.github.ilyankin.rfc9457/intOrNull.<get-intOrNull>|<get-intOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/long // io.github.ilyankin.rfc9457/long|@io.github.ilyankin.rfc9457.ProblemValue{}long[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-long>(): kotlin/Long // io.github.ilyankin.rfc9457/long.<get-long>|<get-long>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/longOrNull // io.github.ilyankin.rfc9457/longOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}longOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-longOrNull>(): kotlin/Long? // io.github.ilyankin.rfc9457/longOrNull.<get-longOrNull>|<get-longOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/primitive // io.github.ilyankin.rfc9457/primitive|@io.github.ilyankin.rfc9457.ProblemValue{}primitive[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-primitive>(): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/primitive.<get-primitive>|<get-primitive>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/primitiveOrNull // io.github.ilyankin.rfc9457/primitiveOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}primitiveOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-primitiveOrNull>(): io.github.ilyankin.rfc9457/ProblemPrimitive? // io.github.ilyankin.rfc9457/primitiveOrNull.<get-primitiveOrNull>|<get-primitiveOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/problemArray // io.github.ilyankin.rfc9457/problemArray|@io.github.ilyankin.rfc9457.ProblemValue{}problemArray[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-problemArray>(): io.github.ilyankin.rfc9457/ProblemArray // io.github.ilyankin.rfc9457/problemArray.<get-problemArray>|<get-problemArray>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/problemArrayOrNull // io.github.ilyankin.rfc9457/problemArrayOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}problemArrayOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-problemArrayOrNull>(): io.github.ilyankin.rfc9457/ProblemArray? // io.github.ilyankin.rfc9457/problemArrayOrNull.<get-problemArrayOrNull>|<get-problemArrayOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/problemObject // io.github.ilyankin.rfc9457/problemObject|@io.github.ilyankin.rfc9457.ProblemValue{}problemObject[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-problemObject>(): io.github.ilyankin.rfc9457/ProblemObject // io.github.ilyankin.rfc9457/problemObject.<get-problemObject>|<get-problemObject>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/problemObjectOrNull // io.github.ilyankin.rfc9457/problemObjectOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}problemObjectOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-problemObjectOrNull>(): io.github.ilyankin.rfc9457/ProblemObject? // io.github.ilyankin.rfc9457/problemObjectOrNull.<get-problemObjectOrNull>|<get-problemObjectOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/string // io.github.ilyankin.rfc9457/string|@io.github.ilyankin.rfc9457.ProblemValue{}string[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-string>(): kotlin/String // io.github.ilyankin.rfc9457/string.<get-string>|<get-string>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final val io.github.ilyankin.rfc9457/stringOrNull // io.github.ilyankin.rfc9457/stringOrNull|@io.github.ilyankin.rfc9457.ProblemValue{}stringOrNull[0]
+    final fun (io.github.ilyankin.rfc9457/ProblemValue).<get-stringOrNull>(): kotlin/String? // io.github.ilyankin.rfc9457/stringOrNull.<get-stringOrNull>|<get-stringOrNull>@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+
+final fun (io.github.ilyankin.rfc9457/ProblemType).io.github.ilyankin.rfc9457/exception(kotlin/String? = ..., kotlin/String? = ..., kotlin/Throwable? = ...): io.github.ilyankin.rfc9457/ProblemException // io.github.ilyankin.rfc9457/exception|exception@io.github.ilyankin.rfc9457.ProblemType(kotlin.String?;kotlin.String?;kotlin.Throwable?){}[0]
+final fun (io.github.ilyankin.rfc9457/ProblemType).io.github.ilyankin.rfc9457/problem(kotlin/String? = ..., kotlin/String? = ...): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/problem|problem@io.github.ilyankin.rfc9457.ProblemType(kotlin.String?;kotlin.String?){}[0]
+final fun (io.github.ilyankin.rfc9457/ProblemValue).io.github.ilyankin.rfc9457/toJsonElement(): kotlinx.serialization.json/JsonElement // io.github.ilyankin.rfc9457/toJsonElement|toJsonElement@io.github.ilyankin.rfc9457.ProblemValue(){}[0]
+final fun (kotlinx.serialization.json/JsonElement).io.github.ilyankin.rfc9457/toProblemValue(): io.github.ilyankin.rfc9457/ProblemValue // io.github.ilyankin.rfc9457/toProblemValue|toProblemValue@kotlinx.serialization.json.JsonElement(){}[0]
+final fun <#A: kotlin/Any?> (io.github.ilyankin.rfc9457/Problem).io.github.ilyankin.rfc9457/extension(kotlin/String, kotlinx.serialization/DeserializationStrategy<#A>, kotlinx.serialization.json/Json = ...): #A? // io.github.ilyankin.rfc9457/extension|extension@io.github.ilyankin.rfc9457.Problem(kotlin.String;kotlinx.serialization.DeserializationStrategy<0:0>;kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (io.github.ilyankin.rfc9457/Problem).io.github.ilyankin.rfc9457/extensionsAs(kotlinx.serialization/DeserializationStrategy<#A>, kotlinx.serialization.json/Json = ...): #A // io.github.ilyankin.rfc9457/extensionsAs|extensionsAs@io.github.ilyankin.rfc9457.Problem(kotlinx.serialization.DeserializationStrategy<0:0>;kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (kotlinx.serialization.json/Json).io.github.ilyankin.rfc9457/encodeToProblemValue(kotlinx.serialization/SerializationStrategy<#A>, #A): io.github.ilyankin.rfc9457/ProblemValue // io.github.ilyankin.rfc9457/encodeToProblemValue|encodeToProblemValue@kotlinx.serialization.json.Json(kotlinx.serialization.SerializationStrategy<0:0>;0:0){0§<kotlin.Any?>}[0]
+final fun io.github.ilyankin.rfc9457/ProblemPrimitive(kotlin/Boolean): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/ProblemPrimitive|ProblemPrimitive(kotlin.Boolean){}[0]
+final fun io.github.ilyankin.rfc9457/ProblemPrimitive(kotlin/Double): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/ProblemPrimitive|ProblemPrimitive(kotlin.Double){}[0]
+final fun io.github.ilyankin.rfc9457/ProblemPrimitive(kotlin/Int): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/ProblemPrimitive|ProblemPrimitive(kotlin.Int){}[0]
+final fun io.github.ilyankin.rfc9457/ProblemPrimitive(kotlin/Long): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/ProblemPrimitive|ProblemPrimitive(kotlin.Long){}[0]
+final fun io.github.ilyankin.rfc9457/ProblemPrimitive(kotlin/String): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/ProblemPrimitive|ProblemPrimitive(kotlin.String){}[0]
+final fun io.github.ilyankin.rfc9457/problemLiteral(kotlin/String, kotlin/Boolean): io.github.ilyankin.rfc9457/ProblemPrimitive // io.github.ilyankin.rfc9457/problemLiteral|problemLiteral(kotlin.String;kotlin.Boolean){}[0]
+final inline fun <#A: reified kotlin/Any?> (io.github.ilyankin.rfc9457/Problem).io.github.ilyankin.rfc9457/extension(kotlin/String, kotlinx.serialization.json/Json = ...): #A? // io.github.ilyankin.rfc9457/extension|extension@io.github.ilyankin.rfc9457.Problem(kotlin.String;kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> (io.github.ilyankin.rfc9457/Problem).io.github.ilyankin.rfc9457/extensionsAs(kotlinx.serialization.json/Json = ...): #A // io.github.ilyankin.rfc9457/extensionsAs|extensionsAs@io.github.ilyankin.rfc9457.Problem(kotlinx.serialization.json.Json){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> (io.github.ilyankin.rfc9457/ProblemBuilder).io.github.ilyankin.rfc9457/extension(kotlin/String, #A) // io.github.ilyankin.rfc9457/extension|extension@io.github.ilyankin.rfc9457.ProblemBuilder(kotlin.String;0:0){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> (io.github.ilyankin.rfc9457/ProblemBuilder).io.github.ilyankin.rfc9457/extensions(#A) // io.github.ilyankin.rfc9457/extensions|extensions@io.github.ilyankin.rfc9457.ProblemBuilder(0:0){0§<kotlin.Any?>}[0]
+final inline fun <#A: reified kotlin/Any?> (kotlinx.serialization.json/Json).io.github.ilyankin.rfc9457/encodeToProblemValue(#A): io.github.ilyankin.rfc9457/ProblemValue // io.github.ilyankin.rfc9457/encodeToProblemValue|encodeToProblemValue@kotlinx.serialization.json.Json(0:0){0§<kotlin.Any?>}[0]
+final inline fun io.github.ilyankin.rfc9457/problem(kotlinx.serialization.json/Json = ..., kotlin/Function1<io.github.ilyankin.rfc9457/ProblemBuilder, kotlin/Unit>): io.github.ilyankin.rfc9457/Problem // io.github.ilyankin.rfc9457/problem|problem(kotlinx.serialization.json.Json;kotlin.Function1<io.github.ilyankin.rfc9457.ProblemBuilder,kotlin.Unit>){}[0]

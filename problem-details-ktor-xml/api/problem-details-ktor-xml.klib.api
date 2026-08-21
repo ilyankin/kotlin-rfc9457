@@ -1,0 +1,16 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-ktor-xml>
+final class io.github.ilyankin.rfc9457.ktor.xml/ProblemXmlConverter : io.ktor.serialization/ContentConverter { // io.github.ilyankin.rfc9457.ktor.xml/ProblemXmlConverter|null[0]
+    constructor <init>() // io.github.ilyankin.rfc9457.ktor.xml/ProblemXmlConverter.<init>|<init>(){}[0]
+
+    final suspend fun deserialize(io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, io.ktor.utils.io/ByteReadChannel): kotlin/Any? // io.github.ilyankin.rfc9457.ktor.xml/ProblemXmlConverter.deserialize|deserialize(io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;io.ktor.utils.io.ByteReadChannel){}[0]
+    final suspend fun serialize(io.ktor.http/ContentType, io.ktor.utils.io.charsets/Charset, io.ktor.util.reflect/TypeInfo, kotlin/Any?): io.ktor.http.content/OutgoingContent? // io.github.ilyankin.rfc9457.ktor.xml/ProblemXmlConverter.serialize|serialize(io.ktor.http.ContentType;io.ktor.utils.io.charsets.Charset;io.ktor.util.reflect.TypeInfo;kotlin.Any?){}[0]
+}
+
+final fun (io.ktor.server.plugins.contentnegotiation/ContentNegotiationConfig).io.github.ilyankin.rfc9457.ktor.xml/problemXml() // io.github.ilyankin.rfc9457.ktor.xml/problemXml|problemXml@io.ktor.server.plugins.contentnegotiation.ContentNegotiationConfig(){}[0]

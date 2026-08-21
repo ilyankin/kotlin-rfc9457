@@ -1,0 +1,9 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, linuxArm64, linuxX64, macosArm64, mingwX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.ilyankin:problem-details-ktor-client>
+final fun (io.ktor.client.plugins/HttpCallValidatorConfig).io.github.ilyankin.rfc9457.ktor.client/problemJson(kotlin/Boolean = ..., kotlinx.serialization.json/Json = ...) // io.github.ilyankin.rfc9457.ktor.client/problemJson|problemJson@io.ktor.client.plugins.HttpCallValidatorConfig(kotlin.Boolean;kotlinx.serialization.json.Json){}[0]
