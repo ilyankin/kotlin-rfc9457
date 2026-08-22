@@ -143,8 +143,8 @@ Gradle (Kotlin DSL):
 
 ```kotlin
 dependencies {
-    implementation("io.github.ilyankin:problem-details-core:0.6.0")
-    implementation("io.github.ilyankin:problem-details-ktor:0.6.0")
+    implementation("io.github.ilyankin:problem-details-core:0.7.0")
+    implementation("io.github.ilyankin:problem-details-ktor:0.7.0")
 }
 ```
 
@@ -154,7 +154,7 @@ Maven:
 <dependency>
   <groupId>io.github.ilyankin</groupId>
   <artifactId>problem-details-core</artifactId>
-  <version>0.6.0</version>
+  <version>0.7.0</version>
 </dependency>
 ```
 
