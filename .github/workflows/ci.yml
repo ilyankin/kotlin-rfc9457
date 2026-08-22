@@ -160,4 +160,10 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      # Test-only classpaths never ship, so a transitive CVE there is never reachable from a
+      # consumer — excluded so Dependabot alerts stay scoped to what's actually shippable. KMP
+      # qualifies these per target (`jvmTestCompileClasspath`), not the plain `testCompileClasspath`
+      # a single-platform project would have.
       - uses: gradle/actions/dependency-submission@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          dependency-graph-exclude-configurations: '.*[Tt]est(Compile|Runtime)Classpath'
