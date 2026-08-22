@@ -1,0 +1,9 @@
+comment:
+  # A dependency bump or a docs-only PR still lands a full coverage comment repeating numbers
+  # that never moved, because Kover only instruments the jvm target and nothing under commonMain
+  # or jvmMain changed. require_changes skips the comment when that's the case.
+  require_changes: true
+  # Reading the project-coverage number in a PR comment as coverage across every target is an
+  # easy mistake, since that same report only counts the jvm one. hide_project_coverage drops the
+  # number and leaves just the diff for what the PR touched.
+  hide_project_coverage: true
