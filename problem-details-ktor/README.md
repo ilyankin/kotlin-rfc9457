@@ -41,12 +41,12 @@ let the catalog answer.
 |---|---|
 | [respondProblem] | Respond with a problem document; fills `status` and `instance` from the call. |
 | [problemDetails] | Inside `install(StatusPages)`: build the exception-to-problem catalog. |
-| [ProblemDetailsCatalog] | That catalog — `map<T>`, `forStatusCode`, `standardStatusCodes`, `onUnmapped`. |
+| [ProblemDetailsCatalog] | That catalog — `map<T>`, `forStatusCode`, `standardStatusCodes`, `onUnmapped`, `customize`. |
 | [problemJson] | Inside `install(ContentNegotiation)`: register the JSON codec. |
 | [ProblemJsonConverter] | The converter behind it, if you need to register it yourself. |
 | [ProblemContentTypes] | `application/problem+json` and `application/problem+xml` as `ContentType`. |
 
-Four behaviours here are decisions rather than defaults, and each is pinned by a test:
+Five behaviours here are decisions rather than defaults, and each is pinned by a test:
 
 - A problem document is **always** labelled `application/problem+json`, even when it was matched
   under `application/json`. RFC 9457 §3 permits the override, and echoing back `application/json`
@@ -61,3 +61,9 @@ Four behaviours here are decisions rather than defaults, and each is pinned by a
   catalog — so `map<ProblemException>` replaces it like any other. Its `cause`, when present, is
   logged server-side (`error` for a 5xx, `debug` otherwise) because `StatusPages` logs nothing it
   handles and the cause would otherwise be dropped silently.
+- `customize` runs once, after whichever of `map`, `onUnmapped` or `forStatusCode` produced the
+  problem, rather than being folded into each of those. Enrichment that belongs on every document —
+  a trace id read off the `ApplicationCall`, say — would otherwise have to be repeated in every
+  mapping instead of registered once. Registration is **additive**, unlike `onUnmapped`: each call
+  adds a step and steps run in registration order, so two unrelated concerns — a trace id and a
+  redaction pass, say — cannot silently drop one another.

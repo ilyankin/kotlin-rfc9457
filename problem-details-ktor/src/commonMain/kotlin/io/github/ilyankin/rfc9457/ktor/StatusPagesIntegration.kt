@@ -53,17 +53,17 @@ public fun StatusPagesConfig.problemDetails(catalog: ProblemDetailsCatalog) {
         } else {
             call.application.log.debug(message, cause)
         }
-        call.respondProblem(problem)
+        call.respondProblem(catalog.customized(call, problem))
     }
 
     catalog.exceptionMappings.forEach { (klass, toProblem) ->
-        exception(klass) { call, cause -> call.respondProblem(toProblem(call, cause)) }
+        exception(klass) { call, cause -> call.respondProblem(catalog.customized(call, toProblem(call, cause))) }
     }
 
     catalog.statusMappings.forEach { (code, provider) ->
         // Explicit parameter types pick the plain (call, code) overload over the StatusContext one.
         status(code) { call: ApplicationCall, _: HttpStatusCode ->
-            call.respondProblem(code, provider(call))
+            call.respondProblem(code, catalog.customized(call, provider(call)))
         }
     }
 }

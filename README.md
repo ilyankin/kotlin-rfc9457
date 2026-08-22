@@ -283,12 +283,28 @@ islands out of a *stable* release, and at 0.x everything is unstable by declarat
 
 ## Roadmap
 
-**Backlog** — scoped, timing intentionally undecided:
+Two backlog candidates were scoped for their own module, and both resolved without one: neither needs
+an optional dependency to gate.
 
-| Module | Would add |
-|---|---|
-| `problem-details-ktor-i18n` | `Accept-Language`-based localization of `title`/`detail` (Spring `MessageSource`-style). |
-| `problem-details-ktor-hooks` | A global enrichment hook (ASP.NET `CustomizeProblemDetails`-style) for adding fields like `traceId` to every response. |
+A global enrichment hook (ASP.NET `CustomizeProblemDetails`-style, for fields like `traceId`) shipped
+as `ProblemDetailsCatalog.customize` in `problem-details-ktor` itself rather than as a module of its
+own: it needs no optional dependency to gate — any binding to a specific tracer (OpenTelemetry,
+Micrometer, MDC) would be JVM-only, which this library does not do, so the hook stays a plain
+`(ApplicationCall, Problem) -> Problem` and leaves sourcing the id to the caller.
+
+`Accept-Language`-based localization of `title`/`detail` (Spring `MessageSource`-style) resolved the
+same way, for two reasons. Negotiating the header needs nothing new — `problem-details-ktor` already
+depends on `ktor-server-core`, which already parses it. And there is nothing to gate behind an optional
+dependency in the first place: Ktor's own `ktor-server-i18n` plugin and the community `ktor-i18n` are
+both plain JVM libraries built on `java.util.ResourceBundle`, and the two real Kotlin Multiplatform
+string-resource libraries — Compose Multiplatform Resources and moko-resources — are Compose-oriented
+and don't cover this library's target matrix either (moko-resources, for one, has no Linux or Windows
+native target). The same `customize` hook already covers it, with zero library changes: read
+`Accept-Language`, resolve a translation any way you like, and return a localized `Problem`. For
+`title` and `detail` that is one `copy`. Validation messages are not there —
+`problem-details-ktor-validation` puts them inside the `errors[]` extension, one object per failure,
+each with its own `detail` — so localizing those means rebuilding that array rather than copying two
+fields.
 
 **1.0.** `@RequiresOptIn` markers arrive for whatever isn't ready to freeze — `ProblemDetailsCatalog`
 and the shape of `ProblemType` are the named candidates — once someone outside this repo has actually

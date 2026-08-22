@@ -6,6 +6,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Added
+
+- **`ProblemDetailsCatalog.customize`** — a global enrichment hook, ASP.NET `CustomizeProblemDetails`
+  style, run on every problem the catalog produces (`map`, `onUnmapped` and `forStatusCode` alike)
+  right before it is sent. Enrichment that belongs on every document — a trace id read off the
+  `ApplicationCall`, say — no longer has to be repeated in every mapping. Registration is additive:
+  each call adds a step and steps run in registration order, so nothing silently replaces a hook
+  registered elsewhere.
+
 ## [0.7.0] — 2026-08-22
 
 ### Changed

@@ -48,6 +48,20 @@ public class ProblemDetailsCatalog internal constructor() {
         Problem.blank(defaultExceptionStatusCode(cause) ?: HttpStatusCode.InternalServerError)
     }
 
+    /**
+     * Runs on the problem this catalog is about to respond with, whichever path produced it.
+     *
+     * A list rather than a single slot: a second [customize] adds a step instead of dropping the
+     * first one silently. This is the one choke point [map], [onUnmapped] and [forStatusCode] all
+     * pass through, for enrichment that has nothing to do with picking a problem type — a trace id
+     * read off [ApplicationCall], for instance — so it does not have to be repeated in every mapping.
+     */
+    internal val customizers: MutableList<(ApplicationCall, Problem) -> Problem> = mutableListOf()
+
+    /** Applies [customizers] in registration order; with none registered the problem passes through. */
+    internal fun customized(call: ApplicationCall, problem: Problem): Problem =
+        customizers.fold(problem) { enriched, step -> step(call, enriched) }
+
     init {
         // A catalog entry, not a registration in `problemDetails`: this key is unique, so a caller's
         // own `map<ProblemException>` replaces it by ordinary map semantics, without the ordering the
@@ -135,6 +149,22 @@ public class ProblemDetailsCatalog internal constructor() {
      */
     public fun onUnmapped(handler: (ApplicationCall, Throwable) -> Problem) {
         unmapped = handler
+    }
+
+    /**
+     * Registers [handler], run on every problem this catalog produces right before it is sent.
+     *
+     * Unlike [map], [onUnmapped] and [forStatusCode], this does not decide *which* problem is built —
+     * it adjusts the one already chosen, the same way regardless of which of those three paths chose
+     * it. Use it for enrichment that belongs on every document rather than one problem type at a
+     * time: a trace id read off the [ApplicationCall], for example.
+     *
+     * Additive, unlike [onUnmapped]: each call adds a step, and steps run in registration order, each
+     * one seeing what the previous returned. Two unrelated concerns — a trace id and a redaction pass,
+     * say — are registered separately without either dropping the other.
+     */
+    public fun customize(handler: (ApplicationCall, Problem) -> Problem) {
+        customizers += handler
     }
 
     /**

@@ -6,6 +6,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotContain
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -195,6 +196,69 @@ class CatalogIntegrationTest :
                 val response = client.get("/nothing-here")
                 response.status shouldBe HttpStatusCode.NotFound
                 Json.decodeFromString<Problem>(response.bodyAsText()).status shouldBe 404
+            }
+        }
+
+        "customize runs for a mapped exception's problem" {
+            testApplication {
+                installProblemFormats()
+                install(StatusPages) {
+                    problemDetails {
+                        map<DomainException>(OutOfCredit)
+                        customize { call, problem -> problem.copy(instance = call.request.headers["X-Trace-Id"]) }
+                    }
+                }
+                routing { get("/pay") { throw DomainException("balance too low") } }
+
+                val response = client.get("/pay") { header("X-Trace-Id", "trace-1") }
+                Json.decodeFromString<Problem>(response.bodyAsText()).instance shouldBe "trace-1"
+            }
+        }
+
+        "customize runs for the catch-all's problem" {
+            testApplication {
+                installProblemFormats()
+                install(StatusPages) {
+                    problemDetails {
+                        customize { call, problem -> problem.copy(instance = call.request.headers["X-Trace-Id"]) }
+                    }
+                }
+                routing { get("/boom") { throw IllegalStateException("x") } }
+
+                val response = client.get("/boom") { header("X-Trace-Id", "trace-2") }
+                Json.decodeFromString<Problem>(response.bodyAsText()).instance shouldBe "trace-2"
+            }
+        }
+
+        "customize runs for a status-code problem" {
+            testApplication {
+                installProblemFormats()
+                install(StatusPages) {
+                    problemDetails {
+                        standardStatusCodes()
+                        customize { call, problem -> problem.copy(instance = call.request.headers["X-Trace-Id"]) }
+                    }
+                }
+                routing { }
+
+                val response = client.get("/nothing-here") { header("X-Trace-Id", "trace-3") }
+                Json.decodeFromString<Problem>(response.bodyAsText()).instance shouldBe "trace-3"
+            }
+        }
+
+        "customize steps run in registration order, each seeing the previous one's result" {
+            testApplication {
+                installProblemFormats()
+                install(StatusPages) {
+                    problemDetails {
+                        customize { _, problem -> problem.copy(detail = "first") }
+                        customize { _, problem -> problem.copy(detail = "${problem.detail}-second") }
+                    }
+                }
+                routing { get("/boom") { throw IllegalStateException("x") } }
+
+                val response = client.get("/boom")
+                Json.decodeFromString<Problem>(response.bodyAsText()).detail shouldBe "first-second"
             }
         }
 

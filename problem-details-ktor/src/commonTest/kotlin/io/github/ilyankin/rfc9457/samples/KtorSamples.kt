@@ -1,5 +1,6 @@
 package io.github.ilyankin.rfc9457.samples
 
+import io.github.ilyankin.rfc9457.ProblemPrimitive
 import io.github.ilyankin.rfc9457.ktor.problemDetails
 import io.github.ilyankin.rfc9457.ktor.problemJson
 import io.github.ilyankin.rfc9457.ktor.respondProblem
@@ -55,6 +56,12 @@ internal fun Application.problemDetailsSample() {
                     status = 500
                     title = "Internal Server Error"
                 }
+            }
+
+            // Runs on every problem this catalog produces, regardless of which mapping built it.
+            customize { call, problem ->
+                val traceId = call.request.headers["traceparent"] ?: return@customize problem
+                problem.copy(extensions = problem.extensions + ("traceId" to ProblemPrimitive(traceId)))
             }
         }
     }

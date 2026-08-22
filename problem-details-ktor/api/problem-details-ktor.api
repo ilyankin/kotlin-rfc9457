@@ -11,6 +11,7 @@ public final class io/github/ilyankin/rfc9457/ktor/ProblemContentTypes {
 
 public final class io/github/ilyankin/rfc9457/ktor/ProblemDetailsCatalog {
 	public final fun addMapping (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function2;)V
+	public final fun customize (Lkotlin/jvm/functions/Function2;)V
 	public final fun declareType (Lio/github/ilyankin/rfc9457/ProblemType;)V
 	public final fun forStatusCode (Lio/ktor/http/HttpStatusCode;Lkotlin/jvm/functions/Function1;)V
 	public final fun getProblemTypes ()Ljava/util/List;
