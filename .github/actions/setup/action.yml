@@ -42,8 +42,19 @@ runs:
     # (gradle-build-action#125). Kotlin/Native puts its compiler, platform libraries and its own
     # caches there, so without this step every job re-downloads the toolchain on every run. Keyed on
     # the version catalog, which is where the Kotlin version that picks the toolchain lives.
-    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+    - id: konan-cache
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: ~/.konan
         key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
         restore-keys: konan-${{ runner.os }}-
+
+    # This key isn't split per job the way the Gradle cache is, so `isolated-projects` shares the
+    # Linux entry `build` writes (see `cache-read-only` above) — same two-writers-one-entry race,
+    # skipped here too. `cache-hit` is only true on an exact match, so a `restore-keys` fallback
+    # still saves the fresher entry.
+    - if: inputs.cache-read-only != 'true' && steps.konan-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/.konan
+        key: ${{ steps.konan-cache.outputs.cache-primary-key }}
