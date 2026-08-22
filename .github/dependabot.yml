@@ -11,8 +11,14 @@ updates:
       - /.github/actions/*
     schedule:
       interval: weekly
+    # Security updates ignore `groups` unless a rule opts in with `applies-to: security-updates`,
+    # so they're unaffected by this and still open the moment a fix is disclosed — only the
+    # routine version bumps below are what this batches and delays.
+    cooldown:
+      default-days: 3
     groups:
       actions:
+        applies-to: version-updates
         patterns: ['*']
 
   # Reads `gradle/libs.versions.toml`. Not covered: the plugin versions written as literals in
@@ -21,15 +27,30 @@ updates:
     directory: /
     schedule:
       interval: weekly
+      day: monday
+    # A week's headroom past GitHub's 3-day platform default, matching this project's own
+    # no-beta/no-RC stance (`docs/release-strategy.md`): let a release sit before adopting it.
+    cooldown:
+      default-days: 7
     groups:
       kotlin:
+        applies-to: version-updates
         patterns:
           - org.jetbrains.kotlin*
           - org.jetbrains.kotlinx*
       ktor:
+        applies-to: version-updates
         patterns:
           - io.ktor*
       testing:
+        applies-to: version-updates
         patterns:
           - io.kotest*
           - ch.qos.logback*
+      # Catch-all, last so the three named groups above still claim their own matches first
+      # (Dependabot assigns each dependency to the first group it fits). Without this, anything
+      # outside those three families — xmlutil, a future addition — opens its own single-dependency
+      # PR instead of riding along in the weekly batch.
+      other:
+        applies-to: version-updates
+        patterns: ['*']
