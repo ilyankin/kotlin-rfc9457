@@ -16,25 +16,13 @@ jobs:
   build:
     name: Build, test, ABI, docs
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # 21 is the daemon JVM (`gradle/gradle-daemon-jvm.properties`); the 17 toolchain the code
-      # compiles against is provisioned by the foojay resolver and cached as `jdks` below.
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      - uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: '21'
-
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        with:
-          # Configuration-cache entries are not cached without it. Absent on forked PRs; caching is
-          # then skipped, the build still passes.
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
-          gradle-home-cache-includes: |
-            caches
-            notifications
-            jdks
 
       # Compiles every target, runs the suites this host can, and checks both ABI dumps.
       - name: Build
@@ -83,21 +71,25 @@ jobs:
     # what this job provides.
     name: Apple targets
     runs-on: macos-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      # Cache keys carry the runner OS, and entries never cross between operating systems
+      # (gradle/actions#27, closed as won't-do). No Linux job can seed a macOS entry, so this one
+      # has to write its own or start cold on every run forever.
+      - uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: '21'
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        with:
-          # Only the `build` job writes the shared cache entry.
-          cache-read-only: true
-
+      # `gradle.properties` is tuned for a workstation. This is the smallest runner in the fleet
+      # (3 CPU / 7 GB), where its 4g + 3g of daemon heap would ask for the whole machine before the
+      # OS, the test binaries and the simulator get any.
       - name: Test
-        run: ./gradlew macosArm64Test iosSimulatorArm64Test
+        run: >-
+          ./gradlew macosArm64Test iosSimulatorArm64Test --max-workers=2
+          -Dorg.gradle.jvmargs=-Xmx2g
+          -Dkotlin.daemon.jvmargs=-Xmx3g
 
       - name: Upload test reports
         if: failure()
@@ -112,17 +104,14 @@ jobs:
     # Windows runner.
     name: Windows target
     runs-on: windows-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      # Its own entry, for the same reason as the Apple job above.
+      - uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: '21'
-
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        with:
-          cache-read-only: true
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - name: Test
         run: ./gradlew mingwX64Test
@@ -140,17 +129,15 @@ jobs:
     # regression that breaks it. See docs/gradle-build-structure.md.
     name: Isolated Projects
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      - uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: '21'
-
-      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        with:
-          # Only the `build` job writes the shared cache entry.
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          # This job shares the Linux key space with `build`, which is the one that writes there.
+          # Two writers would race for a single entry.
           cache-read-only: true
 
       - name: Build with Isolated Projects
@@ -162,6 +149,7 @@ jobs:
     name: Dependency graph
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: write
     steps:

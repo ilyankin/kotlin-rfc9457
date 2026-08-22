@@ -1,0 +1,60 @@
+name: Set up the build
+description: The JDK, Gradle and the caches every Gradle job in this repository needs.
+
+# `actions/checkout` deliberately stays in the calling job. A local composite action is resolved
+# from the workspace, so this file exists only after checkout has run.
+
+inputs:
+  cache-encryption-key:
+    description: >-
+      Base64 AES key for the configuration-cache entries, which may hold credentials. Composite
+      actions cannot read `secrets`, so the caller passes it in. Empty on a forked PR, where the
+      configuration cache is then skipped and the build still passes.
+    required: false
+    default: ''
+  cache-read-only:
+    description: >-
+      Read cache entries without writing them back. Set it on a job that shares a key space with
+      another one, since two writers race for a single entry.
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    # 21 is the daemon JVM (`gradle/gradle-daemon-jvm.properties`); the 17 toolchain the code
+    # compiles against is provisioned by the foojay resolver and cached as `jdks` below.
+    - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      with:
+        distribution: temurin
+        java-version: '21'
+
+    - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+      with:
+        cache-encryption-key: ${{ inputs.cache-encryption-key }}
+        cache-read-only: ${{ inputs.cache-read-only }}
+        gradle-home-cache-includes: |
+          caches
+          notifications
+          jdks
+
+    # `setup-gradle` caches Gradle User Home and nothing outside it, and `~/.konan` sits outside
+    # (gradle-build-action#125). Kotlin/Native puts its compiler, platform libraries and its own
+    # caches there, so without this step every job re-downloads the toolchain on every run. Keyed on
+    # the version catalog, which is where the Kotlin version that picks the toolchain lives.
+    - id: konan-cache
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/.konan
+        key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+        restore-keys: konan-${{ runner.os }}-
+
+    # This key isn't split per job the way the Gradle cache is, so `isolated-projects` shares the
+    # Linux entry `build` writes (see `cache-read-only` above) — same two-writers-one-entry race,
+    # skipped here too. `cache-hit` is only true on an exact match, so a `restore-keys` fallback
+    # still saves the fresher entry.
+    - if: inputs.cache-read-only != 'true' && steps.konan-cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: ~/.konan
+        key: ${{ steps.konan-cache.outputs.cache-primary-key }}
