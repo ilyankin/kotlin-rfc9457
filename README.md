@@ -10,15 +10,14 @@
 
 ![jvm][badge-jvm] ![js][badge-js] ![wasm][badge-wasm] ![linux][badge-linux] ![windows][badge-windows] ![macos][badge-macos] ![ios][badge-ios]
 
-[RFC 9457 Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457) for Kotlin — the
-standard way for an HTTP API to say *what went wrong*, in one machine-readable body shape instead of
-a different error format per service. This library models that document, serializes it correctly, and
-generates the Ktor wiring you would otherwise hand-write into `StatusPages` and `ContentNegotiation`,
-rather than reimplementing either.
+[RFC 9457 Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457) is the standard
+machine-readable body an HTTP API sends to say what went wrong. This library gives you that document
+as a Kotlin type, with codecs for JSON and XML. On top of it sits the Ktor wiring you would otherwise
+hand-write into `StatusPages` and `ContentNegotiation`.
 
 ## See it
 
-Declare a problem type once, in ordinary domain code that imports nothing web-related:
+Declare a problem type once, in domain code that imports nothing web-related:
 
 ```kotlin
 object OutOfCredit : ProblemType {
@@ -28,20 +27,20 @@ object OutOfCredit : ProblemType {
 }
 ```
 
-Wire Ktor up once, at startup:
+Wire Ktor up at startup:
 
 ```kotlin
 install(ContentNegotiation) { problemJson() }
 install(StatusPages) { problemDetails { } }
 ```
 
-Then throw it from anywhere — a service, a repository, a validator:
+Throw it wherever the failure is detected:
 
 ```kotlin
 throw OutOfCredit.exception(detail = "Your current balance is 30, but that costs 50.")
 ```
 
-And the caller gets this, with nothing else configured:
+The caller gets this:
 
 ```http
 HTTP/1.1 403 Forbidden
@@ -56,90 +55,10 @@ Content-Type: application/problem+json
 }
 ```
 
-`instance` came from the request path, `status` from the problem type. Those same two `install` lines
-also answer every *unhandled* exception with a document instead of a stack trace. Bare status codes —
-the 404 from a route that matched nothing — stay untouched until you ask for them with
-`standardStatusCodes()`, because `StatusPages` fires that hook for every response carrying the code,
-including bodies your own handlers built on purpose.
+`instance` comes from the request path and `status` from the problem type. The two `install` calls
+also handle unmapped exceptions, preventing stack traces from reaching the client.
 
-## What it does
-
-**On the server.** `problemDetails { }` writes the `StatusPages` registrations for you: a catch-all
-that never leaks a file path or a SQL fragment into a response, mappings for exception types you do
-not own, and bodies for individual status codes. `problemJson()` registers the codec with
-`ContentNegotiation`. Dispatch itself stays Ktor's — nearest-parent-class exception resolution and
-`Accept` quality values are not reimplemented here.
-
-**In your domain code.** `ProblemType` and the throwable both live in `problem-details-core`, so
-raising a problem from a service layer costs no dependency on a web framework. Pass `cause` and the
-underlying failure is logged server-side and kept out of the document, which RFC 9457 §5 asks for.
-
-**Your own fields, beside the standard ones.** Spread an `@Serializable` object into a document with
-`extensions(obj)`, read it back typed with `extensionsAs<T>()`. They land as *siblings* of
-`type`/`status`/`title`/`detail`/`instance` — what §3.2 requires, and what implementations that nest
-them under an `extensions` key get wrong.
-
-**Field-level validation errors.** `requestValidation(type)` turns Ktor `RequestValidation` failures
-into the `errors[]` array with JSON Pointer references that the RFC itself recommends for multi-field
-validation, and `jsonPointer(Customer::age)` derives each pointer from the property so it cannot
-drift away from the DTO it points into.
-
-**In the OpenAPI document, not just on the wire.** `problemResponses(catalog)` inside `routing { }`
-documents the catch-all and every status the catalog answers, for the whole application, in one line.
-Ktor's own inference cannot find these: it reads route handler bodies, and problem documents come from
-`StatusPages`, which sits outside them. Bodies are keyed `application/problem+json`, which most
-implementations still get wrong.
-
-**Reading problems, not only writing them.** `problemJson()` on Ktor Client turns a problem response
-from an API you call back into the same `ProblemException` your own server throws — one exception
-type for both directions, not two.
-
-**XML when a client asks for it.** The RFC Appendix B format, byte-exact against the RFC's own example
-in both directions, in artifacts of its own so a JSON-only application never resolves an XML parser.
-
-## Which artifact do I need
-
-| If you want to… | Add | Since |
-|---|---|---|
-| Return RFC 9457 documents from a Ktor server | `problem-details-core` + `problem-details-ktor` | 0.1.0 |
-| Build or read the documents with no web framework at all | `problem-details-core` | 0.1.0 |
-| Map `RequestValidation` failures to `errors[]` | …plus `problem-details-ktor-validation` | 0.5.0 |
-| Show those failures in a generated OpenAPI document | …plus `problem-details-ktor-openapi`, and `problem-details-ktor-openapi-xml` if you also answer XML | 0.6.0 |
-| Answer `application/problem+xml` as well as JSON | …plus `problem-details-xml` and `problem-details-ktor-xml` | 0.2.0 |
-| Decode problem responses from APIs you call | …plus `problem-details-ktor-client`, and `problem-details-ktor-client-xml` if those answers can be XML | 0.3.0 / 0.4.0 |
-
-All modules always share one version, so you choose a version once and use it everywhere.
-
-<details>
-<summary>All nine artifacts, with per-module documentation</summary>
-
-| Artifact | Contains | Javadoc |
-|---|---|---|
-| [`problem-details-core`](problem-details-core/README.md) | `Problem`, `ProblemType`, `ProblemValue`, the `problem { }` builder, typed extension reading, and the flattening JSON codec | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-core) |
-| [`problem-details-ktor`](problem-details-ktor/README.md) | `respondProblem`, `ProblemDetailsCatalog`, `problemDetails { }`, `problemJson()` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor) |
-| [`problem-details-xml`](problem-details-xml/README.md) | The RFC Appendix B XML codec (`ProblemXml`) | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-xml) |
-| [`problem-details-ktor-xml`](problem-details-ktor-xml/README.md) | Registers the XML codec with Ktor's `ContentNegotiation` (`problemXml()`) | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-xml) |
-| [`problem-details-ktor-client`](problem-details-ktor-client/README.md) | `problemJson()` — decode a recognized problem response into the same `ProblemException` the server throws | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-client) |
-| [`problem-details-ktor-client-xml`](problem-details-ktor-client-xml/README.md) | `problemXml()` — the same for `application/problem+xml` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-client-xml) |
-| [`problem-details-ktor-validation`](problem-details-ktor-validation/README.md) | `invalidField`/`invalidFields`, `jsonPointer`, `requestValidation(type)` — `RequestValidationException` to `errors[]` with JSON Pointer | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-validation) |
-| [`problem-details-ktor-openapi`](problem-details-ktor-openapi/README.md) | `Route.problemResponses(catalog)`, `problemsFrom`, `problemResponse`, `problemDefault`, `ProblemSchemas` — problem responses in a generated OpenAPI document | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi) |
-| [`problem-details-ktor-openapi-xml`](problem-details-ktor-openapi-xml/README.md) | `problemXmlContent()` — the same, for `application/problem+xml` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi-xml) |
-
-</details>
-
-API reference for every module: **<https://ilyankin.github.io/kotlin-rfc9457/>**, regenerated from
-`main` on every push. Per-artifact documentation is also served unversioned by javadoc.io, resolving
-to the latest release, once that module has a version published.
-
-## Requirements
-
-- JDK 17+
-- Kotlin 2.4+ (built with 2.4.10)
-- Ktor 3.5+ for the Ktor modules
-
-## Installation
-
-Gradle (Kotlin DSL):
+## Install
 
 ```kotlin
 dependencies {
@@ -148,7 +67,14 @@ dependencies {
 }
 ```
 
-Maven:
+| Requires | Version |
+|---|---|
+| JDK | 17+ |
+| Kotlin | 2.4+ (built with 2.4.10) |
+| Ktor | 3.5+, for the Ktor modules |
+
+<details>
+<summary>Maven</summary>
 
 ```xml
 <dependency>
@@ -158,13 +84,44 @@ Maven:
 </dependency>
 ```
 
-The plain coordinates work from Maven as well as Gradle: the root POM is published with
-`packaging: pom` and a compile-scoped dependency on the `-jvm` artifact, the way kotlinx-serialization
-and kotlinx-coroutines do it. You do **not** need to write `-jvm` yourself.
+</details>
 
-## Quick start
+## Artifacts
 
-### Building a problem document
+| To | Add |
+|---|---|
+| Return RFC 9457 documents from a Ktor server | `problem-details-core` + `problem-details-ktor` |
+| Build or parse documents without a web framework | `problem-details-core` |
+| Map `RequestValidation` failures to `errors[]` | + `problem-details-ktor-validation` |
+| Show problem responses in generated OpenAPI documents | + `problem-details-ktor-openapi` (and `problem-details-ktor-openapi-xml` for XML) |
+| Answer `application/problem+xml` alongside JSON | + `problem-details-xml` and `problem-details-ktor-xml` |
+| Decode problem responses from APIs you call | + `problem-details-ktor-client` (and `problem-details-ktor-client-xml` for XML) |
+
+All modules share the same version.
+
+<details>
+<summary>All artifacts, with per-module documentation</summary>
+
+| Artifact | Contains | Javadoc |
+|---|---|---|
+| [`problem-details-core`](problem-details-core/README.md) | `Problem`, `ProblemType`, `ProblemValue`, the `problem { }` builder, typed extension access, and flattening JSON codec | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-core) |
+| [`problem-details-ktor`](problem-details-ktor/README.md) | `respondProblem`, `ProblemDetailsCatalog`, `problemDetails { }`, `problemJson()` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor) |
+| [`problem-details-xml`](problem-details-xml/README.md) | The RFC Appendix B XML codec (`ProblemXml`) | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-xml) |
+| [`problem-details-ktor-xml`](problem-details-ktor-xml/README.md) | Registers the XML codec with Ktor `ContentNegotiation` (`problemXml()`) | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-xml) |
+| [`problem-details-ktor-client`](problem-details-ktor-client/README.md) | `problemJson()`, decoding recognized problem responses into `ProblemException` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-client) |
+| [`problem-details-ktor-client-xml`](problem-details-ktor-client-xml/README.md) | `problemXml()`, decoding XML problem responses into `ProblemException` | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-client-xml) |
+| [`problem-details-ktor-validation`](problem-details-ktor-validation/README.md) | `invalidField`/`invalidFields`, `jsonPointer`, `requestValidation(type)` to map `RequestValidationException` to `errors[]` with JSON Pointer | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-validation) |
+| [`problem-details-ktor-openapi`](problem-details-ktor-openapi/README.md) | `Route.problemResponses(catalog)`, `problemsFrom`, `problemResponse`, `problemDefault`, `ProblemSchemas` for generated OpenAPI documents | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi) |
+| [`problem-details-ktor-openapi-xml`](problem-details-ktor-openapi-xml/README.md) | `problemXmlContent()` for `application/problem+xml` in OpenAPI | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi-xml) |
+
+</details>
+
+API reference for every module: <https://ilyankin.github.io/kotlin-rfc9457/>, regenerated from
+`main` on every push. javadoc.io also serves each artifact at its latest release.
+
+## Recipes
+
+### Build a document
 
 ```kotlin
 val problem = problem {
@@ -174,11 +131,13 @@ val problem = problem {
     detail = "The 'age' field must be a positive integer."
     instance = "/account/12345/msgs/abc"
 }
+
+Json.encodeToString(problem)
 ```
 
-### Extension members
+`Problem` carries its own serializer, so standard `Json` encodes and decodes it without registering custom serializers.
 
-Written as *siblings* of the standard members, never nested under an `extensions` key:
+### Add your own fields
 
 ```kotlin
 @Serializable
@@ -189,20 +148,29 @@ val problem = problem {
     status = 403
     extensions(OutOfCreditDetails(balance = 30, accounts = listOf("/account/12345")))
 }
-// {"type":"…","status":403,"balance":30,"accounts":["/account/12345"]}
 ```
 
-Reading them back is typed:
+```json
+{
+  "type": "https://example.com/probs/out-of-credit",
+  "status": 403,
+  "balance": 30,
+  "accounts": ["/account/12345"]
+}
+```
+
+RFC 9457 §3.2 puts extension members at the top level of the document.
+The `extensions` map holds them in memory and never serializes as a nested object. Reading them back is type-safe:
 
 ```kotlin
 val details = problem.extensionsAs<OutOfCreditDetails>()
 val balance = problem.extensions["balance"]?.int
 ```
 
-### Mapping exceptions you don't own
+### Map exceptions you don't own
 
-Throwing `OutOfCredit.exception(…)` covers your own code — see [See it](#see-it). Exception types
-from a library get mapped declaratively instead, which leaves them free of any dependency on this one:
+Your own code throws `OutOfCredit.exception(…)`. For exception types from external libraries,
+declare the mapping at startup without adding this library as a dependency to the external library:
 
 ```kotlin
 install(StatusPages) {
@@ -214,13 +182,17 @@ install(StatusPages) {
                 detail = "Your balance is ${cause.balance}."
             }
         }
-        forStatusCode(HttpStatusCode.NotFound) { Problem.blank(HttpStatusCode.NotFound) }
+        map<AccountLockedException>(AccountLocked)   // detail comes from the exception message
         standardStatusCodes()
     }
 }
 ```
 
-### Validation errors
+`standardStatusCodes()` covers the four status codes Ktor generates without a body: 404, 405,
+406, and 415. Other codes require explicit mapping via `forStatusCode` to avoid intercepting
+responses that include explicit bodies.
+
+### Field-level validation errors
 
 ```kotlin
 install(RequestValidation) {
@@ -245,80 +217,139 @@ install(StatusPages) { problemDetails { requestValidation(ValidationError) } }
 }
 ```
 
-### Responding directly
+The pointer derives from the property reference, making renames compile-safe. Deeper paths use
+`jsonPointer<Customer>("profile", "color")`, which validates against the target type's serial descriptor.
+
+### Put a trace id on every document
 
 ```kotlin
-call.respondProblem(HttpStatusCode.Forbidden, problem)
+install(StatusPages) {
+    problemDetails {
+        standardStatusCodes()
+        customize { call, problem ->
+            val traceId = call.request.headers["X-Trace-Id"] ?: return@customize problem
+            problem.copy(extensions = problem.extensions + ("traceId" to ProblemPrimitive(traceId)))
+        }
+    }
+}
 ```
+
+```json
+{
+  "type": "about:blank",
+  "status": 404,
+  "title": "Not Found",
+  "instance": "/orders/17",
+  "traceId": "b7ad6b7169203331"
+}
+```
+
+`customize` runs on every document produced by the catalog before sending, whether built by
+`map`, `onUnmapped`, or `forStatusCode`. Each call registers an additional transformation step,
+running in registration order.
+Use the same hook to localize `title` and `detail` by `Accept-Language`: read the header from
+the call, resolve localized strings, and return `problem.copy(...)`.
+
+### Respond from inside a route
+
+```kotlin
+get("/account/{id}") {
+    call.respondProblem(HttpStatusCode.Forbidden, problem)
+}
+```
+
+### Read a problem from an API you call
+
+```kotlin
+val client = HttpClient(CIO) {
+    expectSuccess = true
+    HttpResponseValidator { problemJson() }
+}
+
+try {
+    client.get("https://api.example.com/orders/1").body<Order>()
+} catch (e: ProblemException) {
+    val status = e.problem.status
+    val reason = e.problem.detail
+}
+```
+
+The client and server use the same `ProblemException`. `expectSuccess = true` is required;
+without it, Ktor does not throw on non-2xx responses, leaving nothing for the validator to intercept.
+
+### Answer XML
+
+```kotlin
+install(ContentNegotiation) {
+    problemJson()   // register first: `Accept: */*` matches both, and Ktor breaks the tie by order
+    problemXml()
+}
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<problem xmlns="urn:ietf:rfc:7807">
+  <type>https://example.com/probs/out-of-credit</type>
+  <title>You do not have enough credit.</title>
+  <detail>Your current balance is 30, but that costs 50.</detail>
+  <status>403</status>
+  <instance>/account/12345/msgs/abc</instance>
+</problem>
+```
+
+The writer produces byte-exact output matching RFC 9457 Appendix B, and the reader parses it
+back under namespace `urn:ietf:rfc:7807`. In client code, `problemXml()` inside
+`HttpResponseValidator { }` decodes the same format into `ProblemException`, regardless of registration order.
+
+### Document it in OpenAPI
+
+```kotlin
+val catalog = problemCatalog { standardStatusCodes() }
+
+install(StatusPages) { problemDetails(catalog) }
+
+routing {
+    problemResponses(catalog)   // the catch-all and 404/405/406/415, for every endpoint below
+
+    get("/orders/{id}") { call.respondText("an order") }
+        .describe { responses { problemResponse(OutOfCredit) } }
+}
+```
+
+Ktor infers endpoint responses from route handler bodies. Because problem documents are generated
+by `StatusPages` outside route lambdas, OpenAPI generation cannot detect them automatically.
+`problemResponses` and `problemResponse` register `application/problem+json` schemas and support
+extension members as siblings.
 
 ## Under the hood
 
-Things that are easy to get wrong and are therefore settled here once:
+| Behavior | Rationale |
+|---|---|
+| Documents use `application/problem+json` even when matched by `application/json`. | The media type identifies the payload as a problem details document. RFC 9457 §3 permits this override. |
+| `instance` is set from `request.path()`, excluding query strings. | Query strings frequently contain sensitive tokens. Set `instance` explicitly if query parameters are required. |
+| The unmapped handler rethrows `CancellationException`. | If the client disconnects, writing to the closed socket fails. `TimeoutCancellationException` maps to 504. |
+| Thrown `ProblemException.cause` is logged server-side and omitted from the body. | Problem documents are sent to clients (§5), so internal file paths and SQL queries are omitted. |
+| Both codecs share `Problem.MAX_NESTING_DEPTH`. | Sets a recursion limit, failing with `SerializationException` instead of encountering a `StackOverflowError`. |
 
-- **The media type always says "problem".** A document goes out labelled
-  `application/problem+json` even when the request matched it under plain `application/json`, so the
-  media type never stops being the marker that this body is an error report.
-- **Recursion is bounded.** The JSON and XML codecs share one nesting limit
-  (`Problem.MAX_NESTING_DEPTH`) and fail with `SerializationException`, not a `StackOverflowError`.
-- **`problem-details-ktor` never depends on the XML modules.** That is the point of the split: an
-  application that only emits JSON does not resolve an XML parser, and optionality is expressed by
-  *which artifact declares the registration function* — so a missing dependency is a compile error at
-  the call site, not a runtime `NoClassDefFoundError`.
-- **Multiplatform.** Every module publishes for `jvm`, `js`, `wasmJs`, `linuxX64`, `linuxArm64`,
-  `mingwX64`, `macosArm64`, `iosArm64` and `iosSimulatorArm64`, with all code in `commonMain` and no
-  `expect`/`actual`. Depend on the plain coordinates from `commonMain` and Gradle resolves the
-  variant.
-- **The public surface is reviewed as a diff.** `explicitApi()` everywhere, plus `api/*.api` and
-  `api/*.klib.api` ABI dumps checked on every build, so any accidental widening shows up in review
-  before 1.0 freezes it.
+Every module publishes for nine targets with logic in `commonMain` and no `expect`/`actual` declarations.
+Public API signatures are tracked in `api/*.api` and `api/*.klib.api` and verified on every build to prevent
+unintended API changes.
 
 ## Stability
 
-**This is a 0.x release. Anything may change in any release, and nothing is frozen yet.** No
-deprecation cycle is owed and no binary compatibility is promised until 1.0. The public surface is
-recorded in `api/*.api` dumps and checked on every build, so changes are at least visible in a diff.
+The library is in `0.x`. Releases may introduce breaking API and binary changes without a deprecation
+cycle. ABI dumps record public API differences in pull request reviews.
 
-There are consequently no `@RequiresOptIn` markers: opt-in annotations exist to carve unstable
-islands out of a *stable* release, and at 0.x everything is unstable by declaration.
-
-## Roadmap
-
-Two backlog candidates were scoped for their own module, and both resolved without one: neither needs
-an optional dependency to gate.
-
-A global enrichment hook (ASP.NET `CustomizeProblemDetails`-style, for fields like `traceId`) shipped
-as `ProblemDetailsCatalog.customize` in `problem-details-ktor` itself rather than as a module of its
-own: it needs no optional dependency to gate — any binding to a specific tracer (OpenTelemetry,
-Micrometer, MDC) would be JVM-only, which this library does not do, so the hook stays a plain
-`(ApplicationCall, Problem) -> Problem` and leaves sourcing the id to the caller.
-
-`Accept-Language`-based localization of `title`/`detail` (Spring `MessageSource`-style) resolved the
-same way, for two reasons. Negotiating the header needs nothing new — `problem-details-ktor` already
-depends on `ktor-server-core`, which already parses it. And there is nothing to gate behind an optional
-dependency in the first place: Ktor's own `ktor-server-i18n` plugin and the community `ktor-i18n` are
-both plain JVM libraries built on `java.util.ResourceBundle`, and the two real Kotlin Multiplatform
-string-resource libraries — Compose Multiplatform Resources and moko-resources — are Compose-oriented
-and don't cover this library's target matrix either (moko-resources, for one, has no Linux or Windows
-native target). The same `customize` hook already covers it, with zero library changes: read
-`Accept-Language`, resolve a translation any way you like, and return a localized `Problem`. For
-`title` and `detail` that is one `copy`. Validation messages are not there —
-`problem-details-ktor-validation` puts them inside the `errors[]` extension, one object per failure,
-each with its own `detail` — so localizing those means rebuilding that array rather than copying two
-fields.
-
-**1.0.** `@RequiresOptIn` markers arrive for whatever isn't ready to freeze — `ProblemDetailsCatalog`
-and the shape of `ProblemType` are the named candidates — once someone outside this repo has actually
-used the library.
+`@RequiresOptIn` annotations are omitted in `0.x` because all APIs are subject to change before 1.0.
+Opt-in annotations will be introduced in 1.0 for APIs that remain experimental.
 
 ## Contributing
 
-Bug reports, proposals and questions are all welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for
-where each of them goes and what the build checks before a pull request can land. The roadmap above
-is ordered by demand, so saying you need something counts as a contribution.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for issue guidelines, build instructions, and pull request requirements.
 
 ## License
 
-Apache License 2.0 — see [`LICENSE`](LICENSE).
+Apache License 2.0. See [`LICENSE`](LICENSE).
 
 [badge-jvm]: https://img.shields.io/badge/-jvm-DB413D.svg?style=flat
 [badge-js]: https://img.shields.io/badge/-js-F8DB5D.svg?style=flat

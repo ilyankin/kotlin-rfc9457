@@ -1,116 +1,62 @@
 # Contributing
 
-Thanks for looking. This is a small library with a single maintainer, so the most useful thing you
-can do is tell it what you actually need — the roadmap in the [README](README.md#roadmap) is ordered
-by demand, and right now there is very little demand to go on.
+Issues and pull requests are welcome. Bug reports, feature proposals, and questions help prioritize development.
 
 ## Where things go
 
-| You have | Go to |
+| Issue type | Destination |
 |---|---|
-| A defect | [Issues](https://github.com/ilyankin/kotlin-rfc9457/issues) — the bug form asks for the version, the artifact and a reproducer |
-| A proposal | Issues — the feature form. If it is already on the roadmap, comment there instead |
-| A question | [Discussions](https://github.com/ilyankin/kotlin-rfc9457/discussions) |
-| A security vulnerability | Not a public issue — [report it privately](https://github.com/ilyankin/kotlin-rfc9457/security/advisories/new) |
+| Bug report | [Issues](https://github.com/ilyankin/kotlin-rfc9457/issues) (include version, artifact, and reproducer) |
+| Feature proposal | [Issues](https://github.com/ilyankin/kotlin-rfc9457/issues) (check existing issues before opening a new one) |
+| Question | [Discussions](https://github.com/ilyankin/kotlin-rfc9457/discussions) |
+| Security vulnerability | [Security advisories](https://github.com/ilyankin/kotlin-rfc9457/security/advisories/new) (report privately, not in a public issue) |
 
-For a spec question, quote the section of
-[RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) you are reading it against. Most disagreements
-about this library's behaviour turn out to be disagreements about the RFC, and settle immediately
-once both sides are looking at the same paragraph.
+When asking a specification question, cite the relevant section of [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
 
 ## Building
 
 ```bash
-./gradlew build          # compile, tests, ABI check — everything CI gates on except the docs
+./gradlew build          # Compile, run tests, and check ABI (everything CI gates on except docs)
 ```
 
-You do not need a JDK installed: the wrapper provisions the daemon JVM (21) and the compile
-toolchain (17) itself.
+The Gradle wrapper automatically provisions both daemon JVM 21 and compilation toolchain JVM 17.
 
-This is a Kotlin Multiplatform build, so there is no `test` task. Every target has its own:
+Kotlin Multiplatform builds do not register a root `test` task. Run tests through target-specific tasks:
 
 ```bash
-./gradlew :problem-details-core:jvmTest    # `jvmTest`, since `test` is not a registered task
+./gradlew :problem-details-core:jvmTest
 ./gradlew :problem-details-core:macosArm64Test
 ./gradlew :problem-details-core:jvmTest --tests "io.github.ilyankin.rfc9457.ProblemBuilderTest"
 ```
 
-The others are `jsNodeTest`, `wasmJsNodeTest`, `linuxX64Test`, `mingwX64Test` and
-`iosSimulatorArm64Test`. A target's tests run only on a host that supports it: Apple on macOS,
-`mingwX64` on Windows, `linuxX64` on Linux. `./gradlew build` runs whatever your machine can and
-warns about the rest. CI runs those on their own runners.
+Other test tasks include `jsNodeTest`, `wasmJsNodeTest`, `linuxX64Test`, `mingwX64Test`, and `iosSimulatorArm64Test`. Native test tasks run only on supported host systems (macOS for Apple targets, Windows for `mingwX64`, Linux for `linuxX64`). `./gradlew build` runs available local targets and skips unsupported native targets with a warning; CI runs tests on dedicated runners for each platform.
 
-Tests use [Kotest](https://kotest.io). The JVM runs it on the JUnit Platform. Other targets cannot
-scan a classpath to find specs, so the `io.kotest` Gradle plugin and KSP generate the registration
-code for them. Nearly all specs live in `commonTest`. The exception is
-`problem-details-ktor/src/jvmTest`, which holds the logging tests, because Ktor's `Logger` is an
-`expect interface` whose JVM `actual` is a typealias for `org.slf4j.Logger`, and a recording logger
-cannot be written in common code.
+Tests use [Kotest](https://kotest.io) on JUnit Platform for the JVM. For non-JVM targets, the `io.kotest` Gradle plugin and KSP generate test registration code. Nearly all tests live in `commonTest`. Logging tests are located in `problem-details-ktor/src/jvmTest` because Ktor's `Logger` is an `expect interface` typealiased to `org.slf4j.Logger` on the JVM, which prevents writing a recording logger in common code.
 
-## Things that will fail CI if you miss them
+## CI requirements
 
-- **`api/*.api` and `api/*.klib.api` are the API review.** Every module dumps its public surface
-  twice, once for the JVM and once for the klib targets, and `check` compares against both dumps.
-  Change a public declaration and the build fails until you run `./gradlew updateKotlinAbi` and
-  commit the result. Read both diffs before you push. If either exposes something you did not mean
-  to expose, fix the source rather than the dump.
+- **ABI validation.** Each module dumps its public API surface to `api/*.api` (JVM) and `api/*.klib.api` (klib targets). Any change to a public signature fails the build until you run `./gradlew updateKotlinAbi` and commit the updated dumps. Review both diffs before committing to ensure no unintended API exposure.
+- **KDoc requirements.** Dokka builds run with `reportUndocumented` and `failOnWarning` enabled. In CI, `dokkaGenerate` checks that all public declarations are documented and that KDoc links resolve. This check runs in CI rather than in local `check` because Dokka requires network access.
+- **Sample code verification.** Public entry point `@sample` blocks reference functions in `src/commonTest/kotlin/io/github/ilyankin/rfc9457/samples`. Samples compile and run as tests, so signature changes require updating the corresponding sample.
+- **Isolated Projects compatibility.** CI builds with `-Dorg.gradle.isolated-projects=true`. Build logic must reside in convention plugins under `build-logic/`. Do not use `subprojects { }` or `allprojects { }` blocks in build scripts.
 
-- **Undocumented public declarations fail the documentation build.** `reportUndocumented` and
-  `failOnWarning` are both on. This is not wired into `check` (Dokka needs network access and the
-  local build must work offline), so it surfaces on the pull request rather than on your machine —
-  CI runs `dokkaGenerate` and greps the output for unresolved KDoc links.
+## Code conventions
 
-- **`@sample` blocks point at real code.** Public entry points reference functions under
-  `src/commonTest/kotlin/io/github/ilyankin/rfc9457/samples`, which are compiled and run as ordinary
-  tests. Change a referenced signature and the sample has to change with it.
-
-- **Isolated Projects.** A separate CI job builds with `-Dorg.gradle.isolated-projects=true`. Build
-  logic lives in convention plugins under `build-logic/`; `subprojects { }` and `allprojects { }`
-  break that job and were removed from this build on purpose.
-
-## Conventions worth knowing before you write code
-
-- **`explicitApi()` is on.** Every public declaration needs an explicit visibility modifier and an
-  explicit return type.
-
-- **Extension members are siblings, not nested.** RFC 9457 §3.2 extension members are written at the
-  top level of the document, never under an `"extensions"` key. That is the library's whole point of
-  difference from other implementations, and both codecs enforce it.
-
-- **Strict and `OrNull` accessors come in pairs.** `.string` throws on the wrong shape,
-  `.stringOrNull` returns `null`, because §3 requires *consumers* to treat a wrong-typed member as
-  absent. A new accessor should ship both halves rather than pick one.
-
-- **Multiplatform-first.** All library code lives in `commonMain`, there are no `expect`/`actual`
-  declarations, and every module publishes for every target the build declares. A construct that
-  exists only on the JVM breaks all the others, and it seldom looks JVM-only while you are writing
-  it. `writer.use { }` compiled here for years because xmlutil's `Closeable` is a JVM typealias, and
-  `log.warn("{} {}", a, b)` because Ktor's `Logger` is one too. Open an issue first if you think you
-  need a JVM-only public declaration.
-
-- **`api` versus `implementation` is load-bearing.** Gradle `api` becomes POM `compile` and
-  `implementation` becomes `runtime`, so anything whose type appears in a public signature — a
-  thrown type included — must be `api`. A leak that Gradle consumers never notice breaks Maven
-  consumers at compile time.
-
-- **Module boundaries.** `problem-details-ktor` must never depend on the XML modules: an application
-  that emits only JSON should never resolve an XML parser. The same holds for
-  `problem-details-ktor-openapi`, whose XML half is `problem-details-ktor-openapi-xml`. Optionality is
-  expressed by *which artifact declares the registration function*, so a missing dependency is a
-  compile error at the call site rather than a runtime `NoClassDefFoundError`.
+- **Explicit API mode.** Kotlin `explicitApi()` is enabled. Every public declaration requires an explicit visibility modifier and return type.
+- **Flat extension members.** RFC 9457 §3.2 extension members must serialize at the top level of the document, never nested under an `extensions` key. Both JSON and XML codecs enforce this structure.
+- **Strict and lenient accessor pairs.** When adding accessors for `ProblemValue` or extensions, implement both variants: a strict accessor that throws on type mismatches (e.g. `.string`) and an `OrNull` twin that returns `null` (e.g. `.stringOrNull`), per RFC 9457 §3 consumer requirements.
+- **Multiplatform compatibility.** All library code resides in `commonMain` without `expect`/`actual` declarations. All modules publish for every declared target. Avoid JVM-only constructs in common code (such as Java `AutoCloseable.use` or JVM SLF4J formatting). Open an issue before proposing JVM-specific public declarations.
+- **Dependency scopes (`api` vs. `implementation`).** Gradle `api` dependencies map to Maven `compile` scope, while `implementation` maps to `runtime`. Any type that appears in a public signature, including thrown exception types, must be declared as `api` to avoid compile-time failures for Maven consumers.
+- **Module boundaries and XML isolation.** `problem-details-ktor` must never depend on XML modules. Applications using only JSON should not pull in an XML parser. Optional features are partitioned into separate artifacts (such as `problem-details-ktor-xml` and `problem-details-ktor-openapi-xml`). Missing dependencies must fail at compile time at the call site rather than throwing `NoClassDefFoundError` at runtime.
 
 ## Pull requests
 
-Small and focused beats complete. One logical change per commit, with a one-line imperative subject
-(`fix(core): Reject a negative status`) — the history here has no commit bodies.
+Keep pull requests focused on a single change. Use one logical change per commit with a one-line imperative subject (e.g. `fix(core): Reject negative status`). Commits in this repository do not use commit message bodies.
 
-A bug fix should come with the test that reproduced it. A consumer-visible change should come with a
-`CHANGELOG.md` entry under `## [Unreleased]`.
+Bug fixes must include a reproducing test. Any consumer-visible change must include a `CHANGELOG.md` entry under `## [Unreleased]`.
 
-The version is `0.x` and there is no compatibility promise yet, so a breaking change is allowed —
-but say in the pull request that it is one, so it lands under *Breaking changes* in the changelog.
+Breaking changes are permitted during `0.x`, but mark them explicitly in the PR description so they are documented under Breaking Changes in the changelog.
 
-## Licence
+## License
 
-By contributing you agree that your work is licensed under
-[Apache License 2.0](LICENSE), the same as the rest of the project. There is no CLA.
+By contributing, you agree that your work is licensed under the [Apache License 2.0](LICENSE). There is no CLA.
