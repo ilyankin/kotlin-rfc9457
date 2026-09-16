@@ -6,6 +6,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [Unreleased]
+
+### Breaking changes
+
+- **`Problem` is no longer declared as a Kotlin `data class`.** Its constructor, `copy`,
+  destructuring components, `equals`, `hashCode`, and `toString` keep their signatures and
+  behaviour, so existing code needs no change and no recompilation. What differs:
+  `Problem::class.isData` is now `false`, and `extensions` is a snapshot of the supplied map, so a
+  problem no longer follows later edits to a caller-owned mutable map.
+
 ## [0.8.0] — 2026-09-14
 
 ### Added

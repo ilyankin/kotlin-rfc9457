@@ -94,16 +94,22 @@ public data object ProblemNull : ProblemValue
 
 /**
  * A JSON array as an extension value. Implements `List<ProblemValue>` by delegation, so it can be
- * iterated and indexed directly.
+ * iterated and indexed directly. The constructor takes a snapshot: later changes to a mutable input
+ * list do not change this value.
  *
  * In XML this becomes a sequence of children all named `i` (Appendix B), where an empty array is
  * indistinguishable from an empty object and from `null`; all three read back as the empty string.
  * See the `problem-details-xml` module documentation.
  */
-public class ProblemArray(
+public class ProblemArray private constructor(
     private val items: List<ProblemValue>,
+    @Suppress("UNUSED_PARAMETER") snapshot: Unit,
 ) : ProblemValue,
     List<ProblemValue> by items {
+    // `by` cannot name its delegate, so the snapshot is taken here and passed to the primary
+    // constructor, where the delegate and `equals` share it. `Unit` only tells the signatures apart.
+    public constructor(items: List<ProblemValue>) : this(items.toList(), Unit)
+
     /**
      * Compares the contained values against any `List`, not only another [ProblemArray]. `List`
      * equality requires that of a class implementing it, and it keeps `ProblemArray(items) == items`
@@ -120,16 +126,19 @@ public class ProblemArray(
 
 /**
  * A JSON object as an extension value. Implements `Map<String, ProblemValue>` by delegation, so
- * members can be read with `[]` and iterated directly.
+ * members can be read with `[]` and iterated directly. The constructor takes a snapshot: later
+ * changes to a mutable input map do not change this value.
  *
  * This is the nesting an extension member is allowed, and the reason both codecs are bounded by
  * [Problem.MAX_NESTING_DEPTH].
  */
-public class ProblemObject(
-    entries: Map<String, ProblemValue>,
+public class ProblemObject private constructor(
+    private val members: Map<String, ProblemValue>,
+    @Suppress("UNUSED_PARAMETER") snapshot: Unit,
 ) : ProblemValue,
-    Map<String, ProblemValue> by entries {
-    private val members: Map<String, ProblemValue> = entries
+    Map<String, ProblemValue> by members {
+    // The same snapshot hand-off as ProblemArray's.
+    public constructor(entries: Map<String, ProblemValue>) : this(entries.toMap(), Unit)
 
     /**
      * Compares the contained members against any `Map`, not only another [ProblemObject], for the

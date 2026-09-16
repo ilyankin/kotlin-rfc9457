@@ -158,7 +158,7 @@ public class ProblemBuilder
         }
 
         @PublishedApi
-        internal fun build(): Problem = Problem(type, status, title, detail, instance, extensions.toMap())
+        internal fun build(): Problem = Problem(type, status, title, detail, instance, extensions)
     }
 
 /**

@@ -46,6 +46,26 @@ class ProblemValueTest :
             obj shouldBe mapOf("balance" to ProblemPrimitive(30))
         }
 
+        "ProblemArray is a snapshot of the supplied list" {
+            val supplied = mutableListOf<ProblemValue>(ProblemPrimitive("first"))
+            val array = ProblemArray(supplied)
+
+            supplied[0] = ProblemPrimitive("changed")
+            supplied += ProblemPrimitive("late")
+
+            array shouldBe listOf(ProblemPrimitive("first"))
+        }
+
+        "ProblemObject is a snapshot of the supplied map" {
+            val supplied = mutableMapOf<String, ProblemValue>("first" to ProblemPrimitive(1))
+            val obj = ProblemObject(supplied)
+
+            supplied["first"] = ProblemPrimitive(2)
+            supplied["late"] = ProblemPrimitive(true)
+
+            obj shouldBe mapOf("first" to ProblemPrimitive(1))
+        }
+
         "a non-finite Double is rejected: it has no JSON representation" {
             // RFC 8259 §6 numbers cannot express NaN or Infinity; emitting one would produce a
             // literal conforming parsers reject, so the producing edge refuses it instead.
