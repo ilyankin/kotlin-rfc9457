@@ -12,9 +12,10 @@ import kotlin.coroutines.cancellation.CancellationException
  *
  * Use this when something besides `StatusPages` needs the catalog — documenting it, for instance.
  * `install(StatusPages) { problemDetails { } }` remains the shorter form when nothing does.
+ * The returned catalog is immutable; declare every mapping inside [configure].
  */
 public fun problemCatalog(configure: ProblemDetailsCatalog.() -> Unit): ProblemDetailsCatalog =
-    ProblemDetailsCatalog().apply(configure)
+    ProblemDetailsCatalog().apply(configure).build()
 
 /**
  * Registers a [ProblemDetailsCatalog] against Ktor's own `StatusPages` configuration.

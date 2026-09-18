@@ -250,6 +250,10 @@ running in registration order.
 Use the same hook to localize `title` and `detail` by `Accept-Language`: read the header from
 the call, resolve localized strings, and return `problem.copy(...)`.
 
+Catalogs are immutable after their builder block finishes. Put every mapping and customizer inside
+`problemCatalog { ... }` or `problemDetails { ... }`; changing a completed catalog is rejected so
+`StatusPages` and OpenAPI always read the same configuration.
+
 ### Respond from inside a route
 
 ```kotlin

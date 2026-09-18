@@ -35,6 +35,10 @@ install(StatusPages) {
 Then respond from a route with [io.github.ilyankin.rfc9457.ktor.respondProblem], or just throw and
 let the catalog answer.
 
+The catalog becomes immutable when the `problemDetails { ... }` or `problemCatalog { ... }` builder
+block ends. Declare all mappings and customizers inside that block; late mutation is rejected so
+runtime handling and generated documentation cannot drift apart.
+
 # Package io.github.ilyankin.rfc9457.ktor
 
 | Entry point | Role |

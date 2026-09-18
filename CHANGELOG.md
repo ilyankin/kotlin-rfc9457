@@ -15,6 +15,15 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
   behaviour, so existing code needs no change and no recompilation. What differs:
   `Problem::class.isData` is now `false`, and `extensions` is a snapshot of the supplied map, so a
   problem no longer follows later edits to a caller-owned mutable map.
+- **A `ProblemDetailsCatalog` can only be configured inside `problemCatalog { ... }` or
+  `problemDetails { ... }`.** The completed catalog rejects later calls to `map`, `onUnmapped`,
+  `customize`, `forStatusCode`, and `standardStatusCodes`. This prevents `StatusPages` and OpenAPI
+  consumers from observing different versions of the same catalog.
+
+### Changed
+
+- `ProblemArray` and `ProblemObject` snapshot constructor inputs, and catalog inspection properties
+  return snapshots. Public value objects no longer change through caller-owned mutable collections.
 
 ## [0.8.0] — 2026-09-14
 
