@@ -9,7 +9,7 @@ pluginManagement {
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-    id("com.gradleup.nmcp.settings") version "1.6.1"
+    id("com.gradleup.nmcp.settings") version "1.6.2"
 }
 
 // Read into strings, not passed as providers: nmcp captures its config into a
