@@ -6,6 +6,10 @@
 // - Show declarations: true
 
 // Library unique name: <io.github.ilyankin:problem-details-ktor-openapi>
+open annotation class io.github.ilyankin.rfc9457.ktor.openapi/ExperimentalProblemDetailsOpenApi : kotlin/Annotation { // io.github.ilyankin.rfc9457.ktor.openapi/ExperimentalProblemDetailsOpenApi|null[0]
+    constructor <init>() // io.github.ilyankin.rfc9457.ktor.openapi/ExperimentalProblemDetailsOpenApi.<init>|<init>(){}[0]
+}
+
 final object io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas { // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas|null[0]
     final val problem // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas.problem|{}problem[0]
         final fun <get-problem>(): io.ktor.openapi/JsonSchema // io.github.ilyankin.rfc9457.ktor.openapi/ProblemSchemas.problem.<get-problem>|<get-problem>(){}[0]

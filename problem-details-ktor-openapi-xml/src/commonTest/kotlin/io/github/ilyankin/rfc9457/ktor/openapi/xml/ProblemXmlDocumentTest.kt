@@ -1,8 +1,9 @@
-@file:OptIn(ExperimentalKtorApi::class)
+@file:OptIn(ExperimentalKtorApi::class, ExperimentalProblemDetailsOpenApi::class)
 
 package io.github.ilyankin.rfc9457.ktor.openapi.xml
 
 import io.github.ilyankin.rfc9457.ProblemType
+import io.github.ilyankin.rfc9457.ktor.openapi.ExperimentalProblemDetailsOpenApi
 import io.github.ilyankin.rfc9457.ktor.openapi.problemResponse
 import io.github.ilyankin.rfc9457.ktor.openapi.problemResponses
 import io.github.ilyankin.rfc9457.ktor.problemCatalog

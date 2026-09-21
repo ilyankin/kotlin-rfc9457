@@ -324,6 +324,8 @@ Ktor infers endpoint responses from route handler bodies. Because problem docume
 by `StatusPages` outside route lambdas, OpenAPI generation cannot detect them automatically.
 `problemResponses` and `problemResponse` register `application/problem+json` schemas and support
 extension members as siblings.
+`problemResponses` wraps Ktor's experimental route-description API and therefore requires
+`@OptIn(ExperimentalProblemDetailsOpenApi::class)`.
 
 ## Under the hood
 
@@ -344,8 +346,8 @@ unintended API changes.
 The library is in `0.x`. Releases may introduce breaking API and binary changes without a deprecation
 cycle. ABI dumps record public API differences in pull request reviews.
 
-`@RequiresOptIn` annotations are omitted in `0.x` because all APIs are subject to change before 1.0.
-Opt-in annotations will be introduced in 1.0 for APIs that remain experimental.
+APIs intended to stay experimental after 1.0 carry their own `@RequiresOptIn` marker. Currently this
+applies only to `Route.problemResponses`, which wraps Ktor's experimental route-description API.
 
 ## Contributing
 

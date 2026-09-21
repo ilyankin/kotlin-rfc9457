@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalKtorApi::class)
+@file:OptIn(ExperimentalKtorApi::class, ExperimentalProblemDetailsOpenApi::class)
 
 package io.github.ilyankin.rfc9457.ktor.openapi
 

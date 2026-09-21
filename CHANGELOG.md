@@ -15,10 +15,20 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
   behaviour, so existing code needs no change and no recompilation. What differs:
   `Problem::class.isData` is now `false`, and `extensions` is a snapshot of the supplied map, so a
   problem no longer follows later edits to a caller-owned mutable map.
+- **`Route.problemResponses` requires `@OptIn(ExperimentalProblemDetailsOpenApi::class)`.** The new
+  marker has level `ERROR`, so existing call sites stop compiling until they opt in at the calling
+  declaration or file. Binary compatibility is unaffected. The marker exists because the function
+  wraps Ktor's experimental route-description API; the rest of the OpenAPI helpers remain stable
+  API and need no opt-in.
 - **A `ProblemDetailsCatalog` can only be configured inside `problemCatalog { ... }` or
   `problemDetails { ... }`.** The completed catalog rejects later calls to `map`, `onUnmapped`,
   `customize`, `forStatusCode`, and `standardStatusCodes`. This prevents `StatusPages` and OpenAPI
   consumers from observing different versions of the same catalog.
+
+### Added
+
+- **`ExperimentalProblemDetailsOpenApi`**, the opt-in marker for `Route.problemResponses`; see
+  *Breaking changes*.
 
 ### Changed
 

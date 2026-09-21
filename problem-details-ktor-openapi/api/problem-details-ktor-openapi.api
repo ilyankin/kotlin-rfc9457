@@ -1,3 +1,6 @@
+public abstract interface annotation class io/github/ilyankin/rfc9457/ktor/openapi/ExperimentalProblemDetailsOpenApi : java/lang/annotation/Annotation {
+}
+
 public final class io/github/ilyankin/rfc9457/ktor/openapi/ProblemResponsesKt {
 	public static final fun problemDefault (Lio/ktor/openapi/Responses$Builder;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun problemDefault$default (Lio/ktor/openapi/Responses$Builder;Ljava/lang/String;Lio/ktor/openapi/JsonSchema;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
