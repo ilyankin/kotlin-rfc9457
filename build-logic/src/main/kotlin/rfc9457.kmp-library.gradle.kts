@@ -1,6 +1,7 @@
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import java.net.URI
 
@@ -31,7 +32,12 @@ kotlin {
     //
     // Both web targets run on Node. `browser()` would drag in Karma and a headless Chrome to test a
     // library that touches no DOM API.
-    jvm()
+    jvm {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-Xjdk-release=17")
+        }
+    }
     jvmToolchain(17)
 
     js { nodejs() }

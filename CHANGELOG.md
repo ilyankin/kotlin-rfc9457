@@ -34,6 +34,8 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
 
 - `ProblemArray` and `ProblemObject` snapshot constructor inputs, and catalog inspection properties
   return snapshots. Public value objects no longer change through caller-owned mutable collections.
+- JVM compilation now pins both `jvmTarget` and `-Xjdk-release` to 17 instead of relying on the
+  toolchain selection to imply the bytecode contract.
 
 ## [0.8.0] — 2026-09-14
 
