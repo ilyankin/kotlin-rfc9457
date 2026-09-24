@@ -32,5 +32,9 @@ dokka {
             url("https://api.ktor.io/")
             packageListUrl("https://api.ktor.io/package-list")
         }
+        externalDocumentationLinks.register("problem-details-ktor") {
+            url("https://ilyankin.github.io/kotlin-rfc9457/")
+            packageListUrl("https://ilyankin.github.io/kotlin-rfc9457/problem-details-ktor/package-list")
+        }
     }
 }

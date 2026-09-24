@@ -37,6 +37,12 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
 - JVM compilation now pins both `jvmTarget` and `-Xjdk-release` to 17 instead of relying on the
   toolchain selection to imply the bytecode contract.
 
+### Fixed
+
+- Standalone Dokka publications now know how to resolve links from validation and OpenAPI modules to
+  `problem-details-ktor`, and from the XML client module to `problem-details-ktor-client`. GitHub
+  Pages publishes the additional package list those links require.
+
 ## [0.8.0] — 2026-09-14
 
 ### Added

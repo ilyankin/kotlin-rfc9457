@@ -47,7 +47,7 @@ jobs:
       - name: Add per-module package lists to the site
         run: |
           set -euo pipefail
-          for module in problem-details-core problem-details-ktor; do
+          for module in problem-details-core problem-details-ktor problem-details-ktor-client; do
             cp "$module/build/dokka/html/$module/package-list" "build/dokka/html/$module/package-list"
           done
 
