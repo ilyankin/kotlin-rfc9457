@@ -29,6 +29,7 @@ That is what 0.y.z means, and it is deliberate. Any that occur are listed under 
 
 - **`ExperimentalProblemDetailsOpenApi`**, the opt-in marker for `Route.problemResponses`; see
   *Breaking changes*.
+- **`SECURITY.md`** documents the private vulnerability-reporting channel.
 
 ### Changed
 

@@ -9,7 +9,7 @@ Issues and pull requests are welcome. Bug reports, feature proposals, and questi
 | Bug report | [Issues](https://github.com/ilyankin/kotlin-rfc9457/issues) (include version, artifact, and reproducer) |
 | Feature proposal | [Issues](https://github.com/ilyankin/kotlin-rfc9457/issues) (check existing issues before opening a new one) |
 | Question | [Discussions](https://github.com/ilyankin/kotlin-rfc9457/discussions) |
-| Security vulnerability | [Security advisories](https://github.com/ilyankin/kotlin-rfc9457/security/advisories/new) (report privately, not in a public issue) |
+| Security vulnerability | Follow [`SECURITY.md`](SECURITY.md) and report privately, not in a public issue |
 
 When asking a specification question, cite the relevant section of [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
 

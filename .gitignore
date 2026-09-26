@@ -40,3 +40,6 @@ bin/
 
 # Claude Code — personal, per-machine settings
 .claude/settings.local.json
+
+# Local signing material must never enter the repository
+/private.key
