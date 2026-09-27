@@ -154,9 +154,7 @@ private fun XmlReader.readChildren(depth: Int): Node.Children {
                 }
             }
 
-            else -> {
-                Unit
-            }
+            else -> Unit
         }
     }
     return Node.Children(entries)

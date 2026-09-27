@@ -1,5 +1,6 @@
 package io.github.ilyankin.rfc9457.ktor.validation
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.PolymorphicKind
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.SerialKind
@@ -68,6 +69,7 @@ internal fun buildJsonPointer(
 }
 
 /** The descriptor a [segment] leads into, or `null` where the shape stops being knowable. */
+@OptIn(ExperimentalSerializationApi::class)
 private fun SerialDescriptor.resolve(segment: String): SerialDescriptor? =
     when (kind) {
         StructureKind.CLASS, StructureKind.OBJECT -> {
