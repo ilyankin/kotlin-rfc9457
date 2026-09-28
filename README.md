@@ -62,8 +62,8 @@ also handle unmapped exceptions, preventing stack traces from reaching the clien
 
 ```kotlin
 dependencies {
-    implementation("io.github.ilyankin:problem-details-core:0.8.0")
-    implementation("io.github.ilyankin:problem-details-ktor:0.8.0")
+    implementation("io.github.ilyankin:problem-details-core:0.9.0")
+    implementation("io.github.ilyankin:problem-details-ktor:0.9.0")
 }
 ```
 
@@ -80,7 +80,7 @@ dependencies {
 <dependency>
   <groupId>io.github.ilyankin</groupId>
   <artifactId>problem-details-core</artifactId>
-  <version>0.8.0</version>
+  <version>0.9.0</version>
 </dependency>
 ```
 
