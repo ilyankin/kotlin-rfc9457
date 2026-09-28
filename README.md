@@ -343,8 +343,9 @@ unintended API changes.
 
 ## Stability
 
-The library is in `0.x`. Releases may introduce breaking API and binary changes without a deprecation
-cycle. ABI dumps record public API differences in pull request reviews.
+The latest release line is `0.x`; `main` is preparing `1.0.0`. Until the final 1.0 release, changes
+that freeze the stable contract may still be breaking and are listed explicitly in the changelog.
+ABI dumps record public API differences in pull request reviews.
 
 APIs intended to stay experimental after 1.0 carry their own `@RequiresOptIn` marker. Currently this
 applies only to `Route.problemResponses`, which wraps Ktor's experimental route-description API.

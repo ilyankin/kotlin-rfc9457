@@ -55,7 +55,9 @@ Keep pull requests focused on a single change. Use one logical change per commit
 
 Bug fixes must include a reproducing test. Any consumer-visible change must include a `CHANGELOG.md` entry under `## [Unreleased]`.
 
-Breaking changes are permitted during `0.x`, but mark them explicitly in the PR description so they are documented under Breaking Changes in the changelog.
+Until the final `1.0.0` release, contract-freezing changes may still be breaking. Mark them explicitly
+in the PR description so they are documented under Breaking Changes in the changelog. After 1.0,
+breaking changes require a new major version and ordinary removals follow a deprecation cycle.
 
 ## License
 
