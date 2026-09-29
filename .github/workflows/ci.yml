@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build, test, ABI, docs
+    name: Build, test, ABI
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -52,6 +52,29 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/reports/kover/report.xml
 
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: test-reports-linux
+          path: '**/build/reports/tests/'
+          retention-days: 7
+
+  docs:
+    # Dokka needs none of the test results, so it runs beside `build` instead of after it. It
+    # compiles the main sources itself and reads the Linux caches `build` writes; it writes none
+    # of its own, since two writers would race for the entry the `build` key space shares.
+    name: Docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: ./.github/actions/setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: true
+
       # Dokka is deliberately off `check`: it needs network access and the local build must work
       # offline. CI is the only place `reportUndocumented` + `failOnWarning` can gate a PR.
       - name: Generate documentation
@@ -69,14 +92,6 @@ jobs:
             echo "$unresolved"
             exit 1
           fi
-
-      - name: Upload test reports
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: test-reports-linux
-          path: '**/build/reports/tests/'
-          retention-days: 7
 
   test-apple:
     # Apple targets compile on any host. Running their tests takes a macOS arm64 machine, which is
