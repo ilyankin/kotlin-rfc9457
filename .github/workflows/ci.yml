@@ -10,11 +10,13 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # A push to `main` runs to the end: the cache entries pull requests restore are written when a
+  # run finishes, and a cancelled run may skip that write.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
-    name: Build, test, ABI, docs
+    name: Build, test, ABI
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -25,8 +27,18 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       # Compiles every target, runs the suites this host can, and checks both ABI dumps.
+      #
+      # The three excluded test tasks only run on their own hosts (`test-apple`, `test-windows`).
+      # `-x` also drops the tasks only they consume, and that is the point: without it this host
+      # still compiles and links those test binaries, then skips running them. The main klibs of
+      # those targets keep compiling here, which is the cross-compilation check this job exists for.
+      # The iosArm64 and linuxArm64 test sources have no runner of their own, so they still compile.
       - name: Build
-        run: ./gradlew build
+        run: >-
+          ./gradlew build
+          -x mingwX64Test -x macosArm64Test -x iosSimulatorArm64Test
+          -x compileTestKotlinMingwX64 -x compileTestKotlinMacosArm64
+          -x compileTestKotlinIosSimulatorArm64
 
       # Kover instruments each module's tests (`rfc9457.kmp-library`); the root is the merging
       # module (`kover(project(...))` in the root build file) that combines them all into one
@@ -39,6 +51,29 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/reports/kover/report.xml
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: test-reports-linux
+          path: '**/build/reports/tests/'
+          retention-days: 7
+
+  docs:
+    # Dokka needs none of the test results, so it runs beside `build` instead of after it. It
+    # compiles the main sources itself and reads the Linux caches `build` writes; it writes none
+    # of its own, since two writers would race for the entry the `build` key space shares.
+    name: Docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: ./.github/actions/setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          cache-read-only: true
 
       # Dokka is deliberately off `check`: it needs network access and the local build must work
       # offline. CI is the only place `reportUndocumented` + `failOnWarning` can gate a PR.
@@ -57,14 +92,6 @@ jobs:
             echo "$unresolved"
             exit 1
           fi
-
-      - name: Upload test reports
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: test-reports-linux
-          path: '**/build/reports/tests/'
-          retention-days: 7
 
   test-apple:
     # Apple targets compile on any host. Running their tests takes a macOS arm64 machine, which is

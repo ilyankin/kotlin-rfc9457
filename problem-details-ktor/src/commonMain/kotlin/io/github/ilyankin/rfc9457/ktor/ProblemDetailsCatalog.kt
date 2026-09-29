@@ -16,8 +16,12 @@ import kotlin.reflect.KClass
  * Every entry becomes exactly one registration on Ktor's own `StatusPages` configuration; dispatch,
  * including nearest-parent-class resolution, stays `StatusPages`'s job. Obtain one through
  * [problemDetails], or through [problemCatalog] when something besides `StatusPages` needs it too.
+ * Configuration is limited to the builder block. Once returned, a catalog is immutable, so every
+ * consumer observes the same mappings.
  */
 public class ProblemDetailsCatalog internal constructor() {
+    private var built: Boolean = false
+
     internal val exceptionMappings: MutableMap<KClass<out Throwable>, (ApplicationCall, Throwable) -> Problem> =
         LinkedHashMap()
 
@@ -30,11 +34,15 @@ public class ProblemDetailsCatalog internal constructor() {
      *
      * A mapping written as a lambda is not here: it produces its document at call time and has no
      * type to report. Consumers that document a catalog therefore see the declarative half only.
+     * The returned list is a snapshot and cannot change this catalog.
      */
-    public val problemTypes: List<ProblemType> get() = declaredTypes
+    public val problemTypes: List<ProblemType> get() = declaredTypes.toList()
 
-    /** The status codes registered through [forStatusCode], including via [standardStatusCodes]. */
-    public val statusCodes: Set<HttpStatusCode> get() = statusMappings.keys
+    /**
+     * The status codes registered through [forStatusCode], including via [standardStatusCodes].
+     * The returned set is a snapshot and cannot change this catalog.
+     */
+    public val statusCodes: Set<HttpStatusCode> get() = statusMappings.keys.toSet()
 
     /**
      * The problem produced for an exception no mapping covers.
@@ -91,6 +99,8 @@ public class ProblemDetailsCatalog internal constructor() {
      * Mapping `Throwable` itself is legal and replaces the built-in catch-all wholesale, cancellation
      * guard included. A handler registered that way must rethrow `CancellationException` itself.
      * Prefer [onUnmapped], which keeps the guard.
+     *
+     * @throws IllegalStateException if this catalog's builder block has already finished.
      */
     public inline fun <reified T : Throwable> map(noinline toProblem: (ApplicationCall, T) -> Problem) {
         @Suppress("UNCHECKED_CAST")
@@ -106,6 +116,7 @@ public class ProblemDetailsCatalog internal constructor() {
         klass: KClass<out Throwable>,
         toProblem: (ApplicationCall, Throwable) -> Problem,
     ) {
+        requireConfigurable()
         exceptionMappings[klass] = toProblem
     }
 
@@ -115,6 +126,8 @@ public class ProblemDetailsCatalog internal constructor() {
      * `title` is always [ProblemType.title]. §3.1 says it SHOULD stay constant across occurrences
      * of a type, so there's no per-call override. Localization, the one exception the RFC allows,
      * is out of scope for v1.
+     *
+     * @throws IllegalStateException if this catalog's builder block has already finished.
      */
     public inline fun <reified T : Throwable> map(
         type: ProblemType,
@@ -132,6 +145,7 @@ public class ProblemDetailsCatalog internal constructor() {
      */
     @PublishedApi
     internal fun declareType(type: ProblemType) {
+        requireConfigurable()
         declaredTypes.add(type)
     }
 
@@ -146,8 +160,11 @@ public class ProblemDetailsCatalog internal constructor() {
      * This is the safe way to change catch-all behaviour. Unlike `map<Throwable>`, it only supplies
      * the document, so the surrounding handler still rethrows cancellation and still picks log
      * severity from the resulting status.
+     *
+     * @throws IllegalStateException if this catalog's builder block has already finished.
      */
     public fun onUnmapped(handler: (ApplicationCall, Throwable) -> Problem) {
+        requireConfigurable()
         unmapped = handler
     }
 
@@ -162,8 +179,11 @@ public class ProblemDetailsCatalog internal constructor() {
      * Additive, unlike [onUnmapped]: each call adds a step, and steps run in registration order, each
      * one seeing what the previous returned. Two unrelated concerns — a trace id and a redaction pass,
      * say — are registered separately without either dropping the other.
+     *
+     * @throws IllegalStateException if this catalog's builder block has already finished.
      */
     public fun customize(handler: (ApplicationCall, Problem) -> Problem) {
+        requireConfigurable()
         customizers += handler
     }
 
@@ -172,11 +192,14 @@ public class ProblemDetailsCatalog internal constructor() {
      *
      * Opt-in per code on purpose: `StatusPages`' `status` hook fires for *any* outgoing response
      * carrying that code, including a body the application built deliberately, and would replace it.
+     *
+     * @throws IllegalStateException if this catalog's builder block has already finished.
      */
     public fun forStatusCode(
         status: HttpStatusCode,
         provider: (ApplicationCall) -> Problem,
     ) {
+        requireConfigurable()
         statusMappings[status] = provider
     }
 
@@ -184,13 +207,27 @@ public class ProblemDetailsCatalog internal constructor() {
      * Covers the codes Ktor itself generates without an explicit body: 404, 405, 406, 415.
      *
      * Still an explicit opt-in, not a blanket 4xx/5xx registration. See [forStatusCode].
+     *
+     * @throws IllegalStateException if this catalog's builder block has already finished.
      */
     public fun standardStatusCodes() {
+        requireConfigurable()
         listOf(
             HttpStatusCode.NotFound,
             HttpStatusCode.MethodNotAllowed,
             HttpStatusCode.NotAcceptable,
             HttpStatusCode.UnsupportedMediaType,
         ).forEach { code -> forStatusCode(code) { Problem.blank(code) } }
+    }
+
+    internal fun build(): ProblemDetailsCatalog {
+        built = true
+        return this
+    }
+
+    private fun requireConfigurable() {
+        check(!built) {
+            "This ProblemDetailsCatalog is already built; declare every mapping inside problemCatalog { ... }"
+        }
     }
 }

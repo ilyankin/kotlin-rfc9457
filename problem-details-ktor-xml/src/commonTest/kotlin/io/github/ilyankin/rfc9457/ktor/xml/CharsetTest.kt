@@ -44,7 +44,7 @@ class CharsetTest :
                 val response =
                     client.get("/p") {
                         header(HttpHeaders.Accept, "application/problem+xml")
-                        header(HttpHeaders.AcceptCharset, "ISO-8859-1")
+                        header("Accept-Charset", "ISO-8859-1")
                     }
 
                 ContentType.parse(response.headers[HttpHeaders.ContentType]!!).charset()?.name shouldBe "UTF-8"
@@ -59,7 +59,7 @@ class CharsetTest :
                 val response =
                     client.get("/p") {
                         header(HttpHeaders.Accept, "application/problem+xml")
-                        header(HttpHeaders.AcceptCharset, "ISO-8859-1")
+                        header("Accept-Charset", "ISO-8859-1")
                     }
 
                 // Decoded as UTF-8 deliberately, not through bodyAsText(), which would consult the

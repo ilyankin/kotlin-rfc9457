@@ -33,26 +33,84 @@ import kotlin.jvm.JvmField
  *   unparsed. Machine-readable data belongs in an extension member.
  * @property instance URI reference identifying this specific occurrence. It need not be
  *   dereferenceable. Treat it as an opaque server-assigned identifier when it isn't.
- * @property extensions the §3.2 extension members, keyed by member name.
+ * @property extensions a snapshot of the §3.2 extension members, keyed by member name. Changing a
+ *   mutable map supplied to the constructor does not change this problem.
  *
  * @see <a href="https://www.rfc-editor.org/rfc/rfc9457#section-3">RFC 9457 §3, The Problem Details JSON Object</a>
  */
 @Serializable(with = ProblemSerializer::class)
-public data class Problem(
+public class Problem(
     public val type: String = ABOUT_BLANK,
     public val status: Int? = null,
     public val title: String? = null,
     public val detail: String? = null,
     public val instance: String? = null,
-    public val extensions: Map<String, ProblemValue> = emptyMap(),
+    extensions: Map<String, ProblemValue> = emptyMap(),
 ) {
+    /** A snapshot of the extension members supplied to the constructor. */
+    public val extensions: Map<String, ProblemValue> = extensions.toMap()
+
     init {
-        val reserved = extensions.keys intersect RESERVED_MEMBERS
+        val reserved = this.extensions.keys intersect RESERVED_MEMBERS
         require(reserved.isEmpty()) {
             "Extension member(s) $reserved collide with reserved RFC 9457 members; " +
                 "standard members must be set through the corresponding property"
         }
     }
+
+    /** Returns a problem with the supplied members replaced, preserving data-class-style ergonomics. */
+    public fun copy(
+        type: String = this.type,
+        status: Int? = this.status,
+        title: String? = this.title,
+        detail: String? = this.detail,
+        instance: String? = this.instance,
+        extensions: Map<String, ProblemValue> = this.extensions,
+    ): Problem = Problem(type, status, title, detail, instance, extensions)
+
+    /** The `type` component for destructuring. */
+    public operator fun component1(): String = type
+
+    /** The `status` component for destructuring. */
+    public operator fun component2(): Int? = status
+
+    /** The `title` component for destructuring. */
+    public operator fun component3(): String? = title
+
+    /** The `detail` component for destructuring. */
+    public operator fun component4(): String? = detail
+
+    /** The `instance` component for destructuring. */
+    public operator fun component5(): String? = instance
+
+    /** The `extensions` component for destructuring. */
+    public operator fun component6(): Map<String, ProblemValue> = extensions
+
+    /** Two problems are equal when all five standard members and all extension members match. */
+    override fun equals(other: Any?): Boolean =
+        this === other ||
+            other is Problem &&
+            type == other.type &&
+            status == other.status &&
+            title == other.title &&
+            detail == other.detail &&
+            instance == other.instance &&
+            extensions == other.extensions
+
+    /** Derived from the same members as [equals]. */
+    override fun hashCode(): Int {
+        var result = type.hashCode()
+        result = 31 * result + (status?.hashCode() ?: 0)
+        result = 31 * result + (title?.hashCode() ?: 0)
+        result = 31 * result + (detail?.hashCode() ?: 0)
+        result = 31 * result + (instance?.hashCode() ?: 0)
+        result = 31 * result + extensions.hashCode()
+        return result
+    }
+
+    /** Lists the five standard members and `extensions`, matching the former data-class format. */
+    override fun toString(): String =
+        "Problem(type=$type, status=$status, title=$title, detail=$detail, instance=$instance, extensions=$extensions)"
 
     /** Holds what RFC 9457 fixes on the wire, the nesting limit both codecs share, and the `about:blank` factory. */
     public companion object {

@@ -39,6 +39,10 @@ routing {
 }
 ```
 
+[problemResponses] wraps Ktor's experimental route-description API. Opt in at the calling
+declaration or file with `@OptIn(ExperimentalProblemDetailsOpenApi::class)`. The lower-level schema
+and response builders do not require this opt-in.
+
 Ktor folds route metadata from the routing root downwards, so the one call at the root reaches every
 endpoint, and a `describe` on a leaf merges with it rather than replacing it. Call
 [problemResponses] on a `route("/api") { }` instead when only a subtree should carry them.

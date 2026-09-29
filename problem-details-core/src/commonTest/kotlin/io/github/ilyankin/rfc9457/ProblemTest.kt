@@ -67,4 +67,14 @@ class ProblemTest :
             val problem = Problem(extensions = mapOf("balance" to ProblemPrimitive(30)))
             problem.extensions["balance"]?.int shouldBe 30
         }
+
+        "extensions are a snapshot of the supplied map" {
+            val supplied = mutableMapOf("balance" to ProblemPrimitive(30))
+            val problem = Problem(extensions = supplied)
+
+            supplied["balance"] = ProblemPrimitive(0)
+            supplied["late"] = ProblemPrimitive(true)
+
+            problem.extensions shouldBe mapOf("balance" to ProblemPrimitive(30))
+        }
     })

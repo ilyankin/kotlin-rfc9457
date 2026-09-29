@@ -62,8 +62,8 @@ also handle unmapped exceptions, preventing stack traces from reaching the clien
 
 ```kotlin
 dependencies {
-    implementation("io.github.ilyankin:problem-details-core:0.8.0")
-    implementation("io.github.ilyankin:problem-details-ktor:0.8.0")
+    implementation("io.github.ilyankin:problem-details-core:0.9.0")
+    implementation("io.github.ilyankin:problem-details-ktor:0.9.0")
 }
 ```
 
@@ -80,7 +80,7 @@ dependencies {
 <dependency>
   <groupId>io.github.ilyankin</groupId>
   <artifactId>problem-details-core</artifactId>
-  <version>0.8.0</version>
+  <version>0.9.0</version>
 </dependency>
 ```
 
@@ -250,6 +250,10 @@ running in registration order.
 Use the same hook to localize `title` and `detail` by `Accept-Language`: read the header from
 the call, resolve localized strings, and return `problem.copy(...)`.
 
+Catalogs are immutable after their builder block finishes. Put every mapping and customizer inside
+`problemCatalog { ... }` or `problemDetails { ... }`; changing a completed catalog is rejected so
+`StatusPages` and OpenAPI always read the same configuration.
+
 ### Respond from inside a route
 
 ```kotlin
@@ -320,6 +324,8 @@ Ktor infers endpoint responses from route handler bodies. Because problem docume
 by `StatusPages` outside route lambdas, OpenAPI generation cannot detect them automatically.
 `problemResponses` and `problemResponse` register `application/problem+json` schemas and support
 extension members as siblings.
+`problemResponses` wraps Ktor's experimental route-description API and therefore requires
+`@OptIn(ExperimentalProblemDetailsOpenApi::class)`.
 
 ## Under the hood
 
@@ -337,11 +343,12 @@ unintended API changes.
 
 ## Stability
 
-The library is in `0.x`. Releases may introduce breaking API and binary changes without a deprecation
-cycle. ABI dumps record public API differences in pull request reviews.
+The latest release line is `0.x`; `main` is preparing `1.0.0`. Until the final 1.0 release, changes
+that freeze the stable contract may still be breaking and are listed explicitly in the changelog.
+ABI dumps record public API differences in pull request reviews.
 
-`@RequiresOptIn` annotations are omitted in `0.x` because all APIs are subject to change before 1.0.
-Opt-in annotations will be introduced in 1.0 for APIs that remain experimental.
+APIs intended to stay experimental after 1.0 carry their own `@RequiresOptIn` marker. Currently this
+applies only to `Route.problemResponses`, which wraps Ktor's experimental route-description API.
 
 ## Contributing
 

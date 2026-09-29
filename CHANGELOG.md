@@ -6,6 +6,44 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 **While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
 That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
 
+## [0.9.0] — 2026-09-29
+
+### Breaking changes
+
+- **`Problem` is no longer declared as a Kotlin `data class`.** Its constructor, `copy`,
+  destructuring components, `equals`, `hashCode`, and `toString` keep their signatures and
+  behaviour, so existing code needs no change and no recompilation. What differs:
+  `Problem::class.isData` is now `false`, and `extensions` is a snapshot of the supplied map, so a
+  problem no longer follows later edits to a caller-owned mutable map.
+- **`Route.problemResponses` requires `@OptIn(ExperimentalProblemDetailsOpenApi::class)`.** The new
+  marker has level `ERROR`, so existing call sites stop compiling until they opt in at the calling
+  declaration or file. Binary compatibility is unaffected. The marker exists because the function
+  wraps Ktor's experimental route-description API; the rest of the OpenAPI helpers remain stable
+  API and need no opt-in.
+- **A `ProblemDetailsCatalog` can only be configured inside `problemCatalog { ... }` or
+  `problemDetails { ... }`.** The completed catalog rejects later calls to `map`, `onUnmapped`,
+  `customize`, `forStatusCode`, and `standardStatusCodes`. This prevents `StatusPages` and OpenAPI
+  consumers from observing different versions of the same catalog.
+
+### Added
+
+- **`ExperimentalProblemDetailsOpenApi`**, the opt-in marker for `Route.problemResponses`; see
+  *Breaking changes*.
+- **`SECURITY.md`** documents the private vulnerability-reporting channel.
+
+### Changed
+
+- `ProblemArray` and `ProblemObject` snapshot constructor inputs, and catalog inspection properties
+  return snapshots. Public value objects no longer change through caller-owned mutable collections.
+- JVM compilation now pins both `jvmTarget` and `-Xjdk-release` to 17 instead of relying on the
+  toolchain selection to imply the bytecode contract.
+
+### Fixed
+
+- Standalone Dokka publications now know how to resolve links from validation and OpenAPI modules to
+  `problem-details-ktor`, and from the XML client module to `problem-details-ktor-client`. GitHub
+  Pages publishes the additional package list those links require.
+
 ## [0.8.0] — 2026-09-14
 
 ### Added

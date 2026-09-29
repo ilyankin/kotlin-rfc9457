@@ -1,6 +1,7 @@
 package io.github.ilyankin.rfc9457.samples
 
 import io.github.ilyankin.rfc9457.ProblemType
+import io.github.ilyankin.rfc9457.ktor.openapi.ExperimentalProblemDetailsOpenApi
 import io.github.ilyankin.rfc9457.ktor.openapi.problemResponse
 import io.github.ilyankin.rfc9457.ktor.openapi.problemResponses
 import io.github.ilyankin.rfc9457.ktor.openapi.problemsFrom
@@ -63,7 +64,7 @@ internal fun Application.problemsFromCatalogSample() {
 }
 
 /** @see io.github.ilyankin.rfc9457.ktor.openapi.problemResponses */
-@OptIn(ExperimentalKtorApi::class)
+@OptIn(ExperimentalKtorApi::class, ExperimentalProblemDetailsOpenApi::class)
 internal fun Application.problemRoutesSample() {
     val catalog = problemCatalog { standardStatusCodes() }
 

@@ -24,6 +24,10 @@ nested under an `extensions` key. The `extensions` map is how they are held in m
 member of the wire format. Several published implementations get this wrong, and a consumer reading
 `{"extensions": {...}}` is reading a non-conforming document.
 
+`Problem`, `ProblemArray`, and `ProblemObject` snapshot collections supplied to their constructors.
+Changing a caller-owned mutable map or list later cannot change a problem's value, equality, or hash
+code.
+
 ## Throwing a problem
 
 [io.github.ilyankin.rfc9457.ProblemException] carries a [io.github.ilyankin.rfc9457.Problem] and adds
