@@ -63,7 +63,8 @@ private fun problemMessage(problem: Problem): String =
  * `title` and `status` come from the type and cannot be overridden per call, because §3.1 asks
  * `title` to stay constant across occurrences.
  *
- * For a problem that needs extension members, build the document and wrap it directly:
+ * For a problem that needs extension members, build the document with `problem { }` and wrap it
+ * directly:
  * `throw ProblemException(problem { type(OutOfCredit); extension("balance", 30) })`.
  *
  * @param detail human-readable explanation of this occurrence.
