@@ -27,8 +27,18 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       # Compiles every target, runs the suites this host can, and checks both ABI dumps.
+      #
+      # The three excluded test tasks only run on their own hosts (`test-apple`, `test-windows`).
+      # `-x` also drops the tasks only they consume, and that is the point: without it this host
+      # still compiles and links those test binaries, then skips running them. The main klibs of
+      # those targets keep compiling here, which is the cross-compilation check this job exists for.
+      # The iosArm64 and linuxArm64 test sources have no runner of their own, so they still compile.
       - name: Build
-        run: ./gradlew build
+        run: >-
+          ./gradlew build
+          -x mingwX64Test -x macosArm64Test -x iosSimulatorArm64Test
+          -x compileTestKotlinMingwX64 -x compileTestKotlinMacosArm64
+          -x compileTestKotlinIosSimulatorArm64
 
       # Kover instruments each module's tests (`rfc9457.kmp-library`); the root is the merging
       # module (`kover(project(...))` in the root build file) that combines them all into one
