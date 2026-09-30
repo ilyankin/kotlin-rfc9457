@@ -1,0 +1,220 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>io.github.ilyankin.rfc9457.ktor.validation</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;io.github.ilyankin.rfc9457.ktor.validation/index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":problem-details-ktor-validation/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":problem-details-ktor-validation/commonMain" data-filter=":problem-details-ktor-validation/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids="problem-details-ktor-validation::io.github.ilyankin.rfc9457.ktor.validation////PointingToDeclaration//1615760538">
+  <div class="breadcrumbs"><a href="../index.html">problem-details-ktor-validation</a><span class="delimiter">/</span><span class="current">io.github.ilyankin.rfc9457.ktor.validation</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="table--container"><table><thead><tr><th>Entry point</th><th>Role</th></tr></thead><tbody><tr><td><a href="invalid-field.html">invalidField</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">validate&lt;T&gt; { }</code>: fail with one pointer + detail pair. The pointer is a string, or a property reference the pointer is derived from.</td></tr><tr><td><a href="invalid-fields.html">invalidFields</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">validate&lt;T&gt; { }</code>: fail with more than one pointer + detail pair from the same body. Takes them as <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">vararg</code> pairs or as a <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">List</code>.</td></tr><tr><td><a href="json-pointer.html">jsonPointer</a></td><td>Builds a pointer that is checked against the body type's serial descriptor, instead of written out by hand.</td></tr><tr><td><a href="request-validation.html">requestValidation</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">problemDetails { }</code>: register the <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">RequestValidationException</code> → <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">Problem</code> mapping.</td></tr><tr><td><a href="decode-validation-reason.html">decodeValidationReason</a></td><td>Reads a <a href="invalid-field.html">invalidField</a>/<a href="invalid-fields.html">invalidFields</a>-encoded reason back into pointer + detail, for a mapping that does not go through <code class="org.jetbrains.dokka.pages.commenttable@741b4d6e lang-kotlin">requestValidation</code>.</td></tr></tbody></table></div><p class="paragraph">Published for <code class="lang-kotlin">jvm</code>, <code class="lang-kotlin">js</code>, <code class="lang-kotlin">wasmJs</code>, <code class="lang-kotlin">linuxX64</code>, <code class="lang-kotlin">linuxArm64</code>, <code class="lang-kotlin">mingwX64</code>, <code class="lang-kotlin">macosArm64</code>, <code class="lang-kotlin">iosArm64</code> and <code class="lang-kotlin">iosSimulatorArm64</code>. Depend on the plain coordinates from <code class="lang-kotlin">commonMain</code> and Gradle picks the variant.</p><h2 class="">Usage</h2><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">install(RequestValidation) {<br>    validate&lt;Customer&gt; { customer -&gt;<br>        if (customer.age &gt; 0) ValidationResult.Valid<br>        else invalidField("#/age", "must be a positive integer")<br>    }<br>}<br><br>install(StatusPages) {<br>    problemDetails {<br>        requestValidation(ValidationError)<br>    }<br>}</code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div><h2 class="">When a plain exception is the better tool</h2><p class="paragraph">This module exists to bridge <code class="lang-kotlin">RequestValidation</code>'s reason strings, which carry nothing but text, to <code class="lang-kotlin">errors[]</code>. If you are not tied to that plugin, there is a shorter route to the same document with no encoding in between: throw your own exception from inside <code class="lang-kotlin">validate&lt;T&gt; { }</code> and map it with <code class="lang-kotlin">problem-details-ktor</code>'s <code class="lang-kotlin">map&lt;T&gt; { }</code>. Ktor calls validators without a <code class="lang-kotlin">try</code>, so the exception reaches <code class="lang-kotlin">StatusPages</code> untouched, carrying whatever typed payload you gave it.</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">class InvalidCustomer(val errors: List&lt;FieldError&gt;) : RuntimeException()<br><br>install(RequestValidation) {<br>    validate&lt;Customer&gt; { customer -&gt; if (customer.isValid) ValidationResult.Valid else throw InvalidCustomer(...) }<br>}<br><br>install(StatusPages) {<br>    problemDetails {<br>        map&lt;InvalidCustomer&gt; { _, cause -&gt; /* build errors[] from cause.errors, fully typed */ }<br>    }<br>}</code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div><p class="paragraph">What that gives up is aggregation. The plugin runs <i>every</i> validator registered for a body type and concatenates their reasons; a thrown exception stops at the first one. With a single validator per type — the usual arrangement — nothing is lost, since that validator already collects its own findings before returning.</p><p class="paragraph">So reach for this module when you cannot leave the <code class="lang-kotlin">ValidationResult</code> protocol: several validators on one body type, validators written elsewhere, or a codebase already returning <code class="lang-kotlin">ValidationResult.Invalid</code> throughout. That is what it is good at, and it is a narrower claim than "the way to do validation problems in Ktor".</p><h2 class="">Pointers that cannot go stale</h2><p class="paragraph"><code class="lang-kotlin">"#/age"</code> written as a string is a claim about the request body that nothing checks. Rename the property and the pointer keeps naming a member that is gone. <a href="json-pointer.html">jsonPointer</a> resolves the path against the body type's serial descriptor instead, so a path that no longer exists fails loudly:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">invalidFields(<br>    jsonPointer(Customer::age) to "must be a positive integer",              // renaming `age` stops compiling<br>    jsonPointer&lt;Customer&gt;("profile", "color") to "must be 'green', 'red' or 'blue'",<br>)<br><br>invalidField(Customer::age, "must be a positive integer")                     // the same, for a single field</code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div><p class="paragraph">The property form is checked by the compiler; the string form is checked when the pointer is built, segment by segment, and reports the members that do exist when one does not match. Segments are escaped for you — <code class="lang-kotlin">~</code> and <code class="lang-kotlin">/</code> per RFC 6901 §3, then anything a URI fragment does not admit is percent-encoded.</p><p class="paragraph">Two limits are worth knowing before you rely on the property form. A property renamed with <code class="lang-kotlin">@SerialName</code> cannot be resolved from the reference — mapping a Kotlin property to its serial name needs <code class="lang-kotlin">kotlin-reflect</code>, which this library does not use — so <code class="lang-kotlin">jsonPointer(Customer::emailAddress)</code> throws rather than guessing, and you name it as <code class="lang-kotlin">jsonPointer&lt;Customer&gt;("email_address")</code> instead. And a <code class="lang-kotlin">JsonNamingStrategy</code> on the application's <code class="lang-kotlin">Json</code> is invisible to the descriptor altogether; a project using one should build pointers from strings and test them against a real response.</p><h2 class="">What degrades, and how</h2><p class="paragraph">A reason not produced by <a href="invalid-field.html">invalidField</a>/<a href="invalid-fields.html">invalidFields</a> — a hand-written <code class="lang-kotlin">ValidationResult.Invalid("text")</code>, or the byte-array <code class="lang-kotlin">validate { }</code> overload, which has no field to point at — is never dropped and never throws. It becomes an <code class="lang-kotlin">errors[]</code> entry with <code class="lang-kotlin">detail</code> alone, no <code class="lang-kotlin">pointer</code>.</p><h2 class="">A custom errors[] entry</h2><p class="paragraph"><a href="request-validation.html">requestValidation</a>'s entries are always a flat <code class="lang-kotlin">{detail, pointer}</code> object, using RFC 9457's own example member names. For anything else — other names, extra members, a typed object — bypass it and write the <code class="lang-kotlin">RequestValidationException</code> mapping directly, using <a href="decode-validation-reason.html">decodeValidationReason</a> to read what <a href="invalid-field.html">invalidField</a>/<a href="invalid-fields.html">invalidFields</a> encoded and <a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/encode-to-problem-value.html">io.github.ilyankin.rfc9457.encodeToProblemValue</a> (<code class="lang-kotlin">problem-details-core</code>) to turn a typed value into a <a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem-value/index.html">io.github.ilyankin.rfc9457.ProblemValue</a>:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea"></code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="-1783681312%2FClasslikes%2F1615760538" anchor-label="ValidationReason" id="-1783681312%2FClasslikes%2F1615760538" data-filterable-set=":problem-details-ktor-validation/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-validation/commonMain" data-filterable-set=":problem-details-ktor-validation/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-validation-reason/index.html"><span>Validation</span><wbr><span><span>Reason</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1783681312%2FClasslikes%2F1615760538"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-validation-reason/index.html">ValidationReason</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>pointer<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>detail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">One decoded <code class="lang-kotlin">RequestValidation</code> reason.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-2088951219%2FFunctions%2F1615760538" anchor-label="decodeValidationReason" id="-2088951219%2FFunctions%2F1615760538" data-filterable-set=":problem-details-ktor-validation/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-validation/commonMain" data-filterable-set=":problem-details-ktor-validation/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="decode-validation-reason.html"><span>decode</span><wbr><span>Validation</span><wbr><span><span>Reason</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2088951219%2FFunctions%2F1615760538"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="decode-validation-reason.html"><span class="token function">decodeValidationReason</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-validation-reason/index.html">ValidationReason</a></div><div class="brief "><p class="paragraph">Decodes one <code class="lang-kotlin">RequestValidationException</code> reason. This is what <a href="request-validation.html">requestValidation</a> does internally for every entry of <code class="lang-kotlin">errors[]</code>. It is exposed so a mapping that needs a shape <a href="request-validation.html">requestValidation</a> cannot produce — a typed <code class="lang-kotlin">errors[]</code> element, differently named members, an extra member per entry — can still read <a href="-validation-reason/pointer.html">ValidationReason.pointer</a>/<a href="-validation-reason/detail.html">ValidationReason.detail</a> back out of a reason built by <a href="invalid-field.html">invalidField</a>/<a href="invalid-fields.html">invalidFields</a>, instead of re-inventing the encoding.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="232720511%2FFunctions%2F1615760538" anchor-label="invalidField" id="232720511%2FFunctions%2F1615760538" data-filterable-set=":problem-details-ktor-validation/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-validation/commonMain" data-filterable-set=":problem-details-ktor-validation/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="invalid-field.html"><span>invalid</span><wbr><span><span>Field</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="232720511%2FFunctions%2F1615760538"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="invalid-field.html"><span class="token function">invalidField</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pointer<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">detail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a></div><div class="brief "><p class="paragraph">Builds a <a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a> that <a href="request-validation.html">requestValidation</a> decodes into one <code class="lang-kotlin">errors[]</code> entry carrying both <a href="invalid-field.html">pointer</a> and <a href="invalid-field.html">detail</a>.</p></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="invalid-field.html">T</a><span class="token operator">&gt; </span><a href="invalid-field.html"><span class="token function">invalidField</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">property<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-property1/index.html">KProperty1</a><span class="token operator">&lt;</span><a href="invalid-field.html">T</a><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">detail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a></div><div class="brief "><p class="paragraph">Builds a <a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a> for <a href="invalid-field.html">property</a> of the request body, deriving its pointer with <a href="json-pointer.html">jsonPointer</a> rather than taking one written by hand. Renaming the property is then a compile error, not a pointer that quietly names a member that is gone.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1469179134%2FFunctions%2F1615760538" anchor-label="invalidFields" id="-1469179134%2FFunctions%2F1615760538" data-filterable-set=":problem-details-ktor-validation/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-validation/commonMain" data-filterable-set=":problem-details-ktor-validation/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="invalid-fields.html"><span>invalid</span><wbr><span><span>Fields</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1469179134%2FFunctions%2F1615760538"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="invalid-fields.html"><span class="token function">invalidFields</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">fields<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-pair/index.html">Pair</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a></div><div class="brief "><p class="paragraph">The <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a> form of <a href="invalid-fields.html">invalidFields</a>, for a validator that accumulates its findings before returning rather than knowing them all at the call site.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="invalid-fields.html"><span class="token function">invalidFields</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>fields<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-pair/index.html">Pair</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a></div><div class="brief "><p class="paragraph">Builds one <a href="https://api.ktor.io/ktor-server-request-validation/io.ktor.server.plugins.requestvalidation/-validation-result/-invalid/index.html">ValidationResult.Invalid</a> carrying one <code class="lang-kotlin">errors[]</code> entry per pair in <a href="invalid-fields.html">fields</a>. Use this for a validator that finds more than one invalid member in the same request body, RFC 9457's own recommended shape for multi-field validation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1852901163%2FFunctions%2F1615760538" anchor-label="jsonPointer" id="1852901163%2FFunctions%2F1615760538" data-filterable-set=":problem-details-ktor-validation/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-validation/commonMain" data-filterable-set=":problem-details-ktor-validation/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="json-pointer.html"><span>json</span><wbr><span><span>Pointer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1852901163%2FFunctions%2F1615760538"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="json-pointer.html">T</a><span class="token operator">&gt; </span><a href="json-pointer.html"><span class="token function">jsonPointer</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">property<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-property1/index.html">KProperty1</a><span class="token operator">&lt;</span><a href="json-pointer.html">T</a><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Builds the JSON Pointer (RFC 6901) that identifies <a href="json-pointer.html">property</a> in <a href="json-pointer.html">T</a>'s serialized form, in the URI fragment notation RFC 9457's own example uses: <code class="lang-kotlin">#/age</code>.</p></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="json-pointer.html">T</a><span class="token operator">&gt; </span><a href="json-pointer.html"><span class="token function">jsonPointer</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>path<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Builds the JSON Pointer (RFC 6901) for <a href="json-pointer.html">path</a> in <a href="json-pointer.html">T</a>'s serialized form, in the URI fragment notation RFC 9457's own example uses: <code class="lang-kotlin">jsonPointer&lt;Customer&gt;("profile", "color")</code> gives <code class="lang-kotlin">#/profile/color</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="501179015%2FFunctions%2F1615760538" anchor-label="requestValidation" id="501179015%2FFunctions%2F1615760538" data-filterable-set=":problem-details-ktor-validation/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-ktor-validation/commonMain" data-filterable-set=":problem-details-ktor-validation/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="request-validation.html"><span>request</span><wbr><span><span>Validation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="501179015%2FFunctions%2F1615760538"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-validation/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-ktor/io.github.ilyankin.rfc9457.ktor/-problem-details-catalog/index.html">ProblemDetailsCatalog</a><span class="token punctuation">.</span><a href="request-validation.html"><span class="token function">requestValidation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">type<span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem-type/index.html">ProblemType</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Maps Ktor's <code class="lang-kotlin">RequestValidation</code> plugin failures to <a href="request-validation.html">type</a>, carrying every validation reason as one entry of an <code class="lang-kotlin">errors[]</code> extension array. This is the multi-error pattern RFC 9457 itself recommends for field-level validation failures.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

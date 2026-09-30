@@ -1,0 +1,5 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.github.ilyankin.rfc9457.ktor.client////PointingToDeclaration/problem-details-ktor-client/io.github.ilyankin.rfc9457.ktor.client/index.html
+$dokka.location:io.github.ilyankin.rfc9457.ktor.client//problemJson/io.ktor.client.plugins.HttpCallValidatorConfig#kotlin.Boolean#kotlinx.serialization.json.Json/PointingToDeclaration/problem-details-ktor-client/io.github.ilyankin.rfc9457.ktor.client/problem-json.html
+io.github.ilyankin.rfc9457.ktor.client

@@ -1,0 +1,689 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>io.github.ilyankin.rfc9457</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;io.github.ilyankin.rfc9457/index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":problem-details-core/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":problem-details-core/commonMain" data-filter=":problem-details-core/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids="problem-details-core::io.github.ilyankin.rfc9457////PointingToDeclaration//-64947325">
+  <div class="breadcrumbs"><a href="../index.html">problem-details-core</a><span class="delimiter">/</span><span class="current">io.github.ilyankin.rfc9457</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><p class="paragraph">The problem-detail model, its builder, and the JSON codec.</p><div class="table--container"><table><thead><tr><th>Type</th><th>Role</th></tr></thead><tbody><tr><td><a href="-problem/index.html">Problem</a></td><td>The document. Five standard members as properties, everything else in <code class="org.jetbrains.dokka.pages.commenttable@1da31f2b lang-kotlin">extensions</code>.</td></tr><tr><td><a href="-problem-type/index.html">ProblemType</a></td><td>A problem type — the <code class="org.jetbrains.dokka.pages.commenttable@1da31f2b lang-kotlin">type</code> URI paired with the <code class="org.jetbrains.dokka.pages.commenttable@1da31f2b lang-kotlin">title</code> that belongs to it.</td></tr><tr><td><a href="-problem-value/index.html">ProblemValue</a></td><td>The value of an extension member: primitive, null, array or object.</td></tr><tr><td><a href="problem.html">problem</a></td><td>The builder. <code class="org.jetbrains.dokka.pages.commenttable@1da31f2b lang-kotlin">problem { status = 404; title = "..." }</code>.</td></tr><tr><td><a href="-problem-serializer/index.html">ProblemSerializer</a></td><td>The flattening codec, already attached to <a href="-problem/index.html">Problem</a>.</td></tr><tr><td><a href="-problem-exception/index.html">ProblemException</a></td><td>A <a href="-problem/index.html">Problem</a> that can be thrown. <code class="org.jetbrains.dokka.pages.commenttable@1da31f2b lang-kotlin">throw someType.exception(detail = "…")</code>.</td></tr></tbody></table></div><p class="paragraph">Reading extension values is deliberately offered twice: <code class="lang-kotlin">problem.extensions["x"]?.string</code> throws on a wrong-typed member, <code class="lang-kotlin">?.stringOrNull</code> returns <code class="lang-kotlin">null</code> for it. RFC 9457 §3 requires <i>consumers</i> to ignore a member of an unexpected type, so <code class="lang-kotlin">*OrNull</code> is what a conforming reader wants; the strict half exists for a caller that minted the problem type and wants a mismatch to surface.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="744732627%2FClasslikes%2F-64947325" anchor-label="Problem" id="744732627%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem/index.html"><span><span>Problem</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="744732627%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="-problem-serializer/index.html">ProblemSerializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">class </span><a href="-problem/index.html">Problem</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>type<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>ABOUT_BLANK<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>status<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>title<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>detail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>instance<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">extensions<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="-problem-value/index.html">ProblemValue</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyMap()</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">An RFC 9457 problem detail. This is the document carried by <code class="lang-kotlin">application/problem+json</code> and <code class="lang-kotlin">application/problem+xml</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-611915338%2FClasslikes%2F-64947325" anchor-label="ProblemArray" id="-611915338%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-array/index.html"><span>Problem</span><wbr><span><span>Array</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-611915338%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-array/index.html">ProblemArray</a> : <a href="-problem-value/index.html">ProblemValue</a>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="-problem-value/index.html">ProblemValue</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">A JSON array as an extension value. Implements <code class="lang-kotlin">List&lt;ProblemValue&gt;</code> by delegation, so it can be iterated and indexed directly. The constructor takes a snapshot: later changes to a mutable input list do not change this value.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="479494964%2FClasslikes%2F-64947325" anchor-label="ProblemBuilder" id="479494964%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-builder/index.html"><span>Problem</span><wbr><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="479494964%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-builder/index.html">ProblemBuilder</a></div><div class="brief "><p class="paragraph">Builds a <a href="-problem/index.html">Problem</a>. Obtain one through <a href="problem.html">problem</a>, which also supplies the <code class="lang-kotlin">Json</code> that encodes the typed payloads handed to <a href="-problem-builder/extension.html">extension</a> and <a href="-problem-builder/extensions.html">extensions</a>. That defaults to <a href="-problem-json.html">ProblemJson</a> unless the caller overrides it.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1546484142%2FClasslikes%2F-64947325" anchor-label="ProblemDsl" id="-1546484142%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-dsl/index.html"><span>Problem</span><wbr><span><span>Dsl</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1546484142%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-dsl-marker/index.html"><span class="token annotation builtin">DslMarker</span></a></div></div><span class="token keyword">annotation class </span><a href="-problem-dsl/index.html">ProblemDsl</a></div><div class="brief "><p class="paragraph">Scopes the builder DSL, so that a <code class="lang-kotlin">problem { }</code> nested inside another cannot silently set members on the outer builder.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="706346368%2FClasslikes%2F-64947325" anchor-label="ProblemException" id="706346368%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-exception/index.html"><span>Problem</span><wbr><span><span>Exception</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="706346368%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-exception/index.html">ProblemException</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>problem<span class="token operator">: </span><a href="-problem/index.html">Problem</a><span class="token punctuation">, </span></span><span class="parameter ">cause<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-throwable/index.html">Throwable</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-runtime-exception/index.html">RuntimeException</a></div><div class="brief "><p class="paragraph">A <a href="-problem/index.html">Problem</a> that can be thrown.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1131951884%2FClasslikes%2F-64947325" anchor-label="ProblemNull" id="1131951884%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-null/index.html"><span>Problem</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1131951884%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">object </span><a href="-problem-null/index.html">ProblemNull</a> : <a href="-problem-value/index.html">ProblemValue</a></div><div class="brief "><p class="paragraph">The explicit JSON <code class="lang-kotlin">null</code> of an extension member.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="941072340%2FClasslikes%2F-64947325" anchor-label="ProblemObject" id="941072340%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-object/index.html"><span>Problem</span><wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="941072340%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-object/index.html">ProblemObject</a> : <a href="-problem-value/index.html">ProblemValue</a>, <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="-problem-value/index.html">ProblemValue</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">A JSON object as an extension value. Implements <code class="lang-kotlin">Map&lt;String, ProblemValue&gt;</code> by delegation, so members can be read with <code class="lang-kotlin">[]</code> and iterated directly. The constructor takes a snapshot: later changes to a mutable input map do not change this value.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="732666856%2FClasslikes%2F-64947325" anchor-label="ProblemPrimitive" id="732666856%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-primitive/index.html"><span>Problem</span><wbr><span><span>Primitive</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="732666856%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-primitive/index.html">ProblemPrimitive</a> : <a href="-problem-value/index.html">ProblemValue</a></div><div class="brief "><p class="paragraph">A scalar extension value: a string, a number, or a boolean.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1082970143%2FClasslikes%2F-64947325" anchor-label="ProblemSerializer" id="-1082970143%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-serializer/index.html"><span>Problem</span><wbr><span><span>Serializer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1082970143%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-problem-serializer/index.html">ProblemSerializer</a> : <a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-k-serializer/index.html">KSerializer</a><span class="token operator">&lt;</span><a href="-problem/index.html">Problem</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">The JSON codec for <a href="-problem/index.html">Problem</a>, and <a href="-problem/index.html">Problem</a>'s own serializer.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-689001287%2FClasslikes%2F-64947325" anchor-label="ProblemType" id="-689001287%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-type/index.html"><span>Problem</span><wbr><span><span>Type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-689001287%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-problem-type/index.html">ProblemType</a></div><div class="brief "><p class="paragraph">A problem type carrying the three things §4 asks a type author to define: a type URI, a title, and the HTTP status code to use with it. Implementing this interface states those three once, instead of restating them at every throw site.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-606636642%2FClasslikes%2F-64947325" anchor-label="ProblemValue" id="-606636642%2FClasslikes%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-value/index.html"><span>Problem</span><wbr><span><span>Value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-606636642%2FClasslikes%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">interface </span><a href="-problem-value/index.html">ProblemValue</a></div><div class="brief "><p class="paragraph">A value of an RFC 9457 extension member (§3.2).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="-1400984245%2FProperties%2F-64947325" anchor-label="boolean" id="-1400984245%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="boolean.html"><span><span>boolean</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1400984245%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="boolean.html">boolean</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">The scalar parsed as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1083212811%2FProperties%2F-64947325" anchor-label="booleanOrNull" id="-1083212811%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="boolean-or-null.html"><span>boolean</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1083212811%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="boolean-or-null.html">booleanOrNull</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The scalar parsed as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a>, or <code class="lang-kotlin">null</code> if this value is not a scalar or is not <code class="lang-kotlin">true</code>/<code class="lang-kotlin">false</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="875464784%2FProperties%2F-64947325" anchor-label="double" id="875464784%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="double.html"><span><span>double</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="875464784%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="double.html">double</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The scalar parsed as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a>. Reads the wire literal, so a quoted <code class="lang-kotlin">"1.5"</code> also returns <code class="lang-kotlin">1.5</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2062663878%2FProperties%2F-64947325" anchor-label="doubleOrNull" id="-2062663878%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="double-or-null.html"><span>double</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2062663878%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="double-or-null.html">doubleOrNull</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The scalar parsed as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a>, or <code class="lang-kotlin">null</code> if this value is not a scalar or does not parse.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1677293038%2FProperties%2F-64947325" anchor-label="int" id="-1677293038%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="int.html"><span><span>int</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1677293038%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="int.html">int</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The scalar parsed as an <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1483053188%2FProperties%2F-64947325" anchor-label="intOrNull" id="-1483053188%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="int-or-null.html"><span>int</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1483053188%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="int-or-null.html">intOrNull</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The scalar parsed as an <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a>, or <code class="lang-kotlin">null</code> if this value is not a scalar or does not parse.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1347831419%2FProperties%2F-64947325" anchor-label="long" id="1347831419%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="long.html"><span><span>long</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1347831419%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="long.html">long</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The scalar parsed as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a>. Reads the wire literal, so a quoted <code class="lang-kotlin">"30"</code> also returns <code class="lang-kotlin">30</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1788571941%2FProperties%2F-64947325" anchor-label="longOrNull" id="1788571941%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="long-or-null.html"><span>long</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1788571941%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="long-or-null.html">longOrNull</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The scalar parsed as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a>, or <code class="lang-kotlin">null</code> if this value is not a scalar or does not parse.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2122699146%2FProperties%2F-64947325" anchor-label="primitive" id="2122699146%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="primitive.html"><span><span>primitive</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2122699146%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="primitive.html">primitive</a><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">This value as a scalar.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="355742964%2FProperties%2F-64947325" anchor-label="primitiveOrNull" id="355742964%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="primitive-or-null.html"><span>primitive</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="355742964%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="primitive-or-null.html">primitiveOrNull</a><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">This value as a scalar, or <code class="lang-kotlin">null</code> if it is an array, an object or <a href="-problem-null/index.html">ProblemNull</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-484889351%2FProperties%2F-64947325" anchor-label="problemArray" id="-484889351%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-array.html"><span>problem</span><wbr><span><span>Array</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-484889351%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="problem-array.html">problemArray</a><span class="token operator">: </span><a href="-problem-array/index.html">ProblemArray</a></div><div class="brief "><p class="paragraph">This value as an array.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1181417763%2FProperties%2F-64947325" anchor-label="problemArrayOrNull" id="1181417763%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-array-or-null.html"><span>problem</span><wbr><span>Array</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1181417763%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="problem-array-or-null.html">problemArrayOrNull</a><span class="token operator">: </span><a href="-problem-array/index.html">ProblemArray</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">This value as an array, or <code class="lang-kotlin">null</code> if it is anything else.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="827128740%2FProperties%2F-64947325" anchor-label="ProblemJson" id="827128740%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-json.html"><span>Problem</span><wbr><span><span>Json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="827128740%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-json.html">ProblemJson</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a></div><div class="brief "><p class="paragraph">The <a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a> used to convert typed extension payloads when the caller supplies none. That covers the values passed to <code class="lang-kotlin">extensions(…)</code> and <code class="lang-kotlin">extension(name, …)</code>, and the types read back by <a href="extensions-as.html">extensionsAs</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="487555681%2FProperties%2F-64947325" anchor-label="problemObject" id="487555681%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-object.html"><span>problem</span><wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="487555681%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="problem-object.html">problemObject</a><span class="token operator">: </span><a href="-problem-object/index.html">ProblemObject</a></div><div class="brief "><p class="paragraph">This value as an object.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1625970549%2FProperties%2F-64947325" anchor-label="problemObjectOrNull" id="-1625970549%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-object-or-null.html"><span>problem</span><wbr><span>Object</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1625970549%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="problem-object-or-null.html">problemObjectOrNull</a><span class="token operator">: </span><a href="-problem-object/index.html">ProblemObject</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">This value as an object, or <code class="lang-kotlin">null</code> if it is anything else.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-590713712%2FProperties%2F-64947325" anchor-label="string" id="-590713712%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="string.html"><span><span>string</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-590713712%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="string.html">string</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The scalar's wire literal as text, with the quotes of a JSON string already removed.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1404957562%2FProperties%2F-64947325" anchor-label="stringOrNull" id="1404957562%2FProperties%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="string-or-null.html"><span>string</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1404957562%2FProperties%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-problem-value/index.html">ProblemValue</a><span class="token punctuation">.</span><a href="string-or-null.html">stringOrNull</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The scalar's wire literal as text, or <code class="lang-kotlin">null</code> if this value is not a scalar.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-1342373557%2FFunctions%2F-64947325" anchor-label="encodeToProblemValue" id="-1342373557%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="encode-to-problem-value.html"><span>encode</span><wbr><span>To</span><wbr><span>Problem</span><wbr><span><span>Value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1342373557%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="encode-to-problem-value.html">T</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token punctuation">.</span><a href="encode-to-problem-value.html"><span class="token function">encodeToProblemValue</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="encode-to-problem-value.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-value/index.html">ProblemValue</a></div><div class="brief "><p class="paragraph">Encodes <a href="encode-to-problem-value.html">value</a> to a standalone <a href="-problem-value/index.html">ProblemValue</a>, with the serializer resolved from <a href="encode-to-problem-value.html">T</a>.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="encode-to-problem-value.html">T</a><span class="token operator">&gt; </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token punctuation">.</span><a href="encode-to-problem-value.html"><span class="token function">encodeToProblemValue</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">serializer<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serialization-strategy/index.html">SerializationStrategy</a><span class="token operator">&lt;</span><a href="encode-to-problem-value.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="encode-to-problem-value.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-value/index.html">ProblemValue</a></div><div class="brief "><p class="paragraph">Encodes <a href="encode-to-problem-value.html">value</a> to a standalone <a href="-problem-value/index.html">ProblemValue</a>. <a href="-problem-builder/extension.html">ProblemBuilder.extension</a> does the same thing for one whole extension member; this is for callers building a <a href="-problem-value/index.html">ProblemValue</a> that is not itself a member, such as one element of a <a href="-problem-array/index.html">ProblemArray</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1218892223%2FFunctions%2F-64947325" anchor-label="exception" id="-1218892223%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="exception.html"><span><span>exception</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1218892223%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-type/index.html">ProblemType</a><span class="token punctuation">.</span><a href="exception.html"><span class="token function">exception</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">detail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">instance<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">cause<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-throwable/index.html">Throwable</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-exception/index.html">ProblemException</a></div><div class="brief "><p class="paragraph">Raises this problem type as a <a href="-problem-exception/index.html">ProblemException</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="108927185%2FFunctions%2F-64947325" anchor-label="extension" id="108927185%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="extension.html"><span><span>extension</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="108927185%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="extension.html">T</a><span class="token operator">&gt; </span><a href="-problem/index.html">Problem</a><span class="token punctuation">.</span><a href="extension.html"><span class="token function">extension</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>ProblemJson</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="extension.html">T</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Decodes a single extension member with the deserializer resolved from <a href="extension.html">T</a>, or returns <code class="lang-kotlin">null</code> when the member is absent.</p></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="extension.html">T</a><span class="token operator">&gt; </span><a href="-problem-builder/index.html">ProblemBuilder</a><span class="token punctuation">.</span><a href="extension.html"><span class="token function">extension</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="extension.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds one extension member holding an arbitrary <code class="lang-kotlin">@Serializable</code> value, with the serializer resolved from <a href="extension.html">T</a>.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="extension.html">T</a><span class="token operator">&gt; </span><a href="-problem/index.html">Problem</a><span class="token punctuation">.</span><a href="extension.html"><span class="token function">extension</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">deserializer<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-deserialization-strategy/index.html">DeserializationStrategy</a><span class="token operator">&lt;</span><a href="extension.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>ProblemJson</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="extension.html">T</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Decodes a single extension member, or returns <code class="lang-kotlin">null</code> when it is absent.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1732129185%2FFunctions%2F-64947325" anchor-label="extensions" id="1732129185%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="extensions.html"><span><span>extensions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1732129185%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="extensions.html">T</a><span class="token operator">&gt; </span><a href="-problem-builder/index.html">ProblemBuilder</a><span class="token punctuation">.</span><a href="extensions.html"><span class="token function">extensions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="extensions.html">T</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Spreads <a href="extensions.html">value</a>'s own properties into the problem as sibling extension members, with the serializer resolved from <a href="extensions.html">T</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1046571040%2FFunctions%2F-64947325" anchor-label="extensionsAs" id="1046571040%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="extensions-as.html"><span>extensions</span><wbr><span><span>As</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1046571040%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="extensions-as.html">T</a><span class="token operator">&gt; </span><a href="-problem/index.html">Problem</a><span class="token punctuation">.</span><a href="extensions-as.html"><span class="token function">extensionsAs</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>ProblemJson</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="extensions-as.html">T</a></div><div class="brief "><p class="paragraph">Decodes the whole extension map into <a href="extensions-as.html">T</a>, with the deserializer resolved from <a href="extensions-as.html">T</a>. Members <a href="extensions-as.html">T</a> does not declare are ignored, as RFC 9457 §3.2 requires.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="extensions-as.html">T</a><span class="token operator">&gt; </span><a href="-problem/index.html">Problem</a><span class="token punctuation">.</span><a href="extensions-as.html"><span class="token function">extensionsAs</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">deserializer<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-deserialization-strategy/index.html">DeserializationStrategy</a><span class="token operator">&lt;</span><a href="extensions-as.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>ProblemJson</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="extensions-as.html">T</a></div><div class="brief "><p class="paragraph">Decodes the whole extension map into <a href="extensions-as.html">T</a>. This is the typed consuming edge.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="555326261%2FFunctions%2F-64947325" anchor-label="problem" id="555326261%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem.html"><span><span>problem</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="555326261%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="problem.html"><span class="token function">problem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>ProblemJson<span class="token punctuation">, </span></span><span class="parameter ">block<span class="token operator">: </span><a href="-problem-builder/index.html">ProblemBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem/index.html">Problem</a></div><div class="brief "><p class="paragraph">Entry point for the builder DSL.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1970487258%2FFunctions%2F-64947325" anchor-label="problem" id="1970487258%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem.html"><span><span>problem</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1970487258%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-type/index.html">ProblemType</a><span class="token punctuation">.</span><a href="problem.html"><span class="token function">problem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">detail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">instance<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem/index.html">Problem</a></div><div class="brief "><p class="paragraph">Builds a <a href="-problem/index.html">Problem</a> for this type. <code class="lang-kotlin">detail</code> and <code class="lang-kotlin">instance</code> are the only per-occurrence fields.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1510403423%2FFunctions%2F-64947325" anchor-label="problemLiteral" id="1510403423%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-literal.html"><span>problem</span><wbr><span><span>Literal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1510403423%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="problem-literal.html"><span class="token function">problemLiteral</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">content<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">isString<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">Builds a scalar from an already-encoded wire literal.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="964802379%2FFunctions%2F-64947325" anchor-label="ProblemPrimitive" id="964802379%2FFunctions%2F-64947325" data-filterable-set=":problem-details-core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-core/commonMain" data-filterable-set=":problem-details-core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-primitive.html"><span>Problem</span><wbr><span><span>Primitive</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="964802379%2FFunctions%2F-64947325"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-primitive.html"><span class="token function">ProblemPrimitive</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">A boolean extension value, written as the unquoted literal <code class="lang-kotlin">true</code> or <code class="lang-kotlin">false</code>.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-primitive.html"><span class="token function">ProblemPrimitive</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">A floating-point extension value.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-primitive.html"><span class="token function">ProblemPrimitive</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">An integer extension value.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-primitive.html"><span class="token function">ProblemPrimitive</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">A 64-bit integer extension value.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="-problem-primitive.html"><span class="token function">ProblemPrimitive</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-primitive/index.html">ProblemPrimitive</a></div><div class="brief "><p class="paragraph">A string extension value. It is written quoted, so <code class="lang-kotlin">ProblemPrimitive("30")</code> is not the number 30.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

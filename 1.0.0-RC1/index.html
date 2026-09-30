@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>All modules</title>
+    <link href="images/logo-icon.svg" rel="icon" type="image/svg">
+        <script>var pathToRoot = "";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="scripts/sourceset_dependencies.js" async="async"></script>
+<link href="styles/style.css" rel="Stylesheet">
+<link href="styles/main.css" rel="Stylesheet">
+<link href="styles/prism.css" rel="Stylesheet">
+<link href="styles/logo-styles.css" rel="Stylesheet">
+<link href="ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="ui-kit/ui-kit.min.js" defer="defer"></script>
+<link href="styles/multimodule.css" rel="Stylesheet">
+</head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" id="content" pageIds="kotlin-rfc9457::.ext/allModules///PointingToDeclaration//0">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <h2 class="">All modules:</h2>
+    <div class="table"><a data-name="1776587421%2FMain%2F0" anchor-label="problem-details-core" id="1776587421%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-core/index.html">problem-details-core</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1776587421%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">The RFC 9457 model and the JSON codec. This is the only module a library or an application needs in order to <i>build</i> and <i>read</i> problem documents. The others add a wire format or a framework integration.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="-728833584%2FMain%2F0" anchor-label="problem-details-ktor" id="-728833584%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor/index.html">problem-details-ktor</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-728833584%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Ktor server integration: respond with a problem document, and turn thrown exceptions into problem documents through <code class="lang-kotlin">StatusPages</code>.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="-1847403910%2FMain%2F0" anchor-label="problem-details-ktor-client" id="-1847403910%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor-client/index.html">problem-details-ktor-client</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1847403910%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Ktor Client integration: turn a recognized <code class="lang-kotlin">application/problem+json</code> error response into the same io.github.ilyankin.rfc9457.ProblemException that application code throws on the server side and <code class="lang-kotlin">problem-details-ktor</code> answers.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="1916756080%2FMain%2F0" anchor-label="problem-details-ktor-client-xml" id="1916756080%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor-client-xml/index.html">problem-details-ktor-client-xml</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1916756080%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Ktor Client integration for the Appendix B XML form: turn a recognized <code class="lang-kotlin">application/problem+xml</code> error response into the same io.github.ilyankin.rfc9457.ProblemException that application code throws on the server side and <code class="lang-kotlin">problem-details-ktor</code> answers.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="-1706669715%2FMain%2F0" anchor-label="problem-details-ktor-openapi" id="-1706669715%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor-openapi/index.html">problem-details-ktor-openapi</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1706669715%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Teaches Ktor's OpenAPI generator to describe the problem responses a <code class="lang-kotlin">problem-details-ktor</code> application actually produces: <code class="lang-kotlin">application/problem+json</code> bodies, an RFC 9457 schema that admits extension members as siblings, and the status codes a <code class="lang-kotlin">problemDetails { }</code> catalog answers.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="-1399054877%2FMain%2F0" anchor-label="problem-details-ktor-openapi-xml" id="-1399054877%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor-openapi-xml/index.html">problem-details-ktor-openapi-xml</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1399054877%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Documents <code class="lang-kotlin">application/problem+xml</code> responses in an OpenAPI document, alongside the JSON ones <code class="lang-kotlin">problem-details-ktor-openapi</code> writes. One function; the schemas, the response primitives and the Appendix B constants all live in modules this one depends on.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="-6976628%2FMain%2F0" anchor-label="problem-details-ktor-validation" id="-6976628%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor-validation/index.html">problem-details-ktor-validation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-6976628%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Ktor <code class="lang-kotlin">RequestValidation</code> plugin integration: maps <code class="lang-kotlin">RequestValidationException</code> to a <code class="lang-kotlin">Problem</code> carrying an <code class="lang-kotlin">errors[]</code> extension array with JSON Pointer (RFC 6901) references — the multi-field validation pattern RFC 9457 itself recommends.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="-431239994%2FMain%2F0" anchor-label="problem-details-ktor-xml" id="-431239994%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-ktor-xml/index.html">problem-details-ktor-xml</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-431239994%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">Registers the <code class="lang-kotlin">application/problem+xml</code> codec with Ktor's <code class="lang-kotlin">ContentNegotiation</code>. One function and one converter; everything else lives in <code class="lang-kotlin">problem-details-ktor</code> and <code class="lang-kotlin">problem-details-xml</code>, both of which this module depends on.</p>
+            </span></div>
+        </div>
+      </div>
+<a data-name="1897791855%2FMain%2F0" anchor-label="problem-details-xml" id="1897791855%2FMain%2F0" data-filterable-set=""></a>
+      <div class="table-row table-row_multimodule">
+        <div class="main-subrow ">
+          <div class="w-100"><span class="inline-flex">
+              <div><a href="problem-details-xml/index.html">problem-details-xml</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1897791855%2FMain%2F0"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div><span class="brief-comment">
+              <p class="paragraph">The <code class="lang-kotlin">application/problem+xml</code> codec — RFC 9457 Appendix B, byte-exact against the example the RFC publishes, in both directions.</p>
+            </span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

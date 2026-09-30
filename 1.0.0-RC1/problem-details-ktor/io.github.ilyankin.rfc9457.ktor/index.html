@@ -1,0 +1,269 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>io.github.ilyankin.rfc9457.ktor</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;io.github.ilyankin.rfc9457.ktor/index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":problem-details-ktor/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":problem-details-ktor/commonMain" data-filter=":problem-details-ktor/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids="problem-details-ktor::io.github.ilyankin.rfc9457.ktor////PointingToDeclaration//-1013186192">
+  <div class="breadcrumbs"><a href="../index.html">problem-details-ktor</a><span class="delimiter">/</span><span class="current">io.github.ilyankin.rfc9457.ktor</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="table--container"><table><thead><tr><th>Entry point</th><th>Role</th></tr></thead><tbody><tr><td><a href="respond-problem.html">respondProblem</a></td><td>Respond with a problem document; fills <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">status</code> and <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">instance</code> from the call.</td></tr><tr><td><a href="problem-details.html">problemDetails</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">install(StatusPages)</code>: build the exception-to-problem catalog.</td></tr><tr><td><a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a></td><td>That catalog — <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">map&lt;T&gt;</code>, <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">forStatusCode</code>, <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">standardStatusCodes</code>, <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">onUnmapped</code>, <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">customize</code>.</td></tr><tr><td><a href="problem-json.html">problemJson</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">install(ContentNegotiation)</code>: register the JSON codec.</td></tr><tr><td><a href="-problem-json-converter/index.html">ProblemJsonConverter</a></td><td>The converter behind it, if you need to register it yourself.</td></tr><tr><td><a href="-problem-content-types/index.html">ProblemContentTypes</a></td><td><code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">application/problem+json</code> and <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">application/problem+xml</code> as <code class="org.jetbrains.dokka.pages.commenttable@603eff5f lang-kotlin">ContentType</code>.</td></tr></tbody></table></div><p class="paragraph">Five behaviours here are decisions rather than defaults, and each is pinned by a test:</p><ul><li><p class="paragraph">A problem document is <strong>always</strong> labelled <code class="lang-kotlin">application/problem+json</code>, even when it was matched   under <code class="lang-kotlin">application/json</code>. RFC 9457 §3 permits the override, and echoing back <code class="lang-kotlin">application/json</code>   would strip the only wire-level marker saying the body is a problem document.</p></li><li><p class="paragraph"><code class="lang-kotlin">instance</code> is filled from <code class="lang-kotlin">request.path()</code>, never <code class="lang-kotlin">request.uri</code> — the query string is left out   because problem documents get logged on both ends and query strings carry tokens often enough that   echoing them back by default is the wrong trade. Set <code class="lang-kotlin">instance</code> explicitly to include it.</p></li><li><p class="paragraph">The catch-all handler <strong>rethrows </strong><code class="strong lang-kotlin"><strong>CancellationException</strong></code> unless the status map claims it. A   cancellation means the client is gone; answering it writes a document to a dead socket and logs a   stack trace per dropped connection. <code class="lang-kotlin">TimeoutCancellationException</code> still becomes a 504.</p></li><li><p class="paragraph">A thrown <code class="lang-kotlin">ProblemException</code> is answered with the document it carries, via an entry seeded into the   catalog — so <code class="lang-kotlin">map&lt;ProblemException&gt;</code> replaces it like any other. Its <code class="lang-kotlin">cause</code>, when present, is   logged server-side (<code class="lang-kotlin">error</code> for a 5xx, <code class="lang-kotlin">debug</code> otherwise) because <code class="lang-kotlin">StatusPages</code> logs nothing it   handles and the cause would otherwise be dropped silently.</p></li><li><p class="paragraph"><code class="lang-kotlin">customize</code> runs once, after whichever of <code class="lang-kotlin">map</code>, <code class="lang-kotlin">onUnmapped</code> or <code class="lang-kotlin">forStatusCode</code> produced the   problem, rather than being folded into each of those. Enrichment that belongs on every document —   a trace id read off the <code class="lang-kotlin">ApplicationCall</code>, say — would otherwise have to be repeated in every   mapping instead of registered once. Registration is <strong>additive</strong>, unlike <code class="lang-kotlin">onUnmapped</code>: each call   adds a step and steps run in registration order, so two unrelated concerns — a trace id and a   redaction pass, say — cannot silently drop one another.</p></li></ul></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="-568766379%2FClasslikes%2F-1013186192" anchor-label="ProblemContentTypes" id="-568766379%2FClasslikes%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-content-types/index.html"><span>Problem</span><wbr><span>Content</span><wbr><span><span>Types</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-568766379%2FClasslikes%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-problem-content-types/index.html">ProblemContentTypes</a></div><div class="brief "><p class="paragraph">The two media types RFC 9457 registers (§6.1): <code class="lang-kotlin">application/problem+json</code> and <code class="lang-kotlin">application/problem+xml</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1642023742%2FClasslikes%2F-1013186192" anchor-label="ProblemDetailsCatalog" id="1642023742%2FClasslikes%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-details-catalog/index.html"><span>Problem</span><wbr><span>Details</span><wbr><span><span>Catalog</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1642023742%2FClasslikes%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a></div><div class="brief "><p class="paragraph">A declarative catalog of exception-to-problem and status-to-problem mappings.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="365535861%2FClasslikes%2F-1013186192" anchor-label="ProblemJsonConverter" id="365535861%2FClasslikes%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-json-converter/index.html"><span>Problem</span><wbr><span>Json</span><wbr><span><span>Converter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="365535861%2FClasslikes%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-problem-json-converter/index.html">ProblemJsonConverter</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>Json</span></span><span class="token punctuation">)</span> : <a href="https://api.ktor.io/ktor-serialization/io.ktor.serialization/-content-converter/index.html">ContentConverter</a></div><div class="brief "><p class="paragraph">Reads and writes <code class="lang-kotlin">application/problem+json</code> bodies for <code class="lang-kotlin">ContentNegotiation</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="EXTENSION_PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="564684048%2FProperties%2F-1013186192" anchor-label="httpStatus" id="564684048%2FProperties%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="http-status.html"><span>http</span><wbr><span><span>Status</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="564684048%2FProperties%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem-type/index.html">ProblemType</a><span class="token punctuation">.</span><a href="http-status.html">httpStatus</a><span class="token operator">: </span><a href="https://api.ktor.io/ktor-http/io.ktor.http/-http-status-code/index.html">HttpStatusCode</a></div><div class="brief "><p class="paragraph">An <code class="lang-kotlin">HttpStatusCode</code>-typed view over <a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem-type/status.html">ProblemType.status</a>, which is a plain <code class="lang-kotlin">Int</code> in core.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="1024844733%2FFunctions%2F-1013186192" anchor-label="blank" id="1024844733%2FFunctions%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="blank.html"><span><span>blank</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1024844733%2FFunctions%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem/-companion/index.html">Problem.Companion</a><span class="token punctuation">.</span><a href="blank.html"><span class="token function">blank</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">status<span class="token operator">: </span><a href="https://api.ktor.io/ktor-http/io.ktor.http/-http-status-code/index.html">HttpStatusCode</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem/index.html">Problem</a></div><div class="brief "><p class="paragraph">The <code class="lang-kotlin">about:blank</code> problem for <a href="blank.html">status</a>, with the title taken from Ktor's own reason phrase.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1068756632%2FFunctions%2F-1013186192" anchor-label="problemCatalog" id="1068756632%2FFunctions%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-catalog.html"><span>problem</span><wbr><span><span>Catalog</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1068756632%2FFunctions%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="problem-catalog.html"><span class="token function">problemCatalog</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">configure<span class="token operator">: </span><a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a></div><div class="brief "><p class="paragraph">Builds a <a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a> as a standalone value.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="641372077%2FFunctions%2F-1013186192" anchor-label="problemDetails" id="641372077%2FFunctions%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-details.html"><span>problem</span><wbr><span><span>Details</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="641372077%2FFunctions%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-server-status-pages/io.ktor.server.plugins.statuspages/-status-pages-config/index.html">StatusPagesConfig</a><span class="token punctuation">.</span><a href="problem-details.html"><span class="token function">problemDetails</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">catalog<span class="token operator">: </span><a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers an already-built <a href="problem-details.html">catalog</a> against Ktor's own <code class="lang-kotlin">StatusPages</code> configuration.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-server-status-pages/io.ktor.server.plugins.statuspages/-status-pages-config/index.html">StatusPagesConfig</a><span class="token punctuation">.</span><a href="problem-details.html"><span class="token function">problemDetails</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">configure<span class="token operator">: </span><a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers a <a href="-problem-details-catalog/index.html">ProblemDetailsCatalog</a> against Ktor's own <code class="lang-kotlin">StatusPages</code> configuration.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="813622626%2FFunctions%2F-1013186192" anchor-label="problemJson" id="813622626%2FFunctions%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-json.html"><span>problem</span><wbr><span><span>Json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="813622626%2FFunctions%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-server-content-negotiation/io.ktor.server.plugins.contentnegotiation/-content-negotiation-config/index.html">ContentNegotiationConfig</a><span class="token punctuation">.</span><a href="problem-json.html"><span class="token function">problemJson</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">acceptPlainJson<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter ">json<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>Json</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers the <code class="lang-kotlin">application/problem+json</code> converter on Ktor's own <code class="lang-kotlin">ContentNegotiation</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1404118318%2FFunctions%2F-1013186192" anchor-label="respondProblem" id="-1404118318%2FFunctions%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="respond-problem.html"><span>respond</span><wbr><span><span>Problem</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1404118318%2FFunctions%2F-1013186192"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-server-core/io.ktor.server.application/-application-call/index.html">ApplicationCall</a><span class="token punctuation">.</span><a href="respond-problem.html"><span class="token function">respondProblem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">problem<span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem/index.html">Problem</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Responds with <a href="respond-problem.html">problem</a>, the problem itself deciding the HTTP status.</p></div><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-server-core/io.ktor.server.application/-application-call/index.html">ApplicationCall</a><span class="token punctuation">.</span><a href="respond-problem.html"><span class="token function">respondProblem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">status<span class="token operator">: </span><a href="https://api.ktor.io/ktor-http/io.ktor.http/-http-status-code/index.html">HttpStatusCode</a><span class="token punctuation">, </span></span><span class="parameter ">problem<span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem/index.html">Problem</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Responds with <a href="respond-problem.html">problem</a> at <a href="respond-problem.html">status</a>, the <i>response</i> deciding the status.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

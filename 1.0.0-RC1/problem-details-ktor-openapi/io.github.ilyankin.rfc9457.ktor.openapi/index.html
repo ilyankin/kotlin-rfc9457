@@ -1,0 +1,220 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>io.github.ilyankin.rfc9457.ktor.openapi</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;io.github.ilyankin.rfc9457.ktor.openapi/index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":problem-details-ktor-openapi/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":problem-details-ktor-openapi/commonMain" data-filter=":problem-details-ktor-openapi/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids="problem-details-ktor-openapi::io.github.ilyankin.rfc9457.ktor.openapi////PointingToDeclaration//842245555">
+  <div class="breadcrumbs"><a href="../index.html">problem-details-ktor-openapi</a><span class="delimiter">/</span><span class="current">io.github.ilyankin.rfc9457.ktor.openapi</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="table--container"><table><thead><tr><th>Entry point</th><th>Role</th></tr></thead><tbody><tr><td><a href="problem-responses.html">problemResponses</a></td><td>On a <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">Route</code>: attach a catalog's universal responses to that route and everything below it. One call inside <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">routing { }</code> covers the whole application.</td></tr><tr><td><a href="problems-from.html">problemsFrom</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">responses { }</code>: document the half of a <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">ProblemDetailsCatalog</code> that holds for every operation — the catch-all and its registered status codes.</td></tr><tr><td><a href="problem-response.html">problemResponse</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">responses { }</code>: document one problem type at its own status, or a bare status code.</td></tr><tr><td><a href="problem-default.html">problemDefault</a></td><td>Inside <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">responses { }</code>: document the catch-all <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">default</code> response as a problem document.</td></tr><tr><td><a href="-problem-schemas/index.html">ProblemSchemas</a></td><td>The RFC 9457 JSON Schemas — <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">problem</code> and the <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">errors[]</code>-carrying <code class="org.jetbrains.dokka.pages.commenttable@58498e8b lang-kotlin">problemWithErrors</code>. Hand-written, because the serializer's descriptor describes neither optionality nor extension members.</td></tr></tbody></table></div><p class="paragraph">Published for <code class="lang-kotlin">jvm</code>, <code class="lang-kotlin">js</code>, <code class="lang-kotlin">wasmJs</code>, <code class="lang-kotlin">linuxX64</code>, <code class="lang-kotlin">linuxArm64</code>, <code class="lang-kotlin">mingwX64</code>, <code class="lang-kotlin">macosArm64</code>, <code class="lang-kotlin">iosArm64</code> and <code class="lang-kotlin">iosSimulatorArm64</code>. Depend on the plain coordinates from <code class="lang-kotlin">commonMain</code> and Gradle picks the variant.</p><h2 class="">Usage</h2><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">val catalog = problemCatalog { standardStatusCodes() }<br><br>install(StatusPages) { problemDetails(catalog) }<br><br>routing {<br>    // Every endpoint below now documents the catch-all and the catalog's status codes.<br>    problemResponses(catalog)<br><br>    get("/orders/{id}") { call.respondText("an order") }<br>        .describe { responses { problemResponse(OutOfCredit) } }<br>}</code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div><p class="paragraph"><a href="problem-responses.html">problemResponses</a> wraps Ktor's experimental route-description API. Opt in at the calling declaration or file with <code class="lang-kotlin">@OptIn(ExperimentalProblemDetailsOpenApi::class)</code>. The lower-level schema and response builders do not require this opt-in.</p><p class="paragraph">Ktor folds route metadata from the routing root downwards, so the one call at the root reaches every endpoint, and a <code class="lang-kotlin">describe</code> on a leaf merges with it rather than replacing it. Call <a href="problem-responses.html">problemResponses</a> on a <code class="lang-kotlin">route("/api") { }</code> instead when only a subtree should carry them.</p><p class="paragraph">The schema lands in <code class="lang-kotlin">components/schemas/ProblemDetails</code> and every response references it — Ktor hoists any titled schema on its own, so no component registration is needed here.</p><h2 class="">What a catalog can and cannot tell you</h2><p class="paragraph">A <code class="lang-kotlin">ProblemDetailsCatalog</code> is installed once for the whole application and records no route. Two halves of it therefore document very differently.</p><p class="paragraph">The catch-all and every status registered through <code class="lang-kotlin">forStatusCode</code>/<code class="lang-kotlin">standardStatusCodes()</code> hold <i>wherever</i> the catalog is installed — any route can 404, any unhandled failure answers with a problem document. <a href="problems-from.html">problemsFrom</a> attaches exactly those.</p><p class="paragraph">A type declared with <code class="lang-kotlin">map&lt;InsufficientFunds&gt;(OutOfCredit)</code> does not. Attaching it everywhere would document <code class="lang-kotlin">GET /health</code> as returning 403 and make a client generator emit handling for it. Name such a type where it can actually occur, with <a href="problem-response.html">problemResponse</a>.</p><h2 class="">Two problem types on one status</h2><p class="paragraph">OpenAPI allows a single response object per status code, so declaring two types that share one — a 403 that is either "out of credit" or "account locked" — cannot produce two entries. The two calls collapse into one response whose description names both, carrying one example per type keyed by its type URI. Nothing is silently dropped, and a client generator still sees a single 403 shape, which is what the wire actually offers.</p><h2 class="">Why the schemas are not inferred</h2><p class="paragraph"><code class="lang-kotlin">jsonSchema&lt;Problem&gt;()</code> would read <code class="lang-kotlin">ProblemSerializer</code>'s descriptor, which declares <code class="lang-kotlin">type</code> non-optional and has no way to describe extension members at all — they are decided at runtime. The result would require a member RFC 9457 §3.1 makes optional and omit the sibling extensions of §3.2 entirely.</p><p class="paragraph">Each schema carries a non-null <code class="lang-kotlin">title</code>, and that is load-bearing: Ktor hoists a titled schema into <code class="lang-kotlin">components/schemas</code> and rewrites every use to a <code class="lang-kotlin">$ref</code>. Clearing the title inlines the whole schema at every response instead.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="186198381%2FClasslikes%2F842245555" anchor-label="ExperimentalProblemDetailsOpenApi" id="186198381%2FClasslikes%2F842245555" data-filterable-set=":problem-details-ktor-openapi/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-openapi/commonMain" data-filterable-set=":problem-details-ktor-openapi/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-experimental-problem-details-open-api/index.html"><span>Experimental</span><wbr><span>Problem</span><wbr><span>Details</span><wbr><span>Open</span><wbr><span><span>Api</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="186198381%2FClasslikes%2F842245555"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-requires-opt-in/index.html"><span class="token annotation builtin">RequiresOptIn</span></a><span class="token punctuation">(</span><span>level<span class="token operator"> = </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-requires-opt-in/-level/-e-r-r-o-r/index.html">RequiresOptIn.Level.ERROR</a><span class="token punctuation">, </span></span><wbr><span>message<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"This API wraps Ktor's experimental route-description API and may change with it."</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">annotation class </span><a href="-experimental-problem-details-open-api/index.html">ExperimentalProblemDetailsOpenApi</a></div><div class="brief "><p class="paragraph">Marks API that depends on Ktor's experimental route-description API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1643152637%2FClasslikes%2F842245555" anchor-label="ProblemSchemas" id="1643152637%2FClasslikes%2F842245555" data-filterable-set=":problem-details-ktor-openapi/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-openapi/commonMain" data-filterable-set=":problem-details-ktor-openapi/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-problem-schemas/index.html"><span>Problem</span><wbr><span><span>Schemas</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1643152637%2FClasslikes%2F842245555"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-problem-schemas/index.html">ProblemSchemas</a></div><div class="brief "><p class="paragraph">The JSON Schemas this module writes into an OpenAPI document.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="EXTENSION_FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-2139174605%2FFunctions%2F842245555" anchor-label="problemDefault" id="-2139174605%2FFunctions%2F842245555" data-filterable-set=":problem-details-ktor-openapi/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-openapi/commonMain" data-filterable-set=":problem-details-ktor-openapi/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-default.html"><span>problem</span><wbr><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2139174605%2FFunctions%2F842245555"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-responses/-builder/index.html">Responses.Builder</a><span class="token punctuation">.</span><a href="problem-default.html"><span class="token function">problemDefault</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">description<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">schema<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-json-schema/index.html">JsonSchema</a><span class="token operator"> = </span>ProblemSchemas.problem<span class="token punctuation">, </span></span><span class="parameter ">configure<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-response/-builder/index.html">Response.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Documents the catch-all <code class="lang-kotlin">default</code> response as a problem document.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1418525590%2FFunctions%2F842245555" anchor-label="problemResponse" id="1418525590%2FFunctions%2F842245555" data-filterable-set=":problem-details-ktor-openapi/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-openapi/commonMain" data-filterable-set=":problem-details-ktor-openapi/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-response.html"><span>problem</span><wbr><span><span>Response</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1418525590%2FFunctions%2F842245555"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-responses/-builder/index.html">Responses.Builder</a><span class="token punctuation">.</span><a href="problem-response.html"><span class="token function">problemResponse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">type<span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-core/io.github.ilyankin.rfc9457/-problem-type/index.html">ProblemType</a><span class="token punctuation">, </span></span><span class="parameter ">description<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">schema<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-json-schema/index.html">JsonSchema</a><span class="token operator"> = </span>ProblemSchemas.problem<span class="token punctuation">, </span></span><span class="parameter ">configure<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-response/-builder/index.html">Response.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Documents <a href="problem-response.html">type</a> as a possible outcome of this operation.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-responses/-builder/index.html">Responses.Builder</a><span class="token punctuation">.</span><a href="problem-response.html"><span class="token function">problemResponse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">status<span class="token operator">: </span><a href="https://api.ktor.io/ktor-http/io.ktor.http/-http-status-code/index.html">HttpStatusCode</a><span class="token punctuation">, </span></span><span class="parameter ">description<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">schema<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-json-schema/index.html">JsonSchema</a><span class="token operator"> = </span>ProblemSchemas.problem<span class="token punctuation">, </span></span><span class="parameter ">configure<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-response/-builder/index.html">Response.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Documents <a href="problem-response.html">status</a> as producing a problem document, without naming a problem type.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1180409478%2FFunctions%2F842245555" anchor-label="problemResponses" id="-1180409478%2FFunctions%2F842245555" data-filterable-set=":problem-details-ktor-openapi/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-openapi/commonMain" data-filterable-set=":problem-details-ktor-openapi/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problem-responses.html"><span>problem</span><wbr><span><span>Responses</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1180409478%2FFunctions%2F842245555"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="-experimental-problem-details-open-api/index.html"><span class="token annotation builtin">ExperimentalProblemDetailsOpenApi</span></a></div></div><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-server-core/io.ktor.server.routing/-route/index.html">Route</a><span class="token punctuation">.</span><a href="problem-responses.html"><span class="token function">problemResponses</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">catalog<span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-ktor/io.github.ilyankin.rfc9457.ktor/-problem-details-catalog/index.html">ProblemDetailsCatalog</a><span class="token punctuation">, </span></span><span class="parameter ">configure<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-response/-builder/index.html">Response.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://api.ktor.io/ktor-server-core/io.ktor.server.routing/-route/index.html">Route</a></div><div class="brief "><p class="paragraph">Documents <a href="problem-responses.html">catalog</a>'s universally-applicable responses on this route and everything below it.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="493636928%2FFunctions%2F842245555" anchor-label="problemsFrom" id="493636928%2FFunctions%2F842245555" data-filterable-set=":problem-details-ktor-openapi/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":problem-details-ktor-openapi/commonMain" data-filterable-set=":problem-details-ktor-openapi/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="problems-from.html"><span>problems</span><wbr><span><span>From</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="493636928%2FFunctions%2F842245555"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor-openapi/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-responses/-builder/index.html">Responses.Builder</a><span class="token punctuation">.</span><a href="problems-from.html"><span class="token function">problemsFrom</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">catalog<span class="token operator">: </span><a href="https://ilyankin.github.io/kotlin-rfc9457/problem-details-ktor/io.github.ilyankin.rfc9457.ktor/-problem-details-catalog/index.html">ProblemDetailsCatalog</a><span class="token punctuation">, </span></span><span class="parameter ">configure<span class="token operator">: </span><a href="https://api.ktor.io/ktor-openapi-schema/io.ktor.openapi/-response/-builder/index.html">Response.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Documents the part of <a href="problems-from.html">catalog</a> that is true of every operation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

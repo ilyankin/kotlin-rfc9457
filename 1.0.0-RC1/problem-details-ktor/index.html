@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>problem-details-ktor</title>
+<link href="../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../scripts/sourceset_dependencies.js" async></script>
+<link href="../styles/style.css" rel="Stylesheet">
+<link href="../styles/main.css" rel="Stylesheet">
+<link href="../styles/prism.css" rel="Stylesheet">
+<link href="../styles/logo-styles.css" rel="Stylesheet">
+<link href="../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../scripts/main.js" defer></script>
+<script type="text/javascript" src="../scripts/prism.js" async></script>
+<script type="text/javascript" src="../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":problem-details-ktor/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":problem-details-ktor/commonMain" data-filter=":problem-details-ktor/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" id="content" pageids="problem-details-ktor::////PointingToDeclaration//-1013186192">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>problem-details-ktor</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-ktor/commonMain"><p class="paragraph">Ktor server integration: respond with a problem document, and turn thrown exceptions into problem documents through <code class="lang-kotlin">StatusPages</code>.</p><p class="paragraph"><strong>This module never depends on </strong><code class="strong lang-kotlin"><strong>problem-details-xml</strong></code><strong>.</strong> That edge is the reason the library is split at all — an application that only emits JSON does not resolve an XML parser. XML support is a separate artifact declaring its own registration function, so a missing dependency is a compile error at the call site rather than a <code class="lang-kotlin">NoClassDefFoundError</code> at runtime.</p><p class="paragraph">Published for <code class="lang-kotlin">jvm</code>, <code class="lang-kotlin">js</code>, <code class="lang-kotlin">wasmJs</code>, <code class="lang-kotlin">linuxX64</code>, <code class="lang-kotlin">linuxArm64</code>, <code class="lang-kotlin">mingwX64</code>, <code class="lang-kotlin">macosArm64</code>, <code class="lang-kotlin">iosArm64</code> and <code class="lang-kotlin">iosSimulatorArm64</code>. Depend on the plain coordinates from <code class="lang-kotlin">commonMain</code> and Gradle picks the variant.</p><h2 class="">What it does not do</h2><p class="paragraph">It does not reimplement dispatch or content negotiation. Everything here generates the calls you would otherwise hand-write into <code class="lang-kotlin">StatusPages</code>' and <code class="lang-kotlin">ContentNegotiation</code>'s own configuration DSLs. Nearest-parent-class exception resolution and <code class="lang-kotlin">Accept</code> quality-value matching stay Ktor's, with Ktor's semantics and Ktor's bug fixes.</p><h2 class="">Where to start</h2><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">install(ContentNegotiation) { problemJson() }<br><br>install(StatusPages) {<br>    problemDetails {<br>        standardStatusCodes()<br>        map&lt;IllegalArgumentException&gt; { _, e -&gt; problem { status = 400; detail = e.message } }<br>    }<br>}</code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div><p class="paragraph">Then respond from a route with <a href="io.github.ilyankin.rfc9457.ktor/respond-problem.html">io.github.ilyankin.rfc9457.ktor.respondProblem</a>, or just throw and let the catalog answer.</p><p class="paragraph">The catalog becomes immutable when the <code class="lang-kotlin">problemDetails { ... }</code> or <code class="lang-kotlin">problemCatalog { ... }</code> builder block ends. Declare all mappings and customizers inside that block; late mutation is rejected so runtime handling and generated documentation cannot drift apart.</p></div></div>
+  </div>
+  <h2 class="">Packages</h2>
+  <div class="table"><a data-name="-642721234%2FPackages%2F-1013186192" anchor-label="io.github.ilyankin.rfc9457.ktor" id="-642721234%2FPackages%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":problem-details-ktor/commonMain" data-filterable-set=":problem-details-ktor/commonMain">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="io.github.ilyankin.rfc9457.ktor/index.html">io.github.ilyankin.rfc9457.ktor</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-642721234%2FPackages%2F-1013186192"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right platform-tags--wrapper">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag common-like">common</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="-642721234%2FPackages%2F-1013186192" anchor-label="io.github.ilyankin.rfc9457.ktor" id="-642721234%2FPackages%2F-1013186192" data-filterable-set=":problem-details-ktor/commonMain"></a>
+            <p class="paragraph">Five behaviours here are decisions rather than defaults, and each is pinned by a test:</p>
+          </span></div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

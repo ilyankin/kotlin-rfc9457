@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>problem-details-xml</title>
+<link href="../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../scripts/sourceset_dependencies.js" async></script>
+<link href="../styles/style.css" rel="Stylesheet">
+<link href="../styles/main.css" rel="Stylesheet">
+<link href="../styles/prism.css" rel="Stylesheet">
+<link href="../styles/logo-styles.css" rel="Stylesheet">
+<link href="../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../scripts/main.js" defer></script>
+<script type="text/javascript" src="../scripts/prism.js" async></script>
+<script type="text/javascript" src="../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../index.html" tabindex="1">
+                    kotlin-rfc9457
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;index.html&quot;}">1.0.0-RC1</dokka-template-command>        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":problem-details-xml/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":problem-details-xml/commonMain" data-filter=":problem-details-xml/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kotlin-rfc9457
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" id="content" pageids="problem-details-xml::////PointingToDeclaration//920939095">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>problem-details-xml</span></span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":problem-details-xml/commonMain"><p class="paragraph">The <code class="lang-kotlin">application/problem+xml</code> codec — RFC 9457 Appendix B, byte-exact against the example the RFC publishes, in both directions.</p><p class="paragraph">Split out of <code class="lang-kotlin">problem-details-core</code> on purpose: roughly nine applications in ten only ever emit JSON, and they should not resolve an XML parser to do it. Add this module only if a client of yours asks for XML.</p><p class="paragraph">Depends on <code class="lang-kotlin">problem-details-core</code> (<code class="lang-kotlin">api</code>) and xmlutil (<code class="lang-kotlin">implementation</code>). <strong>No xmlutil type is visible in this module's API — including as a thrown type.</strong> <code class="lang-kotlin">decodeFromString</code> wraps xmlutil's <code class="lang-kotlin">XmlException</code> in <code class="lang-kotlin">kotlinx.serialization.SerializationException</code> with the cause chained, so catching a parse failure never requires xmlutil in your build.</p><p class="paragraph">Published for <code class="lang-kotlin">jvm</code>, <code class="lang-kotlin">js</code>, <code class="lang-kotlin">wasmJs</code>, <code class="lang-kotlin">linuxX64</code>, <code class="lang-kotlin">linuxArm64</code>, <code class="lang-kotlin">mingwX64</code>, <code class="lang-kotlin">macosArm64</code>, <code class="lang-kotlin">iosArm64</code> and <code class="lang-kotlin">iosSimulatorArm64</code>. Depend on the plain coordinates from <code class="lang-kotlin">commonMain</code> and Gradle picks the variant.</p><h2 class="">Not every problem can be written as XML</h2><p class="paragraph">A <code class="lang-kotlin">Problem</code> that encodes to JSON without complaint may be refused here, and finding out on write is the intended behaviour rather than an oversight.</p><p class="paragraph">Appendix B puts each extension member's <i>name</i> into an element name, and XML constrains names and character content in ways JSON does not. <code class="lang-kotlin">encodeToString</code> therefore throws <code class="lang-kotlin">SerializationException</code> when:</p><ul><li><p class="paragraph">an extension member's name is not an XML <code class="lang-kotlin">NCName</code> (XML 1.0 §2.3 without a colon) — so <code class="lang-kotlin">"balance"</code>   and <code class="lang-kotlin">"тип"</code> are fine, while <code class="lang-kotlin">"account balance"</code>, <code class="lang-kotlin">"1abc"</code>, <code class="lang-kotlin">""</code> and <code class="lang-kotlin">"x:y"</code> are not;</p></li><li><p class="paragraph">any member's text carries <code class="lang-kotlin">U+0000</code> or an unpaired surrogate, neither of which XML can represent in   any form — not escaped, not in a CDATA section.</p></li></ul><p class="paragraph"><code class="lang-kotlin">Problem</code> itself accepts any extension name on purpose: RFC 9457 §3.2's naming guidance (start with a letter, only <code class="lang-kotlin">[A-Za-z0-9_]</code>, three characters or longer) is a <code class="lang-kotlin">SHOULD</code>, and enforcing it in the model would break JSON-only callers over a format they never use. §3.2 gives that guidance <i>because</i> of this appendix — following it means a problem type works in both formats. The hard XML constraint is enforced; the <code class="lang-kotlin">SHOULD</code> is not, so a two-character name is accepted.</p><h2 class="">Information this format loses</h2><p class="paragraph">Appendix B's mapping is not lossless, and the losses are specified and tested rather than accidental:</p><ul><li><p class="paragraph"><code class="lang-kotlin">ProblemNull</code>, an empty array and an empty object all encode to an empty element, and all read back   as the empty string.</p></li><li><p class="paragraph">Scalars carry no type on the wire, so a string extension whose text reads <code class="lang-kotlin">30</code> comes back as a   number.</p></li><li><p class="paragraph">An object whose keys are <i>all</i> <code class="lang-kotlin">i</code> comes back as an array, because Appendix B defines an element   whose children are all named <code class="lang-kotlin">i</code> to be one. <code class="lang-kotlin">{"i": "a"}</code> round-trips to <code class="lang-kotlin">["a"]</code>.</p></li></ul><p class="paragraph">Round-tripping through XML is therefore not the identity. If both formats have to agree exactly, keep the JSON document as the source of truth.</p><h2 class="">What the reader tolerates</h2><p class="paragraph">RFC 9457 §3 asks consumers to ignore what they do not recognise rather than reject the document, so the reader is lenient in several ways. Each is a decision, and each is pinned by a test:</p><ul><li><p class="paragraph">a member in a foreign namespace is skipped; a <i>root</i> element in one is rejected, since that is the   document's identity rather than one of its members;</p></li><li><p class="paragraph">a <code class="lang-kotlin">&lt;problem&gt;</code> root with no namespace declaration at all is accepted;</p></li><li><p class="paragraph">where a member appears more than once, the last occurrence wins — for standard members and   extensions alike;</p></li><li><p class="paragraph">content after the closing <code class="lang-kotlin">&lt;/problem&gt;</code> is ignored, and an XML 1.1 declaration parses;</p></li><li><p class="paragraph">attributes are ignored wherever they appear. Appendix B's schema admits them but defines no mapping   from one into the data model, so honouring one would mean inventing semantics the RFC withheld. The   writer emits none.</p></li></ul></div></div>
+  </div>
+  <h2 class="">Packages</h2>
+  <div class="table"><a data-name="-770035975%2FPackages%2F920939095" anchor-label="io.github.ilyankin.rfc9457.xml" id="-770035975%2FPackages%2F920939095" data-filterable-set=":problem-details-xml/commonMain"></a>
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":problem-details-xml/commonMain" data-filterable-set=":problem-details-xml/commonMain">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="io.github.ilyankin.rfc9457.xml/index.html">io.github.ilyankin.rfc9457.xml</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-770035975%2FPackages%2F920939095"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right platform-tags--wrapper">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag common-like">common</div>
+            </div>
+          </div>
+        </div>
+        <div><span class="brief-comment"><a data-name="-770035975%2FPackages%2F920939095" anchor-label="io.github.ilyankin.rfc9457.xml" id="-770035975%2FPackages%2F920939095" data-filterable-set=":problem-details-xml/commonMain"></a>
+            <p class="paragraph">The Appendix B codec.</p>
+          </span></div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
