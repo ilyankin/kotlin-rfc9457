@@ -36,6 +36,7 @@ Tests use [Kotest](https://kotest.io) on JUnit Platform for the JVM. For non-JVM
 ## CI requirements
 
 - **ABI validation.** Each module dumps its public API surface to `api/*.api` (JVM) and `api/*.klib.api` (klib targets). Any change to a public signature fails the build until you run `./gradlew updateKotlinAbi` and commit the updated dumps. Review both diffs before committing to ensure no unintended API exposure.
+- **Consumer smoke.** CI publishes every module to Maven local and resolves it from separate Gradle JVM, Maven, and Kotlin Multiplatform builds under `consumer-smoke/`. To run it locally, use `./gradlew publishToMavenLocal` and then `consumer-smoke/run.sh`. A new published module also needs a line in `problem-details-bom/build.gradle.kts`.
 - **KDoc requirements.** Dokka builds run with `reportUndocumented` and `failOnWarning` enabled. In CI, `dokkaGenerate` checks that all public declarations are documented and that KDoc links resolve. This check runs in CI rather than in local `check` because Dokka requires network access.
 - **Sample code verification.** Public entry point `@sample` blocks reference functions in `src/commonTest/kotlin/io/github/ilyankin/rfc9457/samples`. Samples compile and run as tests, so signature changes require updating the corresponding sample.
 - **Isolated Projects compatibility.** CI builds with `-Dorg.gradle.isolated-projects=true`. Build logic must reside in convention plugins under `build-logic/`. Do not use `subprojects { }` or `allprojects { }` blocks in build scripts.

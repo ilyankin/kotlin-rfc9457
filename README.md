@@ -3,7 +3,7 @@
 [![CI](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml/badge.svg)](https://github.com/ilyankin/kotlin-rfc9457/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/ilyankin/kotlin-rfc9457/graph/badge.svg?token=8F1IBCDE94)](https://codecov.io/github/ilyankin/kotlin-rfc9457)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.4.10-7F52FF.svg?logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.4.20-7F52FF.svg?logo=kotlin)](https://kotlinlang.org)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.ilyankin/problem-details-core)](https://central.sonatype.com/artifact/io.github.ilyankin/problem-details-core)
 [![GitHub Release](https://img.shields.io/github/v/release/ilyankin/kotlin-rfc9457)](https://github.com/ilyankin/kotlin-rfc9457/releases)
 [![javadoc](https://javadoc.io/badge2/io.github.ilyankin/problem-details-core/javadoc.svg)](https://javadoc.io/doc/io.github.ilyankin/problem-details-core)
@@ -62,26 +62,42 @@ also handle unmapped exceptions, preventing stack traces from reaching the clien
 
 ```kotlin
 dependencies {
-    implementation("io.github.ilyankin:problem-details-core:0.9.0")
-    implementation("io.github.ilyankin:problem-details-ktor:0.9.0")
+    implementation(platform("io.github.ilyankin:problem-details-bom:1.0.0-RC1"))
+    implementation("io.github.ilyankin:problem-details-core")
+    implementation("io.github.ilyankin:problem-details-ktor")
 }
 ```
+
+The BOM keeps every module on one version, so the modules themselves need no version.
 
 | Requires | Version |
 |---|---|
 | JDK | 17+ |
-| Kotlin | 2.4+ (built with 2.4.10) |
-| Ktor | 3.5+, for the Ktor modules |
+| Kotlin | 2.4+ (built with 2.4.20) |
+| Ktor | 3.6+, for the Ktor modules |
 
 <details>
 <summary>Maven</summary>
 
 ```xml
-<dependency>
-  <groupId>io.github.ilyankin</groupId>
-  <artifactId>problem-details-core</artifactId>
-  <version>0.9.0</version>
-</dependency>
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>io.github.ilyankin</groupId>
+      <artifactId>problem-details-bom</artifactId>
+      <version>1.0.0-RC1</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+
+<dependencies>
+  <dependency>
+    <groupId>io.github.ilyankin</groupId>
+    <artifactId>problem-details-core</artifactId>
+  </dependency>
+</dependencies>
 ```
 
 </details>
@@ -97,7 +113,7 @@ dependencies {
 | Answer `application/problem+xml` alongside JSON | + `problem-details-xml` and `problem-details-ktor-xml` |
 | Decode problem responses from APIs you call | + `problem-details-ktor-client` (and `problem-details-ktor-client-xml` for XML) |
 
-All modules share the same version.
+All modules share the same version, and `problem-details-bom` pins them together.
 
 <details>
 <summary>All artifacts, with per-module documentation</summary>
@@ -113,11 +129,13 @@ All modules share the same version.
 | [`problem-details-ktor-validation`](problem-details-ktor-validation/README.md) | `invalidField`/`invalidFields`, `jsonPointer`, `requestValidation(type)` to map `RequestValidationException` to `errors[]` with JSON Pointer | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-validation) |
 | [`problem-details-ktor-openapi`](problem-details-ktor-openapi/README.md) | `Route.problemResponses(catalog)`, `problemsFrom`, `problemResponse`, `problemDefault`, `ProblemSchemas` for generated OpenAPI documents | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi) |
 | [`problem-details-ktor-openapi-xml`](problem-details-ktor-openapi-xml/README.md) | `problemXmlContent()` for `application/problem+xml` in OpenAPI | [javadoc.io](https://javadoc.io/doc/io.github.ilyankin/problem-details-ktor-openapi-xml) |
+| `problem-details-bom` | Versions for every artifact above, imported with `platform(...)` or Maven `<scope>import</scope>` | — |
 
 </details>
 
-API reference for every module: <https://ilyankin.github.io/kotlin-rfc9457/>, regenerated from
-`main` on every push. javadoc.io also serves each artifact at its latest release.
+API reference for every module: <https://ilyankin.github.io/kotlin-rfc9457/>, built from the
+latest release, with earlier releases in its version switcher. javadoc.io also serves each artifact
+at every release.
 
 ## Recipes
 
@@ -341,14 +359,30 @@ Every module publishes for nine targets with logic in `commonMain` and no `expec
 Public API signatures are tracked in `api/*.api` and `api/*.klib.api` and verified on every build to prevent
 unintended API changes.
 
-## Stability
+## Stability and support
 
-The latest release line is `0.x`; `main` is preparing `1.0.0`. Until the final 1.0 release, changes
-that freeze the stable contract may still be breaking and are listed explicitly in the changelog.
-ABI dumps record public API differences in pull request reviews.
+The library is feature-complete and maintained. It covers RFC 9457 in JSON and XML, with Ktor
+server, client, validation, and OpenAPI integrations. New features are added on request, not on a
+roadmap.
 
-APIs intended to stay experimental after 1.0 carry their own `@RequiresOptIn` marker. Currently this
-applies only to `Route.problemResponses`, which wraps Ktor's experimental route-description API.
+Releases follow [Semantic Versioning](https://semver.org/):
+
+| Release | Contains |
+|---|---|
+| Patch, `1.0.x` | Bug fixes and security updates of dependencies |
+| Minor, `1.x.0` | New API, new targets, deprecations, a raised minimum Ktor or Kotlin version |
+| Major, `x.0.0` | Removal of deprecated API, a move to a new Ktor major version |
+
+A public declaration is removed in three steps, one minor release each: `@Deprecated` with level
+`WARNING`, then `ERROR`, then `HIDDEN`. The declaration itself disappears only in the next major
+release. ABI dumps record every public API difference in pull request reviews.
+
+`Route.problemResponses` is the one exception to this contract. It requires
+`@OptIn(ExperimentalProblemDetailsOpenApi::class)` because it wraps Ktor's experimental
+route-description API, and it may change in a minor release when Ktor changes that API.
+
+The artifacts are built with Kotlin 2.4 against Ktor 3.6 and run on JDK 17 or newer. Security fixes
+go into the latest release only; see [`SECURITY.md`](SECURITY.md).
 
 ## Contributing
 

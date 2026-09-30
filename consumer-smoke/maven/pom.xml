@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>smoke</groupId>
+  <artifactId>consumer-smoke-maven</artifactId>
+  <version>1</version>
+
+  <!-- Both versions are passed in by consumer-smoke/run.sh, from gradle.properties and the version
+       catalog, so this file never needs a bump. -->
+  <properties>
+    <rfc9457.version>UNSET</rfc9457.version>
+    <kotlin.version>UNSET</kotlin.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <!-- Versions come from the BOM alone. Maven reads no Gradle module metadata, so this is also
+       the check that the plain coordinates redirect to the -jvm artifacts. -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.github.ilyankin</groupId>
+        <artifactId>problem-details-bom</artifactId>
+        <version>${rfc9457.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.ilyankin</groupId>
+      <artifactId>problem-details-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.ilyankin</groupId>
+      <artifactId>problem-details-xml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.ilyankin</groupId>
+      <artifactId>problem-details-ktor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.ilyankin</groupId>
+      <artifactId>problem-details-ktor-client</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/kotlin</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <version>${kotlin.version}</version>
+        <configuration>
+          <jvmTarget>17</jvmTarget>
+        </configuration>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.6.4</version>
+        <executions>
+          <execution>
+            <id>run-smoke</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>smoke.SmokeKt</mainClass>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

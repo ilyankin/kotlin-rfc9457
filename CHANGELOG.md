@@ -3,8 +3,33 @@
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-**While the version is 0.x, any release may contain breaking changes without a deprecation cycle.**
-That is what 0.y.z means, and it is deliberate. Any that occur are listed under *Breaking changes*.
+**From 1.0.0 on, public API is removed only in a major release, after a deprecation cycle.** Each
+of `@Deprecated` levels `WARNING`, `ERROR` and `HIDDEN` takes one minor release. The exception is
+`Route.problemResponses`, which requires `@OptIn(ExperimentalProblemDetailsOpenApi::class)` and may
+change in a minor release. The 0.x releases below could break without a deprecation cycle, and list
+each break under *Breaking changes*.
+
+## [Unreleased]
+
+## [1.0.0-RC1] — 2026-09-30
+
+The release candidate for 1.0.0. Its public API is the one 1.0.0 is meant to ship, unchanged from
+0.9.0. The compatibility promise in the README starts with 1.0.0.
+
+### Added
+
+- **`problem-details-bom`**, a Maven BOM and Gradle platform. It pins every module to one version,
+  including the per-platform artifacts such as `problem-details-core-jvm` that Maven resolves
+  directly.
+- **A versioned API reference.** <https://ilyankin.github.io/kotlin-rfc9457/> now shows the latest
+  release instead of `main`, and keeps every release from this one on behind a version switcher.
+
+### Changed
+
+- The Ktor modules are built against Ktor 3.6.0 instead of 3.5.2, so they require Ktor 3.6 or
+  newer.
+- Built with Kotlin 2.4.20 instead of 2.4.10. `problem-details-xml` uses xmlutil 1.0.2 internally
+  instead of 1.0.1.
 
 ## [0.9.0] — 2026-09-29
 

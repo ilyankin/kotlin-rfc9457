@@ -47,7 +47,7 @@ jobs:
         run: ./gradlew :koverXmlReport
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/reports/kover/report.xml
@@ -170,6 +170,28 @@ jobs:
       - name: Build with Isolated Projects
         run: ./gradlew build -Dorg.gradle.isolated-projects=true
 
+  consumer-smoke:
+    # The build's own tests see the modules as projects. This resolves the published POMs, Gradle
+    # module metadata and BOM from a Maven repository, the way a user's Gradle, Maven or
+    # multiplatform build does.
+    name: Consumer smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: ./.github/actions/setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          # Shares the Linux key space with `build`, which is the one that writes there.
+          cache-read-only: true
+
+      - name: Publish to Maven local
+        run: ./gradlew publishToMavenLocal
+
+      - name: Resolve from Gradle JVM, Kotlin Multiplatform and Maven
+        run: consumer-smoke/run.sh
+
   dependency-graph:
     # Submits the resolved graph so Dependabot alerts cover transitive dependencies, not just what
     # `libs.versions.toml` declares.
@@ -182,7 +204,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin
           java-version: '21'
@@ -191,6 +213,6 @@ jobs:
       # consumer — excluded so Dependabot alerts stay scoped to what's actually shippable. KMP
       # qualifies these per target (`jvmTestCompileClasspath`), not the plain `testCompileClasspath`
       # a single-platform project would have.
-      - uses: gradle/actions/dependency-submission@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+      - uses: gradle/actions/dependency-submission@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
         with:
           dependency-graph-exclude-configurations: '.*[Tt]est(Compile|Runtime)Classpath'
