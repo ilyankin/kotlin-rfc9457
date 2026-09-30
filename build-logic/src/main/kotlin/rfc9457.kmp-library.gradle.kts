@@ -3,6 +3,7 @@ import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+import rfc9457.build.PublishedTargets
 import java.net.URI
 
 plugins {
@@ -52,6 +53,13 @@ kotlin {
     macosArm64()
     iosArm64()
     iosSimulatorArm64()
+
+    // `problem-details-bom` lists one artifact per target from `PublishedTargets`, so a target added
+    // here alone would ship without a BOM entry.
+    val declaredTargets = targets.names - "metadata"
+    check(declaredTargets == PublishedTargets.names) {
+        "Declared targets $declaredTargets differ from PublishedTargets.names ${PublishedTargets.names}"
+    }
 
     // Dumps the public API to `api/*.api`, checked by `check`, so accidental widening shows in a diff.
     @OptIn(ExperimentalAbiValidation::class)
