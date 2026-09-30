@@ -109,5 +109,9 @@ jobs:
             printf '[API reference](https://ilyankin.github.io/kotlin-rfc9457/)'
             printf ' · [Maven Central](https://central.sonatype.com/namespace/io.github.ilyankin)\n'
           } > notes.md
-          gh release create "$GITHUB_REF_NAME" --draft --verify-tag \
+          # A suffixed version such as 1.0.0-RC1 is marked as a pre-release, so GitHub keeps
+          # pointing "Latest" at the last final release.
+          prerelease=()
+          case "$version" in *-*) prerelease=(--prerelease) ;; esac
+          gh release create "$GITHUB_REF_NAME" --draft --verify-tag "${prerelease[@]}" \
             --title "$GITHUB_REF_NAME" --notes-file notes.md
