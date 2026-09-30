@@ -1,18 +1,30 @@
 name: Documentation
 
-# Deploys the aggregated Dokka site. Pull requests already generate it in `ci.yml`, so this
-# workflow only publishes. Requires Settings → Pages → Source: GitHub Actions.
+# Deploys the aggregated Dokka site for a release. The site follows published releases, not
+# `main`: a reader of the 1.0 reference must not see API that exists only on `main`. Pull requests
+# already generate the site in `ci.yml`, so this workflow only publishes.
+#
+# Every release is archived on the `docs-archive` branch, one directory per version, and the
+# versioning plugin puts the archive under `older/` behind a version switcher. The site root is
+# always the newest release, so the `package-list` URLs that published `-javadoc.jar` files link
+# against keep resolving.
+#
+# Requires Settings → Pages → Source: GitHub Actions, and the `github-pages` environment has to
+# allow `v*` tags, since this runs on the tag rather than a branch.
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish again, e.g. v1.0.0
+        required: true
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# One Pages deployment per repository: queue rather than cancel, so the site is never half-updated.
+# One Pages deployment per repository: queue rather than cancel, so the site is never half-updated
+# and two runs never race to push the archive.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -21,11 +33,20 @@ jobs:
   deploy:
     name: Build and deploy to Pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # pushes the `docs-archive` branch
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      ARCHIVE: ${{ github.workspace }}/../docs-archive
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.TAG }}
 
       - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
@@ -36,10 +57,32 @@ jobs:
         with:
           cache-read-only: true
 
+      # A worktree rather than a second clone, so pushing reuses the credentials checkout stored.
+      # The branch holds nothing but version directories, the layout the versioning plugin expects.
+      - name: Check out the archive
+        id: archive
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^version=//p' gradle.properties)
+          if [ "v${version}" != "$TAG" ]; then
+            echo "Tag ${TAG} does not match version ${version} in gradle.properties"
+            exit 1
+          fi
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+          if git ls-remote --exit-code --heads origin docs-archive > /dev/null; then
+            git fetch --no-tags --depth 1 origin docs-archive
+            git worktree add -B docs-archive "$ARCHIVE" FETCH_HEAD
+          else
+            git worktree add --orphan -b docs-archive "$ARCHIVE"
+          fi
+          # A re-run for the same tag regenerates the version rather than listing it twice.
+          rm -rf "${ARCHIVE:?}/${version}"
+
       # The root project aggregates the modules into build/dokka/html; the per-module
       # publications are built for their package lists, see the next step.
       - name: Generate documentation
-        run: ./gradlew dokkaGenerate
+        run: ./gradlew dokkaGenerate -Prfc9457.docs.olderVersionsDir="$ARCHIVE"
 
       # Dokka leaves per-module package lists out of the aggregate, and those are what the modules'
       # cross-module externalDocumentationLinks resolve against. Copying them in is what makes
@@ -51,12 +94,47 @@ jobs:
             cp "$module/build/dokka/html/$module/package-list" "build/dokka/html/$module/package-list"
           done
 
-      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      # A pre-release goes into the archive, but takes the site root only while no final release
+      # exists. After 1.0.0, a 1.1.0-RC1 shows up in the switcher and the root stays on 1.0.x.
+      - name: Decide whether this release takes the site root
+        id: root
+        run: |
+          set -euo pipefail
+          version='${{ steps.archive.outputs.version }}'
+          stable_archived=$(find "$ARCHIVE" -mindepth 1 -maxdepth 1 -type d ! -name '.*' ! -name '*-*' | head -n 1)
+          case "$version" in
+            *-*) [ -n "$stable_archived" ] && deploy=false || deploy=true ;;
+            *) deploy=true ;;
+          esac
+          echo "deploy=${deploy}" >> "$GITHUB_OUTPUT"
+
+      - if: steps.root.outputs.deploy == 'true'
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       # Served as-is, no Jekyll pass, so no `.nojekyll` needed.
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      - if: steps.root.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: build/dokka/html
 
       - id: deployment
+        if: steps.root.outputs.deploy == 'true'
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+      # Last, so a failed deployment leaves the archive as it was. The copy leaves out `older/`,
+      # which only duplicates what the archive already holds.
+      - name: Archive this version
+        run: |
+          set -euo pipefail
+          version='${{ steps.archive.outputs.version }}'
+          rsync -a --exclude '/older/' build/dokka/html/ "$ARCHIVE/${version}/"
+          cd "$ARCHIVE"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add --all
+          if git diff --cached --quiet; then
+            echo "The archive already holds ${version} unchanged"
+          else
+            git commit --quiet -m "docs: Archive ${version}"
+            git push origin docs-archive
+          fi
