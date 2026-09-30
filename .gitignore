@@ -43,3 +43,6 @@ bin/
 
 # Local signing material must never enter the repository
 /private.key
+
+# Maven consumer smoke build output
+/consumer-smoke/maven/target/

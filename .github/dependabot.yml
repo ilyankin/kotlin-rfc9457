@@ -54,3 +54,20 @@ updates:
       other:
         applies-to: version-updates
         patterns: ['*']
+
+  # The Maven consumer smoke build: its plugins and the Maven version in `.mvn/wrapper`.
+  - package-ecosystem: maven
+    directory: /consumer-smoke/maven
+    # The library and Kotlin versions come in through `run.sh`; the pom holds only placeholders.
+    ignore:
+      - dependency-name: "io.github.ilyankin:*"
+      - dependency-name: "org.jetbrains.kotlin:*"
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      maven:
+        applies-to: version-updates
+        patterns: ['*']

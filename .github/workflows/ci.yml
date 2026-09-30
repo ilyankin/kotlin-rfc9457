@@ -170,6 +170,28 @@ jobs:
       - name: Build with Isolated Projects
         run: ./gradlew build -Dorg.gradle.isolated-projects=true
 
+  consumer-smoke:
+    # The build's own tests see the modules as projects. This resolves the published POMs, Gradle
+    # module metadata and BOM from a Maven repository, the way a user's Gradle, Maven or
+    # multiplatform build does.
+    name: Consumer smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: ./.github/actions/setup
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          # Shares the Linux key space with `build`, which is the one that writes there.
+          cache-read-only: true
+
+      - name: Publish to Maven local
+        run: ./gradlew publishToMavenLocal
+
+      - name: Resolve from Gradle JVM, Kotlin Multiplatform and Maven
+        run: consumer-smoke/run.sh
+
   dependency-graph:
     # Submits the resolved graph so Dependabot alerts cover transitive dependencies, not just what
     # `libs.versions.toml` declares.
