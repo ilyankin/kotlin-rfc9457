@@ -10,7 +10,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiationConfig
 import io.ktor.util.reflect.TypeInfo
 import io.ktor.utils.io.ByteReadChannel
 import io.ktor.utils.io.charsets.Charset
-import io.ktor.utils.io.readRemaining
+import io.ktor.utils.io.readBuffer
 import kotlinx.io.readString
 import kotlinx.serialization.json.Json
 
@@ -64,7 +64,7 @@ public class ProblemJsonConverter(
         content: ByteReadChannel,
     ): Any? {
         if (typeInfo.type != Problem::class) return null
-        return json.decodeFromString(Problem.serializer(), content.readRemaining().readString())
+        return json.decodeFromString(Problem.serializer(), content.readBuffer().readString())
     }
 }
 

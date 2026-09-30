@@ -13,7 +13,7 @@ import io.ktor.util.reflect.TypeInfo
 import io.ktor.utils.io.ByteReadChannel
 import io.ktor.utils.io.charsets.Charset
 import io.ktor.utils.io.charsets.Charsets
-import io.ktor.utils.io.readRemaining
+import io.ktor.utils.io.readBuffer
 import kotlinx.io.readString
 
 /**
@@ -81,7 +81,7 @@ public class ProblemXmlConverter : ContentConverter {
         content: ByteReadChannel,
     ): Any? {
         if (typeInfo.type != Problem::class) return null
-        return ProblemXml.decodeFromString(content.readRemaining().readString())
+        return ProblemXml.decodeFromString(content.readBuffer().readString())
     }
 }
 
