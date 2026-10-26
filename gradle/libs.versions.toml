@@ -2,10 +2,10 @@
 kotlin = "2.4.20"
 kotlinx-serialization = "1.11.0"
 ktor = "3.6.0"
-kotest = "6.2.5"
+kotest = "6.2.6"
 xmlutil = "1.0.2"
 dokka = "2.2.0"
-logback = "1.6.4"
+logback = "1.6.5"
 kover = "0.9.11"
 ksp = "2.3.12"
 
