@@ -3,11 +3,11 @@ kotlin = "2.4.21"
 kotlinx-serialization = "1.12.0"
 ktor = "3.6.0"
 kotest = "6.2.5"
-xmlutil = "1.0.2"
+xmlutil = "1.0.2.1"
 dokka = "2.2.0"
 logback = "1.6.4"
 kover = "0.9.11"
-ksp = "2.3.12"
+ksp = "2.3.13"
 
 [libraries]
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
